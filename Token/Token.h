@@ -5,14 +5,21 @@
 #include <string>
 using namespace std;
 
+/*
+	These Tokens will be used for holding info about the Battle Factory
+	pokemon.
+*/
+
 class Token {
 	public:
-		virtual string getVal() = 0;
-		enum TokenType { TYPE, NAME, MOVE, ROUND };
-		virtual TokenType getTokenType() = 0;
+		enum TokenType { NONE,TYPE, NAME, MOVE, ROUND };
+		Token();
+		Token(TokenType t, string s);
+		string getVal();
+		TokenType getTokenType();
 	private:
-
-
+		TokenType tt;
+		string val;
 };
 
 

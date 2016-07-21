@@ -10,15 +10,15 @@ MG_DIR = $(FH_DIR)/MapGenerator
 
 FLAGS = -I$(FH_DIR) -c -Wall
 
-TOKEN_OBJS = $(T_DIR)/TypeToken.o $(T_DIR)/NameToken.o $(T_DIR)/MoveToken.o
+TOKEN_OBJS = $(T_DIR)/Token.o
 
-TokenTester: $(T_DIR)/TypeToken.o $(T_DIR)/TokenTester.o
-	g++ -o TokenTester $(T_DIR)/TypeToken.o $(T_DIR)/TokenTester.o
+TokenTester: $(T_DIR)/Token.o $(T_DIR)/TokenTester.o
+	g++ -o TokenTester $(T_DIR)/Token.o $(T_DIR)/TokenTester.o
 
-$(T_DIR)/TypeToken.o: $(T_DIR)/Token.h $(T_DIR)/TypeToken.h $(T_DIR)/TypeToken.cpp
-	g++ $(FLAGS) $(T_DIR)/TypeToken.cpp -o $(T_DIR)/TypeToken.o
+$(T_DIR)/Token.o: $(T_DIR)/Token.h  $(T_DIR)/Token.cpp
+	g++ $(FLAGS) $(T_DIR)/Token.cpp -o $(T_DIR)/Token.o
 
-$(T_DIR)/TokenTester.o: $(T_DIR)/TypeToken.h $(T_DIR)/TokenTester.cpp
+$(T_DIR)/TokenTester.o: $(T_DIR)/Token.h $(T_DIR)/TokenTester.cpp
 	g++ $(FLAGS) $(T_DIR)/TokenTester.cpp -o $(T_DIR)/TokenTester.o
 
 

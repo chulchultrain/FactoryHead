@@ -1,13 +1,16 @@
-#include <Token/TypeToken.h>
+#include <Token/Token.h>
 #include <iostream>
 #include <stdlib.h>
 #include <map>
 
 using namespace std;
 
+/*
+	
+*/
 
 int main() {
-	Token *t = new TypeToken("herpes");
+	Token *t = new Token(Token::TYPE,"herpes");
 	if(t->getTokenType() == Token::TYPE)
 		cout << "SUCCESS\n";
 	else
