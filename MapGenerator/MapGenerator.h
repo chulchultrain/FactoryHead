@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <map>
 #include <string>
+#include <vector>
 
 using namespace std;
 /*
@@ -41,6 +42,40 @@ class MapGenerator {
 		*/
 		void NameToDexIDMap(map<string,string> &m);
 
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the Types in the Pokemon game.
+			The Values will be all vectors containing the DexIDs of all the Pokemon
+			who have that type.
+		*/
+
+		void TypeToDexIDVectorMap(map<string,vector<string> > &m);
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the DexIDs of the Pokemon.
+			the values will be the names of those pokemon.
+		*/
+
+		void DexIDToNameMap(map<string,string> &m);
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the DexIDs of the Pokemon.
+			The Values will be a vector containing the types of that Pokemon.
+		*/
+
+		void DexIDToTypeVectorMap(map<string,vector<string> > &m);
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the DexIDs of the Pokemon.
+			The values will be the Factory Entry IDs of the Factory Entries that
+			have that DexID.
+		*/
+
+		void DexIDToEntryIDVectorMap(map<string,vector<string> > &m);
 	private:
 
 

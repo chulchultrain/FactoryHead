@@ -31,3 +31,43 @@ void MapGenerator::NameToDexIDMap(map<string,string> &m) {
 }
 
 
+void MapGenerator::TypeToDexIDVectorMap(map<string,vector<string> > &m) {
+
+}
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the DexIDs of the Pokemon.
+			the values will be the names of those pokemon.
+		*/
+
+void MapGenerator::DexIDToNameMap(map<string,string> &m) {
+
+}
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the DexIDs of the Pokemon.
+			The Values will be a vector containing the types of that Pokemon.
+		*/
+
+void MapGenerator::DexIDToTypeVectorMap(map<string,vector<string> > &m) {
+
+}
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the DexIDs of the Pokemon.
+			The values will be the Factory Entry IDs of the Factory Entries that
+			have that DexID.
+		*/
+
+void MapGenerator::DexIDToEntryIDVectorMap(map<string,vector<string> > &m) {
+
+
+}
+
+
+
+
+
