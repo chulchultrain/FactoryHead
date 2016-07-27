@@ -2,11 +2,15 @@
 
 
 #ifndef NAMESFILE
-#define NAMESFILE "/BASE/NAME/Names.txt"
+#define NAMESFILE "base/name/Names.txt"
+#endif
+
+#ifndef TYPESFILE
+#define TYPESFILE "/base/type/Types.txt"
 #endif
 
 #include <fstream>
-
+#include <iostream>
 
 /*
 	Will fill the map with Name To DexID.
@@ -20,12 +24,18 @@ void MapGenerator::NameToDexIDMap(map<string,string> &m) {
 	m.clear();
 	ifstream fin(NAMESFILE);
 	string name;
-	string DexID;
+	string DexID,discard;
+	//int i = 0;
 	while(getline(fin,DexID) ) {
 		getline(fin,name);
 		m[name] = DexID;
+		//cout << name << ' ' << DexID << '\n';
+		//i++;
+		getline(fin,discard);
 	}
-
+	//cout << i << endl;
+	fin.close();
+	//cout << "Finished NDIDM\n";
 	
 
 }

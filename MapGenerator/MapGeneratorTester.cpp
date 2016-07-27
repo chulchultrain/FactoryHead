@@ -43,7 +43,7 @@ void NameToDexIDMapUnitTest() {
 
 	assert(m["Ivysaur"] == "002" && "2");
 		
-	assert(m["Venasaur"] == "003" && "3");
+	assert(m["Venusaur"] == "003" && "3");
 
 	assert(m["Meloetta (Pirouette Forme)"] == "648P" && "4");
 
@@ -140,6 +140,19 @@ void DexIDToNameMapUnitTest() {
 	MapGenerator mg;
 	map<string,string> m;
 	mg.DexIDToNameMap(m);
+
+	assert(m["001"] == "Bulbasaur" && "1");
+
+	assert(m["002"] == "Ivysaur" && "2");
+		
+	assert(m["003"] == "Venasaur" && "3");
+
+	assert(m["648P"] == "Meloetta (Pirouette Forme)" && "4");
+
+	assert(m["648"] == "Meloetta (Aria Forme)" && "5");
+
+	assert(m["479L"] == "Rotom (Mow Rotom)" && "6");
+	
 }
 
 /*
@@ -153,7 +166,16 @@ void DexIDToTypeVectorMapUnitTest() {
 	MapGenerator mg;
 	map<string,vector<string> > m;
 	mg.DexIDToTypeVectorMap(m);
+	
+	assert(TestStringVectorPresence(m["001"],"Grass"));
+	assert(TestStringVectorPresence(m["001"],"Poison"));
+	assert(TestStringVectorPresence(m["001"],"Dark") == false);
+	
+	assert(TestStringVectorPresence(m["479L"],"Grass"));
+	assert(TestStringVectorPresence(m["479L"],"Ghost"));
+	assert(TestStringVectorPresence(m["479L"],"Water") == false);
 
+	
 }
 
 /*
@@ -165,6 +187,16 @@ void DexIDToEntryIDVectorMapUnitTest() {
 	MapGenerator mg;
 	map<string,vector<string> > m;	
 	mg.DexIDToEntryIDVectorMap(m);
+
+	assert(TestStringVectorPresence(m["001"],"001"));
+	assert(TestStringVectorPresence(m["002"],"003"));
+	assert(TestStringVectorPresence(m["002"],"002"));
+	assert(TestStringVectorPresence(m["002"],"100") == false);
+	assert(TestStringVectorPresence(m["229"],"429"));
+	assert(TestStringVectorPresence(m["229"],"430"));
+	assert(TestStringVectorPresence(m["229"],"431"));
+	assert(TestStringVectorPresence(m["229"],"432"));	
+	assert(TestStringVectorPresence(m["229"],"434") == false);	
 }
 
 
