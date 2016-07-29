@@ -22,10 +22,14 @@ using namespace std;
 	Type to DexID Vector
 	DexID to Name
 	DexID to Type Vector
+
+	TODO:
 	DexID to EntryID Vector
-	
-	
-	
+	Type to EntryID Vector
+	MoveID to EntryID Vector
+	Move Name to MoveID
+	MoveID to MoveData Vector
+	DexID to BaseStats
 	
 	 
 

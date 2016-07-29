@@ -103,7 +103,7 @@ void TypeToDexIDListMapUnitTest() {
 	assert(TestStringVectorPresence(m["Ice"],"144")); //articuno
 	assert(TestStringVectorPresence(m["Bug"],"214")); //heracross
 	assert(TestStringVectorPresence(m["Dragon"],"445")); //garchomp
-	assert(TestStringVectorPresence(m["Ghost"],"479O")); //rotom (heat rotom)
+	assert(TestStringVectorPresence(m["Ghost"],"479")); //rotom (Normal Rotom)
 	assert(TestStringVectorPresence(m["Dark"],"229")); //houndoom
 	assert(TestStringVectorPresence(m["Steel"],"208")); //steelix
 
@@ -145,7 +145,7 @@ void DexIDToNameMapUnitTest() {
 
 	assert(m["002"] == "Ivysaur" && "2");
 		
-	assert(m["003"] == "Venasaur" && "3");
+	assert(m["003"] == "Venusaur" && "3");
 
 	assert(m["648P"] == "Meloetta (Pirouette Forme)" && "4");
 
@@ -172,7 +172,7 @@ void DexIDToTypeVectorMapUnitTest() {
 	assert(TestStringVectorPresence(m["001"],"Dark") == false);
 	
 	assert(TestStringVectorPresence(m["479L"],"Grass"));
-	assert(TestStringVectorPresence(m["479L"],"Ghost"));
+	assert(TestStringVectorPresence(m["479L"],"Electric"));
 	assert(TestStringVectorPresence(m["479L"],"Water") == false);
 
 	
@@ -206,9 +206,10 @@ int main() {
 
 
 	NameToDexIDMapUnitTest();
-
-
-
+	TypeToDexIDListMapUnitTest();
+	DexIDToNameMapUnitTest();
+	DexIDToTypeVectorMapUnitTest();
+	DexIDToEntryIDVectorMapUnitTest();
 
 
 	return 0;

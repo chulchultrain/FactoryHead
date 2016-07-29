@@ -2,12 +2,18 @@
 
 
 #ifndef NAMESFILE
-#define NAMESFILE "base/name/Names.txt"
+#define NAMESFILE "BASE/NAME/Names.txt"
 #endif
 
 #ifndef TYPESFILE
-#define TYPESFILE "/base/type/Types.txt"
+#define TYPESFILE "BASE/TYPE/Types.txt"
 #endif
+
+#ifndef ENTRYFILE
+#define ENTRYFILE "BASE/ENTRY/EntryData.txt"
+#endif
+
+
 
 #include <fstream>
 #include <iostream>
@@ -42,9 +48,20 @@ void MapGenerator::NameToDexIDMap(map<string,string> &m) {
 
 
 void MapGenerator::TypeToDexIDVectorMap(map<string,vector<string> > &m) {
-
+	m.clear();
+	ifstream fin(TYPESFILE);
+	string type;
+	string DexID;
+	int numTypes;
+	while(fin >> DexID) {
+		fin >> numTypes;
+		for(int i = 0; i < numTypes; i++) {
+			fin >> type;
+			m[type].push_back(DexID);
+		}		
+	}
+	fin.close();
 }
-
 		/*
 			@param m - the map to fill.
 			m will be a map whose keys are the DexIDs of the Pokemon.
@@ -52,7 +69,17 @@ void MapGenerator::TypeToDexIDVectorMap(map<string,vector<string> > &m) {
 		*/
 
 void MapGenerator::DexIDToNameMap(map<string,string> &m) {
-
+	m.clear();
+	ifstream fin(NAMESFILE);
+	string name;
+	string DexID,discard;
+	while(getline(fin,DexID) ) {
+		getline(fin,name);
+		m[DexID] = name;
+		getline(fin,discard);
+	}
+	fin.close();
+	
 }
 
 		/*
@@ -62,7 +89,19 @@ void MapGenerator::DexIDToNameMap(map<string,string> &m) {
 		*/
 
 void MapGenerator::DexIDToTypeVectorMap(map<string,vector<string> > &m) {
-
+	m.clear();
+	ifstream fin(TYPESFILE);
+	string type;
+	string DexID;
+	int numTypes;
+	while(fin >> DexID) {
+		fin >> numTypes;
+		for(int i = 0; i < numTypes; i++) {
+			fin >> type;
+			m[DexID].push_back(type);
+		}		
+	}
+	fin.close();	
 }
 
 		/*
@@ -73,8 +112,22 @@ void MapGenerator::DexIDToTypeVectorMap(map<string,vector<string> > &m) {
 		*/
 
 void MapGenerator::DexIDToEntryIDVectorMap(map<string,vector<string> > &m) {
-
-
+	m.clear();
+	ifstream fin(ENTRYFILE);
+	string DexID;
+	string EntryID;
+	string discard;
+	//int i = 0;
+	while(getline(fin,EntryID) ) {
+		getline(fin,DexID);
+		getline(fin,discard);
+		//cout << i++ << endl;
+		while(discard != "")
+			getline(fin,discard);
+		m[DexID].push_back(EntryID);
+;
+	}
+	fin.close();
 }
 
 
