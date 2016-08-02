@@ -125,11 +125,41 @@ void MapGenerator::DexIDToEntryIDVectorMap(map<string,vector<string> > &m) {
 		while(discard != "")
 			getline(fin,discard);
 		m[DexID].push_back(EntryID);
-;
 	}
 	fin.close();
 }
 
+		/*
+			@param m - the map to be filled
+			m will be a map whose keys are the Names of moves in Pokemon.
+			the values will be the IDs of those moves.
+		*/
+
+void MapGenerator::TypeToEntryIDVectorMap(map<string, vector<string> > &m) {
+	map <string,vector<string> > dtt;
+	//map <string, vector<string> > dte;
+
+	DexIDToTypeVectorMap(dtt);
+
+
+	m.clear();
+	ifstream fin(ENTRYFILE);
+	string DexID;
+	string EntryID;
+	string discard;	
+	while(getline(fin,EntryID) ) {
+		getline(fin,DexID);
+		getline(fin,discard);
+		while(discard != "")
+			getline(fin,discard);
+		vector<string> &types = dtt[DexID];
+		for(unsigned int i = 0; i < types.size(); i++) {
+			m[types[i]].push_back(EntryID);
+		}
+		m[DexID].push_back(EntryID);
+	}
+	fin.close();
+}
 
 
 

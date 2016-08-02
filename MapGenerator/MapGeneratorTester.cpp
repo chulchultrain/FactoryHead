@@ -199,6 +199,39 @@ void DexIDToEntryIDVectorMapUnitTest() {
 	assert(TestStringVectorPresence(m["229"],"434") == false);	
 }
 
+/*
+	For every Type, the map should be loaded with all Entry IDs of the Factory Entries
+	that have that Type.
+
+	One for each type. An entry that should be presence in 2 types.
+
+*/
+
+void TypeToEntryIDVectorMapUnitTest()  {
+	MapGenerator mg;
+	map<string, vector<string> > m;
+	mg.TypeToEntryIDVectorMap(m);
+
+	assert(TestStringVectorPresence(m["Grass"],"001"));
+	assert(TestStringVectorPresence(m["Normal"],"541"));
+	assert(TestStringVectorPresence(m["Fire"],"011"));
+	assert(TestStringVectorPresence(m["Flying"],"011"));
+	assert(TestStringVectorPresence(m["Water"],"011") == false);
+	assert(TestStringVectorPresence(m["Ground"],"840"));
+	assert(TestStringVectorPresence(m["Poison"],"813"));
+	assert(TestStringVectorPresence(m["Dark"],"813"));
+	assert(TestStringVectorPresence(m["Psychic"],"813") == false);
+	assert(TestStringVectorPresence(m["Electric"],"170"));
+	assert(TestStringVectorPresence(m["Dragon"],"290"));
+	assert(TestStringVectorPresence(m["Ice"],"933"));
+	assert(TestStringVectorPresence(m["Ghost"],"933"));
+	assert(TestStringVectorPresence(m["Bug"],"230"));
+	assert(TestStringVectorPresence(m["Rock"],"194"));
+	assert(TestStringVectorPresence(m["Steel"],"394"));	
+	assert(TestStringVectorPresence(m["Fighting"],"394") == false);	
+}
+
+
 
 int main() {
 	
@@ -210,7 +243,7 @@ int main() {
 	DexIDToNameMapUnitTest();
 	DexIDToTypeVectorMapUnitTest();
 	DexIDToEntryIDVectorMapUnitTest();
-
+	TypeToEntryIDVectorMapUnitTest();	
 
 	return 0;
 }

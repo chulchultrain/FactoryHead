@@ -22,17 +22,27 @@ using namespace std;
 	Type to DexID Vector
 	DexID to Name
 	DexID to Type Vector
+	DexID to EntryID Vector
 
 	TODO:
-	DexID to EntryID Vector
 	Type to EntryID Vector
 	MoveID to EntryID Vector
 	Move Name to MoveID
-	MoveID to MoveData Vector
-	DexID to BaseStats
-	
-	 
 
+	DexID to BaseStats
+	MoveID to MoveData Vector
+	EntryID to EntryData Vector	 
+
+*/
+
+/*
+	Space for writing methods before adding them to MG.
+
+		
+
+		
+
+	
 */
 
 
@@ -80,6 +90,33 @@ class MapGenerator {
 		*/
 
 		void DexIDToEntryIDVectorMap(map<string,vector<string> > &m);
+
+		/*
+			@param m - the map to fill.
+			m will be a map whose keys are the Types of Pokemon, 
+			and the values are the EntryIDs of Factory Entries who have
+			that type as denoted by the key.
+		*/
+
+		void TypeToEntryIDVectorMap(map<string, vector<string> > &m);
+
+		/*
+			@param m - the map to be filled.
+			m will be a map whose keys are the MoveIDs of moves.
+			the values will be the EntryIDs of Factory entries who
+			have the move indicated by the MoveID key.	
+		*/
+		void MoveIDtoEntryIDVectorMap(map<string, vector<string> > &m);
+
+		/*
+			@param m - the map to be filled
+			m will be a map whose keys are the Names of moves in Pokemon.
+			the values will be the IDs of those moves.
+		*/
+	
+		void MoveNameToMoveIDMap(map <string, string> &m);
+
+		
 	private:
 
 
