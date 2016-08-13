@@ -200,6 +200,26 @@ void MapGenerator::MoveIDtoEntryIDVectorMap(map<string, vector<string> > &m) {
 
 
 		/*
+			@param m - the map to fill
+			m will be a map whose keys are the names of the Pokemon.
+			The values will be the Factory Entry IDs of the Factory Entries that have that name.
+		*/
+
+void MapGenerator::NameToEntryIDVectorMap(map<string, vector<string> > &m) {
+	m.clear();
+	//ifstream fin(ENTRYFILE);
+	map<string, string> dtn;
+	DexIDToNameMap(dtn);
+	map<string, vector<string> > dte;
+	DexIDToEntryIDVectorMap(dte);
+	for( 	map<string, vector<string> >::iterator it = dte.begin(); it != dte.end(); it++) {
+		m[dtn[it->first]] = it->second;
+	}
+	//fin.close();
+}
+
+
+		/*
 			@param m - the map to be filled
 			m will be a map whose keys are the Names of moves in Pokemon.
 			the values will be the IDs of those moves.

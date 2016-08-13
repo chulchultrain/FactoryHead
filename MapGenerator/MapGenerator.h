@@ -97,6 +97,14 @@ class MapGenerator {
 		void DexIDToEntryIDVectorMap(map<string,vector<string> > &m);
 
 		/*
+			@param m - the map to fill
+			m will be a map whose keys are the names of the Pokemon.
+			The values will be the Factory Entry IDs of the Factory Entries that have that name.
+		*/
+
+		void NameToEntryIDVectorMap(map<string, vector<string> > &m);
+
+		/*
 			@param m - the map to fill.
 			m will be a map whose keys are the Types of Pokemon, 
 			and the values are the EntryIDs of Factory Entries who have

@@ -348,6 +348,31 @@ hp,a,d,sa,sd,s
 	assert(m["648"] == e648);
 }
 
+void NameToEntryIDVectorMapUnitTest() {
+	MapGenerator mg;
+	map <string, vector<string> > m;
+	mg.NameToEntryIDVectorMap(m);
+
+	assert(TestStringVectorPresence(m["Bulbasaur"],"001") );
+	assert(TestStringVectorPresence(m["Ivysaur"],"002") );
+	assert(TestStringVectorPresence(m["Ivysaur"],"003") );
+	assert(TestStringVectorPresence(m["Venusaur"],"004") );	
+
+	assert(TestStringVectorPresence(m["Cresselia"],"950") );
+	assert(TestStringVectorPresence(m["Cresselia"],"949") );
+	assert(TestStringVectorPresence(m["Cresselia"],"800") == false);	
+	
+	assert(TestStringVectorPresence(m["Mr. Mime"],"216") );
+	assert(TestStringVectorPresence(m["Mr. Mime"],"215") == false);
+
+	assert(TestStringVectorPresence(m["Steelix"],"383") );
+	assert(TestStringVectorPresence(m["Steelix"],"384") );
+	assert(TestStringVectorPresence(m["Steelix"],"385") );
+	assert(TestStringVectorPresence(m["Steelix"],"386") );
+	assert(TestStringVectorPresence(m["Steelix"],"387") == false );	
+
+}
+
 
 int main() {
 	
@@ -364,5 +389,6 @@ int main() {
 	DexIDToBaseStatsUnitTest();
 	MoveIDToMoveDataMapUnitTest();
 	EntryIDToEntryDataMapUnitTest();
+	NameToEntryIDVectorMapUnitTest();
 	return 0;
 }
