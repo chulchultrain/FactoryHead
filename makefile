@@ -15,8 +15,8 @@ FLAGS = -I$(FH_DIR) -c -Wall
 MapGeneratorTester: $(MG_DIR)/MapGenerator.o $(MG_DIR)/MapGeneratorTester.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
 	g++ -o MapGeneratorTester $(MG_DIR)/MapGenerator.o $(MG_DIR)/MapGeneratorTester.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
 
-TypeTokenEvalTester: $(TE_DIR)/TypeTokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
-	g++ -o TypeTokenEvalTester $(TE_DIR)/TypeTokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
+TokenEvalTester: $(TE_DIR)/TypeTokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
+	g++ -o TokenEvalTester $(TE_DIR)/TypeTokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
 
 
 $(MG_DIR)/MapGenerator.o: $(MG_DIR)/MapGenerator.cpp $(MG_DIR)/MapGenerator.h
@@ -28,8 +28,8 @@ $(MG_DIR)/MapGeneratorTester.o: $(MG_DIR)/MapGeneratorTester.cpp $(MG_DIR)/MapGe
 $(TE_DIR)/TypeTokenEvaluator.o: $(TE_DIR)/TypeTokenEvaluator.cpp $(TE_DIR)/TypeTokenEvaluator.h
 	g++ $(FLAGS) $(TE_DIR)/TypeTokenEvaluator.cpp -o $(TE_DIR)/TypeTokenEvaluator.o
 
-$(TE_DIR)/TypeTokenEvalTester.o: $(TE_DIR)/TypeTokenEvaluator.h $(TE_DIR)/TypeTokenEvalTester.cpp
-	g++ $(FLAGS) $(TE_DIR)/TypeTokenEvalTester.cpp -o $(TE_DIR)/TypeTokenEvalTester.o
+$(TE_DIR)/TokenEvalTester.o: $(TE_DIR)/TypeTokenEvaluator.h $(TE_DIR)/TokenEvalTester.cpp
+	g++ $(FLAGS) $(TE_DIR)/TokenEvalTester.cpp -o $(TE_DIR)/TokenEvalTester.o
 
 $(BS_DIR)/BaseStats.o: $(BS_DIR)/BaseStats.h $(BS_DIR)/BaseStats.cpp
 	g++ $(FLAGS) $(BS_DIR)/BaseStats.cpp -o $(BS_DIR)/BaseStats.o

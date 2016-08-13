@@ -5,14 +5,19 @@
 #include <map>
 
 /*
-	This is the class that evaluates Type Tokens and 
+	This is the class that evaluates Type Tokens and returns all the EntryIDs
+	of all the Factory Entries that contain that type
 
 */
 
 class TypeTokenEvaluator : public TokenEvaluator {
 	public:
 		TypeTokenEvaluator();
-		virtual void EvalToken(string token, vector<string> &res);
+		/*
+			given a type token, this function fills up the res vector
+			with the entry IDs of all the factory entries taht have that type
+		*/
+		virtual void EvalToken(string typeToken, vector<string> &res);
 
 
 
