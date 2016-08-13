@@ -33,66 +33,9 @@
 
 */
 
-bool operator == (const BaseStats &lhs, const BaseStats &rhs) {
-	int n = memcmp(&lhs,&rhs,sizeof(BaseStats));
-	return n == 0;
-}
 
-bool operator == (const MoveData &lhs, const MoveData &rhs) {
-	if(lhs.ID != rhs.ID) {
-		//cout << "FAIL HERE\n";
-		return false;
 
-	}
-	if(lhs.name != rhs.name) {
-		//cout << "FAIL HERE 2\n";
-		return false;
-	}
-	if(lhs.type != rhs.type){
-		//cout << "FAIL HERE 3\n";
-		return false;
-	}
-	if(lhs.category != rhs.category){
-		//cout << "FAIL HERE 4\n";
-		return false;
-	}
-	if(lhs.damage != rhs.damage){
-		//cout << "FAIL HERE 5\n";
-		return false;
-	}
-	return true;
-//	return lhs.ID == rhs.ID && lhs.name == rhs.name && lhs.type == rhs.type && lhs.category == rhs.category && lhs.damage == rhs.damage;
-}
 
-	string ID;
-	string DexID;
-	vector<string> moveID;
-	string nature;
-	vector<int> EV;
-bool operator == (const EntryData &lhs, const EntryData &rhs) {
-	if(lhs.ID != rhs.ID) {
-		cout << "FAIL HERE\n";
-		return false;
-
-	}
-	if(lhs.DexID != rhs.DexID) {
-		cout << "FAIL HERE2\n";
-		return false;
-	}	
-	if(lhs.moveID != rhs.moveID) {
-		cout << "FAIL HERE3\n";
-		return false;
-	}
-	if(lhs.nature != rhs.nature) {
-		cout << "FAIL HERE4\n";
-		return false;
-	}
-	if(lhs.EV != rhs.EV) {
-		cout << "FAIL HERE5\n";
-		return false;
-	}
-	return true;
-}
 
 
 void MapGenerator::NameToDexIDMap(map<string,string> &m) {
