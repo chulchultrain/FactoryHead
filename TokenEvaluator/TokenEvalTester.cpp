@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include <TokenEvaluator/TypeTokenEvaluator.h>
+#include <TokenEvaluator/NameTokenEvaluator.h>
+#include <TokenEvaluator/MoveTokenEvaluator.h>
 #include <MapGenerator/MapGenerator.h>
 
 using namespace std;
@@ -23,8 +25,6 @@ void PrintVector(vector<string> &a) {
 */
 
 void TypeTokenEvaluatorUnitTest() {
-	MapGenerator mg;
-	mg.equals
 	TypeTokenEvaluator tte;
 	vector<string> poison;
 	tte.EvalToken("Bug",poison);
@@ -34,9 +34,26 @@ void TypeTokenEvaluatorUnitTest() {
 }
 
 
+void NameTokenEvaluatorUnitTest() {
+	NameTokenEvaluator nte;
+	vector<string> rhydon;
+	nte.EvalToken("Rhydon",rhydon);
+	PrintVector(rhydon);	
+}
+
+void MoveTokenEvaluatorUnitTest() {
+	MoveTokenEvaluator mte;
+	vector<string> thunderpunch;
+	mte.EvalToken("Thunder Punch", thunderpunch);
+	PrintVector(thunderpunch);
+}
+
 int main() {
 
 	TypeTokenEvaluatorUnitTest();
 
+	NameTokenEvaluatorUnitTest();
+
+	MoveTokenEvaluatorUnitTest();
 	return 0;
 }

@@ -371,6 +371,8 @@ void NameToEntryIDVectorMapUnitTest() {
 	assert(TestStringVectorPresence(m["Steelix"],"386") );
 	assert(TestStringVectorPresence(m["Steelix"],"387") == false );	
 
+	assert(TestStringVectorPresence(m["Rhydon"], "194") );
+	assert(TestStringVectorPresence(m["Rhydon"], "193") == false );
 }
 
 void MoveIDtoEntryIDVectorMapUnitTest() {
@@ -409,6 +411,11 @@ void MoveNameToEntryIDVectorMapUnitTest() {
 	assert(TestStringVectorPresence(m["Payback"],"409") );
 	assert(TestStringVectorPresence(m["Payback"],"426") );
 	assert(TestStringVectorPresence(m["Payback"],"545") == false );
+
+	assert(TestStringVectorPresence(m["Acupressure"],"845") );	
+	assert(TestStringVectorPresence(m["Acupressure"],"139") );		
+
+	assert(TestStringVectorPresence(m["Hammer Arm"],"196") );
 }
 
 int main() {

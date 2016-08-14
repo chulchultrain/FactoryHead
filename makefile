@@ -15,8 +15,8 @@ FLAGS = -I$(FH_DIR) -c -Wall
 MapGeneratorTester: $(MG_DIR)/MapGenerator.o $(MG_DIR)/MapGeneratorTester.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
 	g++ -o MapGeneratorTester $(MG_DIR)/MapGenerator.o $(MG_DIR)/MapGeneratorTester.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
 
-TokenEvalTester: $(TE_DIR)/TypeTokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
-	g++ -o TokenEvalTester $(TE_DIR)/TypeTokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o
+TokenEvalTester: $(TE_DIR)/TokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
+	g++ -o TokenEvalTester $(TE_DIR)/TokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 
 
 $(MG_DIR)/MapGenerator.o: $(MG_DIR)/MapGenerator.cpp $(MG_DIR)/MapGenerator.h
@@ -25,11 +25,17 @@ $(MG_DIR)/MapGenerator.o: $(MG_DIR)/MapGenerator.cpp $(MG_DIR)/MapGenerator.h
 $(MG_DIR)/MapGeneratorTester.o: $(MG_DIR)/MapGeneratorTester.cpp $(MG_DIR)/MapGenerator.h
 	g++ $(FLAGS) $(MG_DIR)/MapGeneratorTester.cpp -o $(MG_DIR)/MapGeneratorTester.o
 
-$(TE_DIR)/TypeTokenEvaluator.o: $(TE_DIR)/TypeTokenEvaluator.cpp $(TE_DIR)/TypeTokenEvaluator.h
+$(TE_DIR)/TypeTokenEvaluator.o: $(TE_DIR)/TypeTokenEvaluator.cpp $(TE_DIR)/TypeTokenEvaluator.h $(MG_DIR)/MapGenerator.h
 	g++ $(FLAGS) $(TE_DIR)/TypeTokenEvaluator.cpp -o $(TE_DIR)/TypeTokenEvaluator.o
 
-$(TE_DIR)/TokenEvalTester.o: $(TE_DIR)/TypeTokenEvaluator.h $(TE_DIR)/TokenEvalTester.cpp
+$(TE_DIR)/NameTokenEvaluator.o: $(TE_DIR)/NameTokenEvaluator.cpp $(TE_DIR)/NameTokenEvaluator.h $(MG_DIR)/MapGenerator.h
+	g++ $(FLAGS) $(TE_DIR)/NameTokenEvaluator.cpp -o $(TE_DIR)/NameTokenEvaluator.o
+
+$(TE_DIR)/TokenEvalTester.o: $(TE_DIR)/NameTokenEvaluator.h $(TE_DIR)/TypeTokenEvaluator.h $(TE_DIR)/MoveTokenEvaluator.h $(TE_DIR)/TokenEvalTester.cpp
 	g++ $(FLAGS) $(TE_DIR)/TokenEvalTester.cpp -o $(TE_DIR)/TokenEvalTester.o
+
+$(TE_DIR)/MoveTokenEvaluator.o: $(TE_DIR)/MoveTokenEvaluator.cpp $(TE_DIR)/MoveTokenEvaluator.h $(MG_DIR)/MapGenerator.h
+	g++ $(FLAGS) $(TE_DIR)/MoveTokenEvaluator.cpp -o $(TE_DIR)/MoveTokenEvaluator.o
 
 $(BS_DIR)/BaseStats.o: $(BS_DIR)/BaseStats.h $(BS_DIR)/BaseStats.cpp
 	g++ $(FLAGS) $(BS_DIR)/BaseStats.cpp -o $(BS_DIR)/BaseStats.o
