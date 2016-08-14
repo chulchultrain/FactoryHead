@@ -314,8 +314,8 @@ void EntryIDToEntryDataMapUnitTest() {
 hp,a,d,sa,sd,s
 */
 	vector<string> e001M(4);
-	e001M[0] = "73";
-	e001M[1] = "92";
+	e001M[0] = "073";
+	e001M[1] = "092";
 	e001M[2] = "230";
 	e001M[3] = "345";
 	vector<int> e001E(6,0);
@@ -325,8 +325,8 @@ hp,a,d,sa,sd,s
 	assert(m["001"] == e001);
 
 	vector<string> e950M(4);
-	e950M[0] = "58";
-	e950M[1] = "94";
+	e950M[0] = "058";
+	e950M[1] = "094";
 	e950M[2] = "236";
 	e950M[3] = "324";
 	vector<int> e950E(6,0);
@@ -337,8 +337,8 @@ hp,a,d,sa,sd,s
 	assert(m["950"] == e950);
 	
 	vector<string> e648M(4);
-	e648M[0] = "73";
-	e648M[1] = "75";
+	e648M[0] = "073";
+	e648M[1] = "075";
 	e648M[2] = "332";
 	e648M[3] = "445";
 	vector<int> e648E(6,0);
@@ -373,6 +373,43 @@ void NameToEntryIDVectorMapUnitTest() {
 
 }
 
+void MoveIDtoEntryIDVectorMapUnitTest() {
+	MapGenerator mg;
+	map<string, vector<string> > m;
+	mg.MoveIDtoEntryIDVectorMap(m);
+	
+	//Thunder Punch
+	assert(TestStringVectorPresence(m["009"],"035") );
+	assert(TestStringVectorPresence(m["009"],"043") );
+	assert(TestStringVectorPresence(m["009"],"108") );
+	assert(TestStringVectorPresence(m["009"],"149") );
+	assert(TestStringVectorPresence(m["009"],"410") );
+	assert(TestStringVectorPresence(m["009"],"476") == false);
+	assert(TestStringVectorPresence(m["447"],"589") );
+
+	//Grass Knot
+	assert(TestStringVectorPresence(m["447"],"621") );
+	assert(TestStringVectorPresence(m["447"],"625") );
+	assert(TestStringVectorPresence(m["447"],"626") == false);
+
+	//Double-Edge
+	assert(TestStringVectorPresence(m["038"],"129") );
+	assert(TestStringVectorPresence(m["038"],"202") );
+	assert(TestStringVectorPresence(m["038"],"201") == false);		
+}
+
+
+void MoveNameToEntryIDVectorMapUnitTest() {
+	MapGenerator mg;	
+	map<string, vector<string> > m;
+	mg.MoveNameToEntryIDVectorMap(m);
+	
+	assert(TestStringVectorPresence(m["Payback"],"385") );
+	assert(TestStringVectorPresence(m["Payback"],"390") );
+	assert(TestStringVectorPresence(m["Payback"],"409") );
+	assert(TestStringVectorPresence(m["Payback"],"426") );
+	assert(TestStringVectorPresence(m["Payback"],"545") == false );
+}
 
 int main() {
 	
@@ -390,5 +427,7 @@ int main() {
 	MoveIDToMoveDataMapUnitTest();
 	EntryIDToEntryDataMapUnitTest();
 	NameToEntryIDVectorMapUnitTest();
+
+	cout << "Tests Finished Without A Hitch\n";
 	return 0;
 }

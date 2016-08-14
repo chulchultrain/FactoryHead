@@ -219,6 +219,24 @@ void MapGenerator::NameToEntryIDVectorMap(map<string, vector<string> > &m) {
 }
 
 
+	/*
+		@param m - the map to fill
+		m wlil be a map whose keys are the names of Pokemon moves.
+		The values will be the Factory Entry IDs of the Factory Entries that have that move in their move set.
+	*/
+
+void MapGenerator::MoveNameToEntryIDVectorMap(map<string, vector<string> > &m) {
+	m.clear();
+	map<string, MoveData> midtmd; 
+	MoveIDToMoveDataMap(midtmd);
+	map<string, vector<string> > midteid;
+	MoveIDtoEntryIDVectorMap(midteid);
+	for( 	map<string, vector<string> >::iterator it = midteid.begin(); it != midteid.end(); it++) {
+		m[midtmd[it->first].name] = it->second;
+	}	
+}
+
+
 		/*
 			@param m - the map to be filled
 			m will be a map whose keys are the Names of moves in Pokemon.

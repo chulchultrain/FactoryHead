@@ -105,11 +105,20 @@ class MapGenerator {
 		void NameToEntryIDVectorMap(map<string, vector<string> > &m);
 
 		/*
+			@param m - the map to fill
+			m wlil be a map whose keys are the names of Pokemon moves.
+			The values will be the Factory Entry IDs of the Factory Entries that have that move in their move set.
+		*/
+
+		void MoveNameToEntryIDVectorMap(map<string, vector<string> > &m);
+
+		/*
 			@param m - the map to fill.
 			m will be a map whose keys are the Types of Pokemon, 
 			and the values are the EntryIDs of Factory Entries who have
 			that type as denoted by the key.
 		*/
+
 
 		void TypeToEntryIDVectorMap(map<string, vector<string> > &m);
 
