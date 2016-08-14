@@ -194,6 +194,10 @@ void MapGenerator::MoveIDtoEntryIDVectorMap(map<string, vector<string> > &m) {
 			getline(fin,move);
 			m[move].push_back(EntryID);
 		}
+		getline(fin,discard);
+		while(discard != "") {
+			getline(fin,discard);
+		}
 	}	
 	fin.close();
 }

@@ -427,7 +427,8 @@ int main() {
 	MoveIDToMoveDataMapUnitTest();
 	EntryIDToEntryDataMapUnitTest();
 	NameToEntryIDVectorMapUnitTest();
-
+	MoveIDtoEntryIDVectorMapUnitTest();
+	MoveNameToEntryIDVectorMapUnitTest(); 
 	cout << "Tests Finished Without A Hitch\n";
 	return 0;
 }
