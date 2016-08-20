@@ -162,6 +162,21 @@ class MapGenerator {
 		*/
 
 		void EntryIDToEntryDataMap(map <string, EntryData> &m);
+
+		/*
+			@param m - the map to be filled
+			m will be a map whose keys are the natures of Pokemon.
+			the values will be maps of that nature. These maps will have
+			int keys that correspond to each of the stats. 
+			0 for HP
+			1 for A
+			2 for D
+			3 for SA
+			4 for SD
+			5 for S
+		*/
+
+		void NatureToStatMultiplierMap(map <string, map<int, int> > &m);
 	//EntryID to EntryData Vector
 	private:
 

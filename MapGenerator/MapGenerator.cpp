@@ -21,6 +21,9 @@
 #define STATSFILE "BASE/STATS/BaseStats.txt"
 #endif
 
+#ifndef NATUREFILE
+#define NATUREFILE "BASE/NATURE/NatureData.txt"
+#endif
 
 #include <fstream>
 #include <iostream>
@@ -367,4 +370,28 @@ void MapGenerator::EntryIDToEntryDataMap(map <string, EntryData> &m) {
 	fin.close();
 }
 
+		/*
+			@param m - the map to be filled
+			m will be a map whose keys are the natures of Pokemon.
+			the values will be maps of that nature. These maps will have
+			int keys that correspond to each of the stats. 
+			0 for HP
+			1 for A
+			2 for D
+			3 for SA
+			4 for SD
+			5 for S
+		*/
 
+void MapGenerator::NatureToStatMultiplierMap(map <string, map<int, int> > &m) {
+	m.clear();
+	ifstream fin(NATUREFILE);
+	string nature;
+	int incStat,decStat;
+	while(fin >> nature) {
+		fin >> incStat >> decStat;
+		m[nature][incStat] = 1;
+		m[nature][decStat] = -1;
+	}
+	fin.close();
+}

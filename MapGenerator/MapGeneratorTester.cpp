@@ -418,6 +418,28 @@ void MoveNameToEntryIDVectorMapUnitTest() {
 	assert(TestStringVectorPresence(m["Hammer Arm"],"196") );
 }
 
+void NatureToStatMultiplierMapUnitTest() {
+	MapGenerator mg;
+	map<string, map<int, int> > m;
+	mg.NatureToStatMultiplierMap(m);
+
+	assert(m["Lonely"][1] == 1);
+	assert(m["Lonely"][2] == -1);
+	assert(m["Lonely"][3] == 0);
+	assert(m["Lonely"][0] == 0);
+	assert(m["Lonely"][4] == 0);
+	assert(m["Lonely"][5] == 0);
+
+	assert(m["Careful"][4] == 1);
+	assert(m["Careful"][3] == -1);
+	assert(m["Careful"][2] == 0);
+	assert(m["Careful"][1] == 0);
+	assert(m["Careful"][0] == 0);
+	assert(m["Careful"][5] == 0);
+
+	
+}
+
 int main() {
 	
 	
@@ -436,6 +458,7 @@ int main() {
 	NameToEntryIDVectorMapUnitTest();
 	MoveIDtoEntryIDVectorMapUnitTest();
 	MoveNameToEntryIDVectorMapUnitTest(); 
+	NatureToStatMultiplierMapUnitTest();
 	cout << "Tests Finished Without A Hitch\n";
 	return 0;
 }
