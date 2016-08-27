@@ -11,9 +11,10 @@ struct EntryData {
 	string ID;
 	string DexID;
 	vector<string> moveID;
+	string item;
 	string nature;
 	vector<int> EV;
-	EntryData(string x1, string x2, vector<string> &x3, string x4, vector<int> &x5);
+	EntryData(string x1, string x2, vector<string> &x3, string x4, string x5, vector<int> &x6);
 	EntryData();
 };
 

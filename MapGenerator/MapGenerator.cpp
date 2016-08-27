@@ -37,11 +37,27 @@
 */
 
 
-
-
-
+map<string,string> MapGenerator::NameToDexID;
+map<string,vector<string> > MapGenerator::TypeToDexIDVector;
+map<string,string> MapGenerator::DexIDToName;
+map<string, vector<string> > MapGenerator::DexIDToTypeVector;
+map<string, vector<string> > MapGenerator::DexIDToEntryIDVector;
+map<string, vector<string> > MapGenerator::TypeToEntryIDVector;
+map<string, vector<string> > MapGenerator::MoveIDtoEntryIDVector;
+map<string, vector<string> > MapGenerator::NameToEntryIDVector;
+map<string, vector<string> > MapGenerator::MoveNameToEntryIDVector;
+map<string, string> MapGenerator::MoveNameToMoveID;
+map<string, BaseStats> MapGenerator::DexIDToBaseStats;
+map<string, MoveData> MapGenerator::MoveIDToMoveData;
+map<string, EntryData> MapGenerator::EntryIDToEntryData;
+map <string, map<int, int> > MapGenerator::NatureToStatMultiplier;
+bool MapGenerator::mapsInitialized;
 
 void MapGenerator::NameToDexIDMap(map<string,string> &m) {
+	m = NameToDexID;
+}
+
+void MapGenerator::NameToDexIDMapHelper(map<string,string> &m) {
 	m.clear();
 	ifstream fin(NAMESFILE);
 	string name;
@@ -61,8 +77,11 @@ void MapGenerator::NameToDexIDMap(map<string,string> &m) {
 
 }
 
-
 void MapGenerator::TypeToDexIDVectorMap(map<string,vector<string> > &m) {
+	m = TypeToDexIDVector;
+}
+
+void MapGenerator::TypeToDexIDVectorMapHelper(map<string,vector<string> > &m) {
 	m.clear();
 	ifstream fin(TYPESFILE);
 	string type;
@@ -77,13 +96,19 @@ void MapGenerator::TypeToDexIDVectorMap(map<string,vector<string> > &m) {
 	}
 	fin.close();
 }
+
+
+void MapGenerator::DexIDToNameMap(map<string,string> &m) {
+	m = DexIDToName;
+}
+
 		/*
 			@param m - the map to fill.
 			m will be a map whose keys are the DexIDs of the Pokemon.
 			the values will be the names of those pokemon.
 		*/
 
-void MapGenerator::DexIDToNameMap(map<string,string> &m) {
+void MapGenerator::DexIDToNameMapHelper(map<string,string> &m) {
 	m.clear();
 	ifstream fin(NAMESFILE);
 	string name;
@@ -97,13 +122,17 @@ void MapGenerator::DexIDToNameMap(map<string,string> &m) {
 	
 }
 
+void MapGenerator::DexIDToTypeVectorMap(map<string,vector<string> > &m) {
+	m = DexIDToTypeVector;
+}
+
 		/*
 			@param m - the map to fill.
 			m will be a map whose keys are the DexIDs of the Pokemon.
 			The Values will be a vector containing the types of that Pokemon.
 		*/
 
-void MapGenerator::DexIDToTypeVectorMap(map<string,vector<string> > &m) {
+void MapGenerator::DexIDToTypeVectorMapHelper(map<string,vector<string> > &m) {
 	m.clear();
 	ifstream fin(TYPESFILE);
 	string type;
@@ -127,6 +156,10 @@ void MapGenerator::DexIDToTypeVectorMap(map<string,vector<string> > &m) {
 		*/
 
 void MapGenerator::DexIDToEntryIDVectorMap(map<string,vector<string> > &m) {
+	m = DexIDToEntryIDVector;
+}
+
+void MapGenerator::DexIDToEntryIDVectorMapHelper(map<string,vector<string> > &m) {
 	m.clear();
 	ifstream fin(ENTRYFILE);
 	string DexID;
@@ -144,13 +177,17 @@ void MapGenerator::DexIDToEntryIDVectorMap(map<string,vector<string> > &m) {
 	fin.close();
 }
 
+void MapGenerator::TypeToEntryIDVectorMap(map<string, vector<string> > &m) {
+	m = TypeToEntryIDVector;
+}
+
 		/*
 			@param m - the map to be filled
 			m will be a map whose keys are the Names of moves in Pokemon.
 			the values will be the IDs of those moves.
 		*/
 
-void MapGenerator::TypeToEntryIDVectorMap(map<string, vector<string> > &m) {
+void MapGenerator::TypeToEntryIDVectorMapHelper(map<string, vector<string> > &m) {
 	map <string,vector<string> > dtt;
 	//map <string, vector<string> > dte;
 
@@ -184,7 +221,12 @@ void MapGenerator::TypeToEntryIDVectorMap(map<string, vector<string> > &m) {
 			the values will be the EntryIDs of Factory entries who
 			have the move indicated by the MoveID key.	
 		*/
+
 void MapGenerator::MoveIDtoEntryIDVectorMap(map<string, vector<string> > &m) {
+	m = MoveIDtoEntryIDVector;
+}
+
+void MapGenerator::MoveIDtoEntryIDVectorMapHelper(map<string, vector<string> > &m) {
 	m.clear();
 	ifstream fin(ENTRYFILE);
 	string DexID;
@@ -206,13 +248,17 @@ void MapGenerator::MoveIDtoEntryIDVectorMap(map<string, vector<string> > &m) {
 }
 
 
+void MapGenerator::NameToEntryIDVectorMap(map<string, vector<string> > &m) {
+	m = NameToEntryIDVector;
+}
+
 		/*
 			@param m - the map to fill
 			m will be a map whose keys are the names of the Pokemon.
 			The values will be the Factory Entry IDs of the Factory Entries that have that name.
 		*/
 
-void MapGenerator::NameToEntryIDVectorMap(map<string, vector<string> > &m) {
+void MapGenerator::NameToEntryIDVectorMapHelper(map<string, vector<string> > &m) {
 	m.clear();
 	//ifstream fin(ENTRYFILE);
 	map<string, string> dtn;
@@ -226,13 +272,17 @@ void MapGenerator::NameToEntryIDVectorMap(map<string, vector<string> > &m) {
 }
 
 
+void MapGenerator::MoveNameToEntryIDVectorMap(map<string, vector<string> > &m) {
+	m = MoveNameToEntryIDVector;
+}
+
 	/*
 		@param m - the map to fill
 		m wlil be a map whose keys are the names of Pokemon moves.
 		The values will be the Factory Entry IDs of the Factory Entries that have that move in their move set.
 	*/
 
-void MapGenerator::MoveNameToEntryIDVectorMap(map<string, vector<string> > &m) {
+void MapGenerator::MoveNameToEntryIDVectorMapHelper(map<string, vector<string> > &m) {
 	m.clear();
 	map<string, MoveData> midtmd; 
 	MoveIDToMoveDataMap(midtmd);
@@ -249,8 +299,12 @@ void MapGenerator::MoveNameToEntryIDVectorMap(map<string, vector<string> > &m) {
 			m will be a map whose keys are the Names of moves in Pokemon.
 			the values will be the IDs of those moves.
 		*/
-	
+
 void MapGenerator::MoveNameToMoveIDMap(map <string, string> &m) {
+	m = MoveNameToMoveID;
+}
+	
+void MapGenerator::MoveNameToMoveIDMapHelper(map <string, string> &m) {
 	m.clear();
 	ifstream fin(MOVESFILE);
 	string MoveID;
@@ -274,6 +328,10 @@ void MapGenerator::MoveNameToMoveIDMap(map <string, string> &m) {
 		*/
 
 void MapGenerator::DexIDToBaseStatsMap(map <string, BaseStats> &m) {
+	m = DexIDToBaseStats;
+}
+
+void MapGenerator::DexIDToBaseStatsMapHelper(map <string, BaseStats> &m) {
 	m.clear();
 	ifstream fin(STATSFILE);
 	string DexID;
@@ -296,9 +354,11 @@ void MapGenerator::DexIDToBaseStatsMap(map <string, BaseStats> &m) {
 			The values will be MoveData structures
 		*/
 
-
-
 void MapGenerator::MoveIDToMoveDataMap(map <string, MoveData> &m) {
+	m = MoveIDToMoveData;
+}
+
+void MapGenerator::MoveIDToMoveDataMapHelper(map <string, MoveData> &m) {
 	m.clear();
 	ifstream fin(MOVESFILE);
 	string moveID;
@@ -330,6 +390,10 @@ void MapGenerator::MoveIDToMoveDataMap(map <string, MoveData> &m) {
 		*/
 
 void MapGenerator::EntryIDToEntryDataMap(map <string, EntryData> &m) {
+	m = EntryIDToEntryData;
+}
+
+void MapGenerator::EntryIDToEntryDataMapHelper(map <string, EntryData> &m) {
 	m.clear();
 	map<string,int> stat;
 	ifstream fin(ENTRYFILE);
@@ -342,6 +406,7 @@ void MapGenerator::EntryIDToEntryDataMap(map <string, EntryData> &m) {
 	string entryID;
 	string DexID;
 	string discard;
+	string item;
 	string nature;
 	string whichEV;
 	int amtEV;
@@ -354,14 +419,14 @@ void MapGenerator::EntryIDToEntryDataMap(map <string, EntryData> &m) {
 			fin >> moveID[i];
 		}
 		getline(fin,discard);
-		getline(fin,discard);
+		getline(fin,item);
 		getline(fin,nature);
 		fin >> numEV;
 		for(int i = 0; i < numEV; i++) {
 			fin >> amtEV >> whichEV;
 			EV[stat[whichEV]] = amtEV;
 		}
-		EntryData e(entryID,DexID,moveID,nature,EV);
+		EntryData e(entryID,DexID,moveID,item,nature,EV);
 		m[entryID] = e;
 		for(int i = 0; i < 6; i++) {
 			EV[i] = 0;
@@ -384,6 +449,10 @@ void MapGenerator::EntryIDToEntryDataMap(map <string, EntryData> &m) {
 		*/
 
 void MapGenerator::NatureToStatMultiplierMap(map <string, map<int, int> > &m) {
+	m = NatureToStatMultiplier;
+}
+
+void MapGenerator::NatureToStatMultiplierMapHelper(map <string, map<int, int> > &m) {
 	m.clear();
 	ifstream fin(NATUREFILE);
 	string nature;
@@ -395,3 +464,19 @@ void MapGenerator::NatureToStatMultiplierMap(map <string, map<int, int> > &m) {
 	}
 	fin.close();
 }
+
+//TODO:check for everything but EVs
+void MapGenerator::ProposeData(string entryID, EntryData ed) {
+	EntryIDToEntryData[entryID] = ed;
+}
+
+
+
+
+
+
+
+
+
+
+

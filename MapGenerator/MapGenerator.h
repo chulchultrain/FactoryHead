@@ -178,10 +178,82 @@ class MapGenerator {
 
 		void NatureToStatMultiplierMap(map <string, map<int, int> > &m);
 	//EntryID to EntryData Vector
+
+		/*
+			will only accept proposal if the moveset is equal
+		*/
+		void ProposeData(string entryID, EntryData ed);
+
+		void initMaps();
+		MapGenerator() {
+			if(!mapsInitialized) {
+				NameToDexIDMapHelper(NameToDexID);
+				TypeToDexIDVectorMapHelper(TypeToDexIDVector);
+				MoveNameToMoveIDMapHelper(MoveNameToMoveID);
+				DexIDToNameMapHelper(DexIDToName);
+				DexIDToTypeVectorMapHelper(DexIDToTypeVector);
+				DexIDToEntryIDVectorMapHelper(DexIDToEntryIDVector);
+				NameToEntryIDVectorMapHelper(NameToEntryIDVector);
+				DexIDToBaseStatsMapHelper(DexIDToBaseStats);
+				MoveIDToMoveDataMapHelper(MoveIDToMoveData);
+				EntryIDToEntryDataMapHelper(EntryIDToEntryData);
+				NatureToStatMultiplierMapHelper(NatureToStatMultiplier);
+				TypeToEntryIDVectorMapHelper(TypeToEntryIDVector);
+				MoveIDtoEntryIDVectorMapHelper(MoveIDtoEntryIDVector);
+				MoveNameToEntryIDVectorMapHelper(MoveNameToEntryIDVector);
+				mapsInitialized = true;
+			}
+
+		}
 	private:
+		static map<string,string> NameToDexID;
+		static map<string,vector<string> > TypeToDexIDVector;
+		static map<string,string> DexIDToName;
+		static map<string, vector<string> > DexIDToTypeVector;
+		static map<string, vector<string> > DexIDToEntryIDVector;
+		static map<string, vector<string> > TypeToEntryIDVector;
+		static map<string, vector<string> > MoveIDtoEntryIDVector;
+		static map<string, vector<string> > NameToEntryIDVector;
+		static map<string, vector<string> > MoveNameToEntryIDVector;
+		static map<string, string> MoveNameToMoveID;
+		static map<string, BaseStats> DexIDToBaseStats;
+		static map<string, MoveData> MoveIDToMoveData;
+		static map<string, EntryData> EntryIDToEntryData;
+		static map <string, map<int, int> > NatureToStatMultiplier;
+		static bool mapsInitialized;
 
 
+		void NameToDexIDMapHelper(map<string,string> &m);
 
+		void TypeToDexIDVectorMapHelper(map<string,vector<string> > &m);
+
+		void DexIDToNameMapHelper(map<string,string> &m);
+
+		void DexIDToTypeVectorMapHelper(map<string,vector<string> > &m);
+
+		void DexIDToEntryIDVectorMapHelper(map<string,vector<string> > &m);
+
+		void NameToEntryIDVectorMapHelper(map<string, vector<string> > &m);
+
+		void MoveNameToEntryIDVectorMapHelper(map<string, vector<string> > &m);
+
+
+		void TypeToEntryIDVectorMapHelper(map<string, vector<string> > &m);
+
+		void MoveIDtoEntryIDVectorMapHelper(map<string, vector<string> > &m);
+
+	
+		void MoveNameToMoveIDMapHelper(map <string, string> &m);
+
+		void DexIDToBaseStatsMapHelper(map <string, BaseStats> &m);
+
+		void MoveIDToMoveDataMapHelper(map <string, MoveData> &m);
+
+
+		void EntryIDToEntryDataMapHelper(map <string, EntryData> &m);
+
+
+		void NatureToStatMultiplierMapHelper(map <string, map<int, int> > &m);
 };
 
 

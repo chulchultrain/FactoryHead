@@ -321,7 +321,7 @@ hp,a,d,sa,sd,s
 	vector<int> e001E(6,0);
 	e001E[4] = 255;
 	e001E[5] = 255;
-	EntryData e001("001","001",e001M,"Modest",e001E);
+	EntryData e001("001","001",e001M,"BrightPowder","Modest",e001E);
 	assert(m["001"] == e001);
 
 	vector<string> e950M(4);
@@ -333,7 +333,7 @@ hp,a,d,sa,sd,s
 	e950E[0] = 170;
 	e950E[2] = 170;
 	e950E[5] = 170;
-	EntryData e950("950","488",e950M,"Modest",e950E);
+	EntryData e950("950","488",e950M,"Leftovers","Modest",e950E);
 	assert(m["950"] == e950);
 	
 	vector<string> e648M(4);
@@ -344,7 +344,7 @@ hp,a,d,sa,sd,s
 	vector<int> e648E(6,0);
 	e648E[0] = 255;
 	e648E[1] = 255;
-	EntryData e648("648","357",e648M,"Adamant",e648E);
+	EntryData e648("648","357",e648M,"Lansat Berry","Adamant",e648E);
 	assert(m["648"] == e648);
 }
 

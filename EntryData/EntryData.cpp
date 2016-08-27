@@ -1,11 +1,12 @@
 #include <EntryData/EntryData.h>
 
-EntryData::EntryData(string x1, string x2, vector<string> &x3, string x4, vector<int> &x5) {
+EntryData::EntryData(string x1, string x2, vector<string> &x3, string x4, string x5, vector<int> &x6) {
 	ID = x1;
 	DexID = x2;
 	moveID = x3;
-	nature = x4;
-	EV = x5;
+	item = x4;
+	nature = x5;
+	EV = x6;
 }
 
 EntryData::EntryData() {
@@ -13,6 +14,7 @@ EntryData::EntryData() {
 	DexID = "";
 	moveID.resize(4,"");
 	nature = "";
+	item = "";
 	EV.resize(6,0);
 }
 
@@ -34,6 +36,11 @@ bool operator == (const EntryData &lhs, const EntryData &rhs) {
 	//	cout << "FAIL HERE4\n";
 		return false;
 	}
+
+	if(lhs.item != rhs.item) {
+		return false;
+	}	
+
 	if(lhs.EV != rhs.EV) {
 	//	cout << "FAIL HERE5\n";
 		return false;
