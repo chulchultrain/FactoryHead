@@ -10,11 +10,13 @@ MD_DIR = $(FH_DIR)/MoveData
 ED_DIR = $(FH_DIR)/EntryData
 EF_DIR = $(FH_DIR)/EntryFilter
 PE_DIR = $(FH_DIR)/PokemonEntry
+WS_DIR = $(FH_DIR)/WorkingStats
+DR_DIR = $(FH_DIR)/DataResolution
 
 FLAGS = -I$(FH_DIR) -c -Wall
 
-PokemonEntryTester:$(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o
-	g++ -o PokemonEntryTester $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o
+PokemonEntryTester:$(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o
+	g++ -o PokemonEntryTester $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o
 
 EntryFilterTester: $(EF_DIR)/EntryFilterTester.o $(EF_DIR)/EntryFilter.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 	g++ -o EntryFilterTester $(EF_DIR)/EntryFilterTester.o $(EF_DIR)/EntryFilter.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
@@ -25,6 +27,8 @@ MapGeneratorTester: $(MG_DIR)/MapGenerator.o $(MG_DIR)/MapGeneratorTester.o $(BS
 TokenEvalTester: $(TE_DIR)/TokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 	g++ -o TokenEvalTester $(TE_DIR)/TokenEvalTester.o $(TE_DIR)/TypeTokenEvaluator.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 
+DataResolutionTester:$(EF_DIR)/EntryFilter.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(DR_DIR)/DataResolution.o $(DR_DIR)/DataResolutionTester.o $(WS_DIR)/WorkingStats.o
+	g++ -o DataResolutionTester $(EF_DIR)/EntryFilter.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(DR_DIR)/DataResolution.o $(DR_DIR)/DataResolutionTester.o $(WS_DIR)/WorkingStats.o
 
 $(MG_DIR)/MapGenerator.o: $(MG_DIR)/MapGenerator.cpp $(MG_DIR)/MapGenerator.h
 	g++ $(FLAGS) $(MG_DIR)/MapGenerator.cpp -o $(MG_DIR)/MapGenerator.o
@@ -59,11 +63,19 @@ $(EF_DIR)/EntryFilter.o: $(EF_DIR)/EntryFilter.h $(EF_DIR)/EntryFilter.cpp $(TE_
 $(EF_DIR)/EntryFilterTester.o: $(EF_DIR)/EntryFilter.h $(EF_DIR)/EntryFilterTester.cpp
 	g++ $(FLAGS) -o $(EF_DIR)/EntryFilterTester.o $(EF_DIR)/EntryFilterTester.cpp
 
-$(PE_DIR)/PokemonEntry.o: $(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonEntry.cpp
+$(PE_DIR)/PokemonEntry.o: $(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonEntry.cpp $(WS_DIR)/WorkingStats.h
 	 g++ $(FLAGS) -o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntry.cpp
 
 $(PE_DIR)/PokemonEntryTester.o:$(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonEntryTester.cpp
 	g++ $(FLAGS) -o $(PE_DIR)/PokemonEntryTester.o $(PE_DIR)/PokemonEntryTester.cpp
 
+$(WS_DIR)/WorkingStats.o:$(WS_DIR)/WorkingStats.h $(WS_DIR)/WorkingStats.cpp $(MG_DIR)/MapGenerator.h
+	g++ $(FLAGS) -o $(WS_DIR)/WorkingStats.o $(WS_DIR)/WorkingStats.cpp
+
+$(DR_DIR)/DataResolution.o:$(DR_DIR)/DataResolution.h $(DR_DIR)/DataResolution.cpp $(MG_DIR)/MapGenerator.h
+	g++ $(FLAGS) -o $(DR_DIR)/DataResolution.o $(DR_DIR)/DataResolution.cpp
+
+$(DR_DIR)/DataResolutionTester.o:$(DR_DIR)/DataResolution.h $(DR_DIR)/DataResolutionTester.cpp
+	g++ $(FLAGS) -o  $(DR_DIR)/DataResolutionTester.o $(DR_DIR)/DataResolutionTester.cpp
 
 

@@ -459,6 +459,7 @@ void MapGenerator::NatureToStatMultiplierMapHelper(map <string, map<int, int> > 
 	int incStat,decStat;
 	while(fin >> nature) {
 		fin >> incStat >> decStat;
+	//	cout << nature << " " << incStat << " " << decStat << '\n';
 		m[nature][incStat] = 1;
 		m[nature][decStat] = -1;
 	}
