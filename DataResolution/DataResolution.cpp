@@ -14,7 +14,6 @@ bool DataResolution::mapsInitialized;
 
 DataResolution::DataResolution() {
 	if(!mapsInitialized) {
-		MapGenerator mg;
 		mg.EntryIDToEntryDataMap(edata);
 		mg.DexIDToBaseStatsMap(bsdata);
 		mapsInitialized = true;
@@ -45,5 +44,13 @@ void DataResolution::Input(string name, const vector<string> &moveList, const ve
 			cout << TrueEV[i] << endl;
 		}
 	}
-	
+	ed.EV = TrueEV;
+	mg.ProposeData(eid[0],ed);
+	mg.SaveChangesToFile();
 }
+
+
+
+
+
+

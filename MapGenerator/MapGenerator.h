@@ -177,12 +177,17 @@ class MapGenerator {
 		*/
 
 		void NatureToStatMultiplierMap(map <string, map<int, int> > &m);
+
+		void TypeMultiplierMap(map<string, map<string,int> > &m);
+
 	//EntryID to EntryData Vector
 
 		/*
 			will only accept proposal if the moveset is equal
 		*/
 		void ProposeData(string entryID, EntryData ed);
+
+		void SaveChangesToFile();
 
 		void initMaps();
 		MapGenerator() {
@@ -201,6 +206,7 @@ class MapGenerator {
 				TypeToEntryIDVectorMapHelper(TypeToEntryIDVector);
 				MoveIDtoEntryIDVectorMapHelper(MoveIDtoEntryIDVector);
 				MoveNameToEntryIDVectorMapHelper(MoveNameToEntryIDVector);
+				TypeMultiplierMapHelper(TypeMultiplier);
 				mapsInitialized = true;
 			}
 
@@ -220,6 +226,7 @@ class MapGenerator {
 		static map<string, MoveData> MoveIDToMoveData;
 		static map<string, EntryData> EntryIDToEntryData;
 		static map <string, map<int, int> > NatureToStatMultiplier;
+		static map<string, map<string, int> > TypeMultiplier;
 		static bool mapsInitialized;
 
 
@@ -254,6 +261,11 @@ class MapGenerator {
 
 
 		void NatureToStatMultiplierMapHelper(map <string, map<int, int> > &m);
+
+		void TypeMultiplierMapHelper(map<string, map<string,int> > &m);
+
+
+		void PrintEntryData(ofstream &fout, const EntryData &ed);
 };
 
 

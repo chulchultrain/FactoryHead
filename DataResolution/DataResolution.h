@@ -9,19 +9,23 @@
 #include <EntryFilter/EntryFilter.h>
 #include <EntryData/EntryData.h>
 #include <BaseStats/BaseStats.h>
+#include <MapGenerator/MapGenerator.h>
 
 class DataResolution {
 	public:
 		DataResolution();
 		void Input(string name, const vector<string> &moveList, const vector<int> &ws);
-
+		
 
 
 	private:
 		EntryFilter ef;
+		MapGenerator mg;
 		static map<string, EntryData> edata;
 		static map<string, BaseStats> bsdata;
 		static bool mapsInitialized;
+
+		
 };
 
 

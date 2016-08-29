@@ -25,6 +25,14 @@
 #define NATUREFILE "BASE/NATURE/NatureData.txt"
 #endif
 
+#ifndef TYPECHARTFILE
+#define TYPECHARTFILE "BASE/TYPE/TypeChart.txt"
+#endif
+
+#ifndef OUTPUTENTRYFILE
+#define OUTPUTENTRYFILE "BASE/ENTRY/OutputEntryData.txt"
+#endif
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -51,6 +59,7 @@ map<string, BaseStats> MapGenerator::DexIDToBaseStats;
 map<string, MoveData> MapGenerator::MoveIDToMoveData;
 map<string, EntryData> MapGenerator::EntryIDToEntryData;
 map <string, map<int, int> > MapGenerator::NatureToStatMultiplier;
+map<string, map<string, int> > MapGenerator::TypeMultiplier;
 bool MapGenerator::mapsInitialized;
 
 void MapGenerator::NameToDexIDMap(map<string,string> &m) {
@@ -396,7 +405,7 @@ void MapGenerator::EntryIDToEntryDataMap(map <string, EntryData> &m) {
 void MapGenerator::EntryIDToEntryDataMapHelper(map <string, EntryData> &m) {
 	m.clear();
 	map<string,int> stat;
-	ifstream fin(ENTRYFILE);
+	ifstream fin(OUTPUTENTRYFILE);
 	stat["HP"] = 0;
 	stat["A"] = 1;
 	stat["D"] = 2;
@@ -421,11 +430,8 @@ void MapGenerator::EntryIDToEntryDataMapHelper(map <string, EntryData> &m) {
 		getline(fin,discard);
 		getline(fin,item);
 		getline(fin,nature);
-		fin >> numEV;
-		for(int i = 0; i < numEV; i++) {
-			fin >> amtEV >> whichEV;
-			EV[stat[whichEV]] = amtEV;
-		}
+		for(int i = 0; i < 6; i++)
+			fin >> EV[i];
 		EntryData e(entryID,DexID,moveID,item,nature,EV);
 		m[entryID] = e;
 		for(int i = 0; i < 6; i++) {
@@ -471,9 +477,45 @@ void MapGenerator::ProposeData(string entryID, EntryData ed) {
 	EntryIDToEntryData[entryID] = ed;
 }
 
+void MapGenerator::SaveChangesToFile() {
+	ofstream fout(OUTPUTENTRYFILE);
+	for(map<string, EntryData>::iterator it = EntryIDToEntryData.begin(); it != EntryIDToEntryData.end(); it++) {
+		PrintEntryData(fout,it->second);
+	}
 
+	fout.close();
+}
 
+void MapGenerator::TypeMultiplierMap(map<string, map<string,int> > &m) {
+	m = TypeMultiplier;
+}
 
+void MapGenerator::TypeMultiplierMapHelper(map<string, map<string,int> > &m) {
+	m.clear();
+	ifstream fin(TYPECHARTFILE);
+	string atype,dtype;
+	int code;
+	while(fin >> atype) {
+		fin >> dtype;
+		fin >> code;
+		m[atype][dtype] = code;
+	}
+	fin.close();
+}
+
+void MapGenerator::PrintEntryData(ofstream &fout, const EntryData &ed) {
+	fout << ed.ID << '\n';
+	fout << ed.DexID << '\n';
+	for(unsigned i = 0; i < 4; i++) {
+		fout << ed.moveID[i] << '\n';
+	}
+	fout << ed.item << '\n';
+	fout << ed.nature << '\n';
+	for(unsigned i = 0; i < 6; i++) {
+		fout << ed.EV[i] << '\n';
+	}
+	fout << '\n';
+}
 
 
 

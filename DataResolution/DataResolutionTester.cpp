@@ -8,8 +8,6 @@
 
 
 
-
-
 int main() {
 	DataResolution dr;
 	vector<string> moves;
