@@ -15,8 +15,8 @@ DR_DIR = $(FH_DIR)/DataResolution
 
 FLAGS = -I$(FH_DIR) -c -Wall
 
-PokemonEntryTester:$(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o
-	g++ -o PokemonEntryTester $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o
+PokemonEntryTester:$(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
+	g++ -o PokemonEntryTester $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 
 EntryFilterTester: $(EF_DIR)/EntryFilterTester.o $(EF_DIR)/EntryFilter.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 	g++ -o EntryFilterTester $(EF_DIR)/EntryFilterTester.o $(EF_DIR)/EntryFilter.o $(MG_DIR)/MapGenerator.o $(BS_DIR)/BaseStats.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o

@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-void PrintStuff(string name, vector<string> &moves, vector<int> &stats) {
+void PrintDRCriteria(string name, vector<string> &moves, vector<int> &stats) {
 	cout << name << '\n';
 	cout << "Moves:\n";
 	for(unsigned i = 0; i < moves.size(); i++) {
@@ -51,7 +51,7 @@ void DRMenu() {
 					cout << "Invalid stat number. Need 0=5\n";
 				}
 				break;
-			case 4: PrintStuff(name,moves,stats);
+			case 4: PrintDRCriteria(name,moves,stats);
 				break;
 			case 5: dr.Input(name,moves,stats);
 				break;

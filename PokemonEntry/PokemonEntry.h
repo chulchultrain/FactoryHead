@@ -20,10 +20,11 @@ class PokemonEntry {
 	public:
 		PokemonEntry(string entryID,int IV);
 		int getStat(int which);
+		string getName();
 		pair<int,int> getMoveDamageRange(PokemonEntry &defender,int which);
 		vector<string> getTypes() {return types;}
 		pair<int,int> getMoveDamageRange(PokemonEntry &defender, string moveName);
-		
+		MoveData getMove(int which);
 		//int getDamage(const PokemonEntry &defender, int whichMove);
 
 	private:

@@ -42,7 +42,17 @@ void PokemonEntry::InitializeMaps() {
 	mg.TypeMultiplierMap(typeMul);
 }
 
+string PokemonEntry::getName() {
+	return name;
+}
 
+MoveData PokemonEntry::getMove(int which) {
+	MoveData mm;
+	if(which >= 0 && which < (int)moves.size())
+		return moves[which];
+	else 
+		return mm;
+}
 
 void PokemonEntry::Construct(string eid,int IV) {
 	EntryData ed = EntryIDToEntryData[eid];
