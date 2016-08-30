@@ -1,0 +1,668 @@
+001 2 Grass Poison 
+002 2 Grass Poison 
+003 2 Grass Poison 
+004 1 Fire 
+005 1 Fire 
+006 2 Fire Flying 
+007 1 Water 
+008 1 Water 
+009 1 Water 
+010 1 Bug 
+011 1 Bug 
+012 2 Bug Flying 
+013 2 Bug Poison 
+014 2 Bug Poison 
+015 2 Bug Poison 
+016 2 Normal Flying 
+017 2 Normal Flying 
+018 2 Normal Flying 
+019 1 Normal 
+020 1 Normal 
+021 2 Normal Flying 
+022 2 Normal Flying 
+023 1 Poison 
+024 1 Poison 
+025 1 Electric 
+026 1 Electric 
+027 1 Ground 
+028 1 Ground 
+029 1 Poison 
+030 1 Poison 
+031 2 Poison Ground 
+032 1 Poison 
+033 1 Poison 
+034 2 Poison Ground 
+035 1 Normal 
+036 1 Normal 
+037 1 Fire 
+038 1 Fire 
+039 1 Normal 
+040 1 Normal 
+041 2 Poison Flying 
+042 2 Poison Flying 
+043 2 Grass Poison 
+044 2 Grass Poison 
+045 2 Grass Poison 
+046 2 Bug Grass 
+047 2 Bug Grass 
+048 2 Bug Poison 
+049 2 Bug Poison 
+050 1 Ground 
+051 1 Ground 
+052 1 Normal 
+053 1 Normal 
+054 1 Water 
+055 1 Water 
+056 1 Fighting 
+057 1 Fighting 
+058 1 Fire 
+059 1 Fire 
+060 1 Water 
+061 1 Water 
+062 2 Water Fighting 
+063 1 Psychic 
+064 1 Psychic 
+065 1 Psychic 
+066 1 Fighting 
+067 1 Fighting 
+068 1 Fighting 
+069 2 Grass Poison 
+070 2 Grass Poison 
+071 2 Grass Poison 
+072 2 Water Poison 
+073 2 Water Poison 
+074 2 Rock Ground 
+075 2 Rock Ground 
+076 2 Rock Ground 
+077 1 Fire 
+078 1 Fire 
+079 2 Water Psychic 
+080 2 Water Psychic 
+081 2 Electric Steel 
+082 2 Electric Steel 
+083 2 Normal Flying 
+084 2 Normal Flying 
+085 2 Normal Flying 
+086 1 Water 
+087 2 Water Ice 
+088 1 Poison 
+089 1 Poison 
+090 1 Water 
+091 2 Water Ice 
+092 2 Ghost Poison 
+093 2 Ghost Poison 
+094 2 Ghost Poison 
+095 2 Rock Ground 
+096 1 Psychic 
+097 1 Psychic 
+098 1 Water 
+099 1 Water 
+100 1 Electric 
+101 1 Electric 
+102 2 Grass Psychic 
+103 2 Grass Psychic 
+104 1 Ground 
+105 1 Ground 
+106 1 Fighting 
+107 1 Fighting 
+108 1 Normal 
+109 1 Poison 
+110 1 Poison 
+111 2 Ground Rock 
+112 2 Ground Rock 
+113 1 Normal 
+114 1 Grass 
+115 1 Normal 
+116 1 Water 
+117 1 Water 
+118 1 Water 
+119 1 Water 
+120 1 Water 
+121 2 Water Psychic 
+122 1 Psychic 
+123 2 Bug Flying 
+124 2 Ice Psychic 
+125 1 Electric 
+126 1 Fire 
+127 1 Bug 
+128 1 Normal 
+129 1 Water 
+130 2 Water Flying 
+131 2 Water Ice 
+132 1 Normal 
+133 1 Normal 
+134 1 Water 
+135 1 Electric 
+136 1 Fire 
+137 1 Normal 
+138 2 Rock Water 
+139 2 Rock Water 
+140 2 Rock Water 
+141 2 Rock Water 
+142 2 Rock Flying 
+143 1 Normal 
+144 2 Ice Flying 
+145 2 Electric Flying 
+146 2 Fire Flying 
+147 1 Dragon 
+148 1 Dragon 
+149 2 Dragon Flying 
+150 1 Psychic 
+151 1 Psychic 
+152 1 Grass 
+153 1 Grass 
+154 1 Grass 
+155 1 Fire 
+156 1 Fire 
+157 1 Fire 
+158 1 Water 
+159 1 Water 
+160 1 Water 
+161 1 Normal 
+162 1 Normal 
+163 2 Normal Flying 
+164 2 Normal Flying 
+165 2 Bug Flying 
+166 2 Bug Flying 
+167 2 Bug Poison 
+168 2 Bug Poison 
+169 2 Poison Flying 
+170 2 Water Electric 
+171 2 Water Electric 
+172 1 Electric 
+173 1 Normal 
+174 1 Normal 
+175 1 Normal 
+176 2 Normal Flying 
+177 2 Psychic Flying 
+178 2 Psychic Flying 
+179 1 Electric 
+180 1 Electric 
+181 1 Electric 
+182 1 Grass 
+183 1 Water 
+184 1 Water 
+185 1 Rock 
+186 1 Water 
+187 2 Grass Flying 
+188 2 Grass Flying 
+189 2 Grass Flying 
+190 1 Normal 
+191 1 Grass 
+192 1 Grass 
+193 2 Bug Flying 
+194 2 Water Ground 
+195 2 Water Ground 
+196 1 Psychic 
+197 1 Dark 
+198 2 Dark Flying 
+199 2 Water Psychic 
+200 1 Ghost 
+201 1 Psychic 
+202 1 Psychic 
+203 2 Normal Psychic 
+204 1 Bug 
+205 2 Bug Steel 
+206 1 Normal 
+207 2 Ground Flying 
+208 2 Steel Ground 
+209 1 Normal 
+210 1 Normal 
+211 2 Water Poison 
+212 2 Bug Steel 
+213 2 Bug Rock 
+214 2 Bug Fighting 
+215 2 Dark Ice 
+216 1 Normal 
+217 1 Normal 
+218 1 Fire 
+219 2 Fire Rock 
+220 2 Ice Ground 
+221 2 Ice Ground 
+222 2 Water Rock 
+223 1 Water 
+224 1 Water 
+225 2 Ice Flying 
+226 2 Water Flying 
+227 2 Steel Flying 
+228 2 Dark Fire 
+229 2 Dark Fire 
+230 2 Water Dragon 
+231 1 Ground 
+232 1 Ground 
+233 1 Normal 
+234 1 Normal 
+235 1 Normal 
+236 1 Fighting 
+237 1 Fighting 
+238 2 Ice Psychic 
+239 1 Electric 
+240 1 Fire 
+241 1 Normal 
+242 1 Normal 
+243 1 Electric 
+244 1 Fire 
+245 1 Water 
+246 2 Rock Ground 
+247 2 Rock Ground 
+248 2 Rock Dark 
+249 2 Psychic Flying 
+250 2 Fire Flying 
+251 2 Psychic Grass 
+252 1 Grass 
+253 1 Grass 
+254 1 Grass 
+255 1 Fire 
+256 2 Fire Fighting 
+257 2 Fire Fighting 
+258 1 Water 
+259 2 Water Ground 
+260 2 Water Ground 
+261 1 Dark 
+262 1 Dark 
+263 1 Normal 
+264 1 Normal 
+265 1 Bug 
+266 1 Bug 
+267 2 Bug Flying 
+268 1 Bug 
+269 2 Bug Poison 
+270 2 Water Grass 
+271 2 Water Grass 
+272 2 Water Grass 
+273 1 Grass 
+274 2 Grass Dark 
+275 2 Grass Dark 
+276 2 Normal Flying 
+277 2 Normal Flying 
+278 2 Water Flying 
+279 2 Water Flying 
+280 1 Psychic 
+281 1 Psychic 
+282 1 Psychic 
+283 2 Bug Water 
+284 2 Bug Flying 
+285 1 Grass 
+286 2 Grass Fighting 
+287 1 Normal 
+288 1 Normal 
+289 1 Normal 
+290 2 Bug Ground 
+291 2 Bug Flying 
+292 2 Bug Ghost 
+293 1 Normal 
+294 1 Normal 
+295 1 Normal 
+296 1 Fighting 
+297 1 Fighting 
+298 1 Normal 
+299 1 Rock 
+300 1 Normal 
+301 1 Normal 
+302 2 Dark Ghost 
+303 1 Steel 
+304 2 Steel Rock 
+305 2 Steel Rock 
+306 2 Steel Rock 
+307 2 Fighting Psychic 
+308 2 Fighting Psychic 
+309 1 Electric 
+310 1 Electric 
+311 1 Electric 
+312 1 Electric 
+313 1 Bug 
+314 1 Bug 
+315 2 Grass Poison 
+316 1 Poison 
+317 1 Poison 
+318 2 Water Dark 
+319 2 Water Dark 
+320 1 Water 
+321 1 Water 
+322 2 Fire Ground 
+323 2 Fire Ground 
+324 1 Fire 
+325 1 Psychic 
+326 1 Psychic 
+327 1 Normal 
+328 1 Ground 
+329 2 Ground Dragon 
+330 2 Ground Dragon 
+331 1 Grass 
+332 2 Grass Dark 
+333 2 Normal Flying 
+334 2 Dragon Flying 
+335 1 Normal 
+336 1 Poison 
+337 2 Rock Psychic 
+338 2 Rock Psychic 
+339 2 Water Ground 
+340 2 Water Ground 
+341 1 Water 
+342 2 Water Dark 
+343 2 Ground Psychic 
+344 2 Ground Psychic 
+345 2 Rock Grass 
+346 2 Rock Grass 
+347 2 Rock Bug 
+348 2 Rock Bug 
+349 1 Water 
+350 1 Water 
+351 1 Normal 
+352 1 Normal 
+353 1 Ghost 
+354 1 Ghost 
+355 1 Ghost 
+356 1 Ghost 
+357 2 Grass Flying 
+358 1 Psychic 
+359 1 Dark 
+360 1 Psychic 
+361 1 Ice 
+362 1 Ice 
+363 2 Ice Water 
+364 2 Ice Water 
+365 2 Ice Water 
+366 1 Water 
+367 1 Water 
+368 1 Water 
+369 2 Water Rock 
+370 1 Water 
+371 1 Dragon 
+372 1 Dragon 
+373 2 Dragon Flying 
+374 2 Steel Psychic 
+375 2 Steel Psychic 
+376 2 Steel Psychic 
+377 1 Rock 
+378 1 Ice 
+379 1 Steel 
+380 2 Dragon Psychic 
+381 2 Dragon Psychic 
+382 1 Water 
+383 1 Ground 
+384 2 Dragon Flying 
+385 2 Steel Psychic 
+386 1 Psychic 
+386A 1 Psychic
+386D 1 Psychic
+386S 1 Psychic
+387 1 Grass 
+388 1 Grass 
+389 2 Grass Ground 
+390 1 Fire 
+391 2 Fire Fighting 
+392 2 Fire Fighting 
+393 1 Water 
+394 1 Water 
+395 2 Water Steel 
+396 2 Normal Flying 
+397 2 Normal Flying 
+398 2 Normal Flying 
+399 1 Normal 
+400 2 Normal Water 
+401 1 Bug 
+402 1 Bug 
+403 1 Electric 
+404 1 Electric 
+405 1 Electric 
+406 2 Grass Poison 
+407 2 Grass Poison 
+408 1 Rock 
+409 1 Rock 
+410 2 Rock Steel 
+411 2 Rock Steel 
+412 1 Bug 
+413 2 Bug Grass 
+413G 2 Bug Ground
+413S 2 Bug Steel
+414 2 Bug Flying 
+415 2 Bug Flying 
+416 2 Bug Flying 
+417 1 Electric 
+418 1 Water 
+419 1 Water 
+420 1 Grass 
+421 1 Grass 
+422 1 Water 
+423 2 Water Ground 
+424 1 Normal 
+425 2 Ghost Flying 
+426 2 Ghost Flying 
+427 1 Normal 
+428 1 Normal 
+429 1 Ghost 
+430 2 Dark Flying 
+431 1 Normal 
+432 1 Normal 
+433 1 Psychic 
+434 2 Poison Dark 
+435 2 Poison Dark 
+436 2 Steel Psychic 
+437 2 Steel Psychic 
+438 1 Rock 
+439 1 Psychic 
+440 1 Normal 
+441 2 Normal Flying 
+442 2 Ghost Dark 
+443 2 Dragon Ground 
+444 2 Dragon Ground 
+445 2 Dragon Ground 
+446 1 Normal 
+447 1 Fighting 
+448 2 Fighting Steel 
+449 1 Ground 
+450 1 Ground 
+451 2 Poison Bug 
+452 2 Poison Dark 
+453 2 Poison Fighting 
+454 2 Poison Fighting 
+455 1 Grass 
+456 1 Water 
+457 1 Water 
+458 2 Water Flying 
+459 2 Grass Ice 
+460 2 Grass Ice 
+461 2 Dark Ice 
+462 2 Electric Steel 
+463 1 Normal 
+464 2 Ground Rock 
+465 1 Grass 
+466 1 Electric 
+467 1 Fire 
+468 2 Normal Flying 
+469 2 Bug Flying 
+470 1 Grass 
+471 1 Ice 
+472 2 Ground Flying 
+473 2 Ice Ground 
+474 1 Normal 
+475 2 Psychic Fighting 
+476 2 Rock Steel 
+477 1 Ghost 
+478 2 Ice Ghost 
+479 2 Electric Ghost 
+479O 2 Electric Fire
+479W 2 Electric Water
+479R 2 Electric Ice
+479F 2 Electric Flying
+479L 2 Electric Grass
+480 1 Psychic 
+481 1 Psychic 
+482 1 Psychic 
+483 2 Steel Dragon 
+484 2 Water Dragon 
+485 2 Fire Steel 
+486 1 Normal 
+487 2 Ghost Dragon 
+487O 2 Ghost Dragon
+488 1 Psychic 
+489 1 Water 
+490 1 Water 
+491 1 Dark 
+492 1 Grass 
+492S 1 Grass Flying
+493 1 Normal 
+494 2 Psychic Fire 
+495 1 Grass 
+496 1 Grass 
+497 1 Grass 
+498 1 Fire 
+499 2 Fire Fighting 
+500 2 Fire Fighting 
+501 1 Water 
+502 1 Water 
+503 1 Water 
+504 1 Normal 
+505 1 Normal 
+506 1 Normal 
+507 1 Normal 
+508 1 Normal 
+509 1 Dark 
+510 1 Dark 
+511 1 Grass 
+512 1 Grass 
+513 1 Fire 
+514 1 Fire 
+515 1 Water 
+516 1 Water 
+517 1 Psychic 
+518 1 Psychic 
+519 2 Normal Flying 
+520 2 Normal Flying 
+521 2 Normal Flying 
+522 1 Electric 
+523 1 Electric 
+524 1 Rock 
+525 1 Rock 
+526 1 Rock 
+527 2 Psychic Flying 
+528 2 Psychic Flying 
+529 1 Ground 
+530 2 Ground Steel 
+531 1 Normal 
+532 1 Fighting 
+533 1 Fighting 
+534 1 Fighting 
+535 1 Water 
+536 2 Water Ground 
+537 2 Water Ground 
+538 1 Fighting 
+539 1 Fighting 
+540 2 Bug Grass 
+541 2 Bug Grass 
+542 2 Bug Grass 
+543 2 Bug Poison 
+544 2 Bug Poison 
+545 2 Bug Poison 
+546 1 Grass 
+547 1 Grass 
+548 1 Grass 
+549 1 Grass 
+550 1 Water 
+551 2 Ground Dark 
+552 2 Ground Dark 
+553 2 Ground Dark 
+554 1 Fire 
+555 1 Fire 
+555Z 2 Fire Psychic
+556 1 Grass 
+557 2 Bug Rock 
+558 2 Bug Rock 
+559 2 Dark Fighting 
+560 2 Dark Fighting 
+561 2 Psychic Flying 
+562 1 Ghost 
+563 1 Ghost 
+564 2 Water Rock 
+565 2 Water Rock 
+566 2 Rock Flying 
+567 2 Rock Flying 
+568 1 Poison 
+569 1 Poison 
+570 1 Dark 
+571 1 Dark 
+572 1 Normal 
+573 1 Normal 
+574 1 Psychic 
+575 1 Psychic 
+576 1 Psychic 
+577 1 Psychic 
+578 1 Psychic 
+579 1 Psychic 
+580 2 Water Flying 
+581 2 Water Flying 
+582 1 Ice 
+583 1 Ice 
+584 1 Ice 
+585 2 Normal Grass 
+586 2 Normal Grass 
+587 2 Electric Flying 
+588 1 Bug 
+589 2 Bug Steel 
+590 2 Grass Poison 
+591 2 Grass Poison 
+592 2 Water Ghost 
+593 2 Water Ghost 
+594 1 Water 
+595 2 Bug Electric 
+596 2 Bug Electric 
+597 2 Grass Steel 
+598 2 Grass Steel 
+599 1 Steel 
+600 1 Steel 
+601 1 Steel 
+602 1 Electric 
+603 1 Electric 
+604 1 Electric 
+605 1 Psychic 
+606 1 Psychic 
+607 2 Ghost Fire 
+608 2 Ghost Fire 
+609 2 Ghost Fire 
+610 1 Dragon 
+611 1 Dragon 
+612 1 Dragon 
+613 1 Ice 
+614 1 Ice 
+615 1 Ice 
+616 1 Bug 
+617 1 Bug 
+618 2 Ground Electric 
+619 1 Fighting 
+620 1 Fighting 
+621 1 Dragon 
+622 2 Ground Ghost 
+623 2 Ground Ghost 
+624 2 Dark Steel 
+625 2 Dark Steel 
+626 1 Normal 
+627 2 Normal Flying 
+628 2 Normal Flying 
+629 2 Dark Flying 
+630 2 Dark Flying 
+631 1 Fire 
+632 2 Bug Steel 
+633 2 Dark Dragon 
+634 2 Dark Dragon 
+635 2 Dark Dragon 
+636 2 Bug Fire 
+637 2 Bug Fire 
+638 2 Steel Fighting 
+639 2 Rock Fighting 
+640 2 Grass Fighting 
+641 1 Flying 
+641T 1 Flying
+642 2 Electric Flying 
+642T 2 Electric Flying
+643 2 Dragon Fire 
+644 2 Dragon Electric 
+645 2 Ground Flying 
+645T 2 Ground Flying
+646 2 Dragon Ice 
+646B 2 Dragon Ice
+646W 2 Dragon Ice
+647 2 Water Fighting 
+648 2 Normal Psychic 
+648P 2 Normal Fighting
+649 2 Bug Steel 

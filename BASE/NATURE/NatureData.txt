@@ -1,0 +1,21 @@
+Lonely 	1 2
+Brave 	1 5 
+Adamant 1 3 
+Naughty 1 4 
+Bold 	2 1 
+Relaxed 2 5 
+Impish 2 3
+Lax 	2 4
+Timid 	5 1
+Hasty 	5 2
+Jolly 	5 3
+Naive 	5 4
+Modest 	3 1
+Mild 	3 2
+Quiet 	3 5
+Rash 	3 4
+Calm 	4 1
+Gentle 	4 2
+Sassy 	4 5	
+Careful 4 3
+
