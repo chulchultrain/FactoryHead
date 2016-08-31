@@ -60,15 +60,17 @@ void PokemonEntry::Construct(string eid,int IV) {
 	types = DexIDToTypes[ed.DexID];
 	ws = WorkingStats(bs,ed.EV,IV,ed.nature);
 	moves.resize(4);
+	name = DexIDToName[ed.DexID];
 	for(unsigned i = 0; i < 4; i++) {
 		moves[i] = MoveIDToMoveData[ed.moveID[i]];
 	}
 }
 
 int PokemonEntry::getStat(int which) {
-	if(ws.stats.size() != 6)
+	if(ws.stats.size() == 6 && which >= 0 && which < 6)
+		return ws.stats[which];
+	else
 		return -1;
-	return ws.stats[which];
 }
 
 pair<int,int> PokemonEntry::getMoveDamageRange(PokemonEntry &defender, string moveName) {
@@ -94,15 +96,15 @@ pair<int,int> PokemonEntry::getMoveDamageRange(PokemonEntry &defender,int which)
 		dStat = defender.getStat(4);
 	}
 	else {
-		cout << "HIT STATUS\n";
+//		cout << "HIT STATUS\n";
 		return pair<int,int>(0,0);
 	}
 	double damage = double((2 * 100 + 10)) / double(250);
-	cout << aStat << ' ' << dStat << '\n';
+//	cout << aStat << ' ' << dStat << '\n';
 	damage *= (double(aStat) / double(dStat));
 	damage *= md.damage;
 	damage += 2;
-	cout << damage << endl;
+//	cout << damage << endl;
 	for(unsigned i = 0; i < types.size(); i++)
 		if(md.type == types[i]) {
 			damage *= 1.5;
@@ -110,9 +112,9 @@ pair<int,int> PokemonEntry::getMoveDamageRange(PokemonEntry &defender,int which)
 		}
 	vector<string> defTypes = defender.getTypes();
 	for(unsigned i = 0; i < defTypes.size(); i++) {
-		cout << defTypes[i] << " " << dmgMultiplier(md.type,defTypes[i]);
+//		cout << defTypes[i] << " " << dmgMultiplier(md.type,defTypes[i]);
 		damage *= dmgMultiplier(md.type,defTypes[i]);
-		cout << damage << '\n';
+//		cout << damage << '\n';
 	}
 	return pair<int,int>(int(.85 * damage),int(damage));
 }

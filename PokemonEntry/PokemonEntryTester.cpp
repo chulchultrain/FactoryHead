@@ -96,6 +96,7 @@ void BattleSim(vector<string> &names, vector<vector<string> > &moves) {
 			pair<int,int> damage = entries[i].getMoveDamageRange(entries[1-i],j);
 			cout << entries[i].getMove(j).name << " does " << damage.first << " to " << damage.second << '\n';
 		}
+		cout << '\n';
 	}
 }
 
