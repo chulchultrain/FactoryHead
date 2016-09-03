@@ -27,7 +27,7 @@ void DRMenu() {
 	int which;
 	while(sentValue) {
 		cout << "Enter Choice\n1 - name.\n2 - moves.\n3 - stats\n";
-		cout << "4 - Print\n5 - Evaluate\n 6 - Cancel\n";
+		cout << "4 - Print\n5 - Evaluate\n6 - Cancel\n";
 		cin >> choice;
 		switch(choice) {
 			case 1: cout << "Enter the name\n";

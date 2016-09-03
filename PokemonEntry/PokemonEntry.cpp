@@ -4,7 +4,7 @@
 
 
 		map<string, MoveData> PokemonEntry::MoveIDToMoveData;
-		map<string, BaseStats> PokemonEntry::DexIDToBaseStats;
+		map<string, vector<int> > PokemonEntry::DexIDToBaseStats;
 		map<string, vector<string> > PokemonEntry::DexIDToTypes;
 		map<string, EntryData> PokemonEntry::EntryIDToEntryData;
 		map<string, string> PokemonEntry::DexIDToName;
@@ -56,7 +56,7 @@ MoveData PokemonEntry::getMove(int which) {
 
 void PokemonEntry::Construct(string eid,int IV) {
 	EntryData ed = EntryIDToEntryData[eid];
-	BaseStats bs = DexIDToBaseStats[ed.DexID];
+	vector<int> bs = DexIDToBaseStats[ed.DexID];
 	types = DexIDToTypes[ed.DexID];
 	ws = WorkingStats(bs,ed.EV,IV,ed.nature);
 	moves.resize(4);

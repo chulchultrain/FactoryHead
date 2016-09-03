@@ -241,32 +241,68 @@ void MoveNameToMoveIDMapUnitTest() {
 	assert(m["Double-Edge"] == "038");
 	assert(m["Protect"] == "182");
 	assert(m["Sweet Kiss"] == "186");
-	assert(m["Hyperspace Fury"] == "621");
 }
 
 void DexIDToBaseStatsUnitTest() {
 	MapGenerator mg;
-	map<string,BaseStats> m;
+	map<string,vector<int> > m;
 	mg.DexIDToBaseStatsMap(m);
 
-	BaseStats bulbasaur(45,49,49,65,65,45);
-	BaseStats bulbaTest = m["001"];
-	assert(bulbaTest == bulbasaur);
+	vector<int> bul(6);
+	bul[0] = 45;
+	bul[1] = 49;
+	bul[2] = 49;
+	bul[3] = 65;
+	bul[4] = 65;
+	bul[5] = 45;
+	vector<int> bulbaTest = m["001"];
+	assert(bulbaTest == bul);
 
-	BaseStats ivysaur(60,62,63,80,80,60);
-	assert(m["002"] == ivysaur);
+	vector<int> ivy(6);
+	ivy[0] = 60;
+	ivy[1] = 62;
+	ivy[2] = 63;
+	ivy[3] = 80;
+	ivy[4] = 80;
+	ivy[5] = 60;
+	assert(m["002"] == ivy);
 		
-	BaseStats venusaur(80,82,83,100,100,80);
-	assert(m["003"] == venusaur);
+	vector<int> ven(6);
+	ven[0] = 80;
+	ven[1] = 82;
+	ven[2] = 83;
+	ven[3] = 100;
+	ven[4] = 100;
+	ven[5] = 80;
+	assert(m["003"] == ven);
 
-	BaseStats meloettaPF(100,128,90,77,77,128);
-	assert(m["648P"] == meloettaPF);
+	vector<int> mpf(6);
+	mpf[0] = 100;
+	mpf[1] = 128;
+	mpf[2] = 90;
+	mpf[3] = 77;
+	mpf[4] = 77;
+	mpf[5] = 128;
+	assert(m["648P"] == mpf);
 
-	BaseStats meloettaAF(100,77,77,128,128,90);
-	assert(m["648"] == meloettaAF);
+	vector<int> maf(6);
+	maf[0] = 100;
+	maf[1] = 77;
+	maf[2] = 77;
+	maf[3] = 128;
+	maf[4] = 128;
+	maf[5] = 90;
+	assert(m["648"] == maf);
+	vector<int> rmr(6);
+	rmr[0] = 50;
+	rmr[1] = 65;
+	rmr[2] = 107;
+	rmr[3] = 105;
+	rmr[4] = 107;
+	rmr[5] = 86;
 
-	BaseStats rotomMR(50,65,107,105,107,86);
-	assert(m["479L"] == rotomMR);
+	
+	assert(m["479L"] == rmr);
 
 }
 
@@ -297,11 +333,9 @@ void MoveIDToMoveDataMapUnitTest() {
 	MoveData protect("182","Protect","Normal","Status",0);
 	assert(m["182"] == protect);
 
-	MoveData sweetKiss("186","Sweet Kiss","Fairy","Status",0);
+	MoveData sweetKiss("186","Sweet Kiss","Normal","Status",0);
 	assert(m["186"] == sweetKiss);
 
-	MoveData hsf("621","Hyperspace Fury","Dark","Physical",100);
-	assert(m["621"] == hsf);
 
 }
 

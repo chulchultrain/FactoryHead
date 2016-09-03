@@ -42,7 +42,7 @@ class PokemonEntry {
 */
 		static bool initialized;
 		static map<string, MoveData> MoveIDToMoveData;
-		static map<string, BaseStats> DexIDToBaseStats;
+		static map<string, vector<int> > DexIDToBaseStats;
 		static map<string, vector<string> > DexIDToTypes;
 		static map<string, EntryData> EntryIDToEntryData;
 		static map<string, string> DexIDToName;

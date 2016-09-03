@@ -55,7 +55,7 @@ map<string, vector<string> > MapGenerator::MoveIDtoEntryIDVector;
 map<string, vector<string> > MapGenerator::NameToEntryIDVector;
 map<string, vector<string> > MapGenerator::MoveNameToEntryIDVector;
 map<string, string> MapGenerator::MoveNameToMoveID;
-map<string, BaseStats> MapGenerator::DexIDToBaseStats;
+map<string, vector<int> > MapGenerator::DexIDToBaseStats;
 map<string, MoveData> MapGenerator::MoveIDToMoveData;
 map<string, EntryData> MapGenerator::EntryIDToEntryData;
 map <string, map<int, int> > MapGenerator::NatureToStatMultiplier;
@@ -336,20 +336,21 @@ void MapGenerator::MoveNameToMoveIDMapHelper(map <string, string> &m) {
 			The values will be BaseStats structures
 		*/
 
-void MapGenerator::DexIDToBaseStatsMap(map <string, BaseStats> &m) {
+void MapGenerator::DexIDToBaseStatsMap(map <string, vector<int> > &m) {
 	m = DexIDToBaseStats;
 }
 
-void MapGenerator::DexIDToBaseStatsMapHelper(map <string, BaseStats> &m) {
+void MapGenerator::DexIDToBaseStatsMapHelper(map <string, vector<int> > &m) {
 	m.clear();
 	ifstream fin(STATSFILE);
 	string DexID;
-	int s[6];
+	
+	vector<int> s(6);
 	while(fin >> DexID) {
 		for(int i = 0; i < 6; i++)
 			fin >> s[i];
-		BaseStats b(s[0],s[1],s[2],s[3],s[4],s[5]);
-		m[DexID] = b;
+		
+		m[DexID] = s;
 	}
 	fin.close();
 	

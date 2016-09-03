@@ -144,7 +144,7 @@ class MapGenerator {
 			The values will be BaseStats structures
 		*/
 		
-		void DexIDToBaseStatsMap(map <string, BaseStats> &m);
+		void DexIDToBaseStatsMap(map <string, vector<int> > &m);
 
 
 		/*
@@ -222,7 +222,7 @@ class MapGenerator {
 		static map<string, vector<string> > NameToEntryIDVector;
 		static map<string, vector<string> > MoveNameToEntryIDVector;
 		static map<string, string> MoveNameToMoveID;
-		static map<string, BaseStats> DexIDToBaseStats;
+		static map<string, vector<int> > DexIDToBaseStats;
 		static map<string, MoveData> MoveIDToMoveData;
 		static map<string, EntryData> EntryIDToEntryData;
 		static map <string, map<int, int> > NatureToStatMultiplier;
@@ -252,7 +252,7 @@ class MapGenerator {
 	
 		void MoveNameToMoveIDMapHelper(map <string, string> &m);
 
-		void DexIDToBaseStatsMapHelper(map <string, BaseStats> &m);
+		void DexIDToBaseStatsMapHelper(map <string, vector<int> > &m);
 
 		void MoveIDToMoveDataMapHelper(map <string, MoveData> &m);
 

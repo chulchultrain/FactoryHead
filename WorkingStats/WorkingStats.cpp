@@ -7,15 +7,15 @@
 map<string, map<int,int> > WorkingStats::natureMul;
 bool WorkingStats::mapsInitialized = false;
 
-WorkingStats::WorkingStats(const BaseStats &bs, vector<int> EV, int IV, string nature) {
+WorkingStats::WorkingStats(const vector<int> &bs, vector<int> EV, int IV, string nature) {
 	if(!mapsInitialized) {
 		initializeMaps();
 		mapsInitialized = true;
 	}
 	stats.resize(6);
-	stats[0] = CalcHP(bs.stats[0],EV[0],IV,100);
+	stats[0] = CalcHP(bs[0],EV[0],IV,100);
 	for(unsigned i = 1; i < 6; i++) {
-		stats[i] = CalcNonHP(i,bs.stats[i],EV[i],IV,100,nature);
+		stats[i] = CalcNonHP(i,bs[i],EV[i],IV,100,nature);
 	}	
 }
 
@@ -29,7 +29,7 @@ WorkingStats::WorkingStats(const vector<int> &a) {
 	if(stats.size() != 6)
 		stats.resize(6);
 }
-vector<int> WorkingStats::CalculateEVs(const BaseStats &bs, string nature) {
+vector<int> WorkingStats::CalculateEVs(const vector<int> &bs, string nature) {
 //	cout << natureMul[nature][5] << endl;
 
 
@@ -40,14 +40,14 @@ vector<int> WorkingStats::CalculateEVs(const BaseStats &bs, string nature) {
 	return CalculateEVs(bs,iv,nature);
 }
 
-int  WorkingStats::CalculateIVs(const BaseStats &bs,string nature) {
+int  WorkingStats::CalculateIVs(const vector<int> &bs,string nature) {
 	for(int i = 0; i <= 31; i++) {
-		if( CalcHP(bs.stats[0],0,i,100) == stats[0]) {
+		if( CalcHP(bs[0],0,i,100) == stats[0]) {
 		//	cout << "HP FAIL\n";
 			return i;
 		}
 		for(int j = 1; j < 6; j++) {
-			if(CalcNonHP(j,bs.stats[j],0,i,100,nature) == stats[j]) {
+			if(CalcNonHP(j,bs[j],0,i,100,nature) == stats[j]) {
 			//	cout << j << " FAIL\n";
 				return i;
 			}
@@ -59,13 +59,13 @@ int  WorkingStats::CalculateIVs(const BaseStats &bs,string nature) {
 	
 
 
-vector<int> WorkingStats::CalculateEVs(const BaseStats &bs, int IV,string nature) {
+vector<int> WorkingStats::CalculateEVs(const vector<int> &bs, int IV,string nature) {
 	vector<int> res(6,-1);
 	int splitAcross = 0;
-	if( CalcHP(bs.stats[0],0,IV,100) == stats[0])
+	if( CalcHP(bs[0],0,IV,100) == stats[0])
 		res[0] = 0;
 	for(int i = 1; i < 6; i++)
-		if( CalcNonHP(i,bs.stats[i],0,IV,100,nature) == stats[i])
+		if( CalcNonHP(i,bs[i],0,IV,100,nature) == stats[i])
 			res[i] = 0;
 	for(int j = 0; j < 6; j++)
 		if( res[j] == -1)
@@ -75,12 +75,12 @@ vector<int> WorkingStats::CalculateEVs(const BaseStats &bs, int IV,string nature
 			if( res[j] == -1)
 				res[j] = 510 / splitAcross;
 
-		if( CalcHP(bs.stats[0],res[0],IV,100) != stats[0]) {
+		if( CalcHP(bs[0],res[0],IV,100) != stats[0]) {
 				cout << "ERROR:WORKINGSTATS.CPP/CALCULATEEVS EV CANNOT MATCH STATS\n";
 				cout << 0 << " " << res[0] << endl;			
 		}
 		for(int i = 1; i < 6; i++)
-			if(CalcNonHP(i,bs.stats[i],res[i],IV,100,nature) != stats[i]) {
+			if(CalcNonHP(i,bs[i],res[i],IV,100,nature) != stats[i]) {
 				cout << "ERROR:WORKINGSTATS.CPP/CALCULATEEVS EV CANNOT MATCH STATS\n";
 				cout << i << " " << res[i] << endl;
 				return res;
