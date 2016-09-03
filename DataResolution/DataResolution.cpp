@@ -6,7 +6,7 @@
 
 
 map<string, EntryData> DataResolution::edata;
-map<string, BaseStats> DataResolution::bsdata;
+map<string, vector<int> > DataResolution::bsdata;
 bool DataResolution::mapsInitialized;
 
 
@@ -34,7 +34,7 @@ void DataResolution::Input(string name, const vector<string> &moveList, const ve
 		return;
 	}
 	EntryData ed = edata[eid[0]];
-	BaseStats bs = bsdata[ed.DexID];
+	vector<int> bs = bsdata[ed.DexID];
 	WorkingStats ws(givenStats);
 	//cout << ed.nature << endl;
 	vector<int> TrueEV = ws.CalculateEVs(bs,ed.nature);

@@ -22,7 +22,7 @@ class DataResolution {
 		EntryFilter ef;
 		MapGenerator mg;
 		static map<string, EntryData> edata;
-		static map<string, BaseStats> bsdata;
+		static map<string, vector<int> > bsdata;
 		static bool mapsInitialized;
 
 		
