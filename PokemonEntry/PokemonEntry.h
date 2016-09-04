@@ -8,7 +8,6 @@
 
 #include <MoveData/MoveData.h>
 #include <EntryData/EntryData.h>
-#include <BaseStats/BaseStats.h>
 #include <WorkingStats/WorkingStats.h>
 #include <utility>
 

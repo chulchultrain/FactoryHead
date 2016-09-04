@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <cstring>
-#include <BaseStats/BaseStats.h>
 #include <EntryData/EntryData.h>
 #include <MoveData/MoveData.h>
 

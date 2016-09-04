@@ -8,7 +8,6 @@
 #include <map>
 #include <EntryFilter/EntryFilter.h>
 #include <EntryData/EntryData.h>
-#include <BaseStats/BaseStats.h>
 #include <MapGenerator/MapGenerator.h>
 
 class DataResolution {
