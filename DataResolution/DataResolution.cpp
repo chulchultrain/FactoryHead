@@ -35,9 +35,9 @@ void DataResolution::Input(string name, const vector<string> &moveList, const ve
 	}
 	EntryData ed = edata[eid[0]];
 	vector<int> bs = bsdata[ed.DexID];
-	WorkingStats ws(givenStats);
+	vector<int> ws = givenStats;
 	//cout << ed.nature << endl;
-	vector<int> TrueEV = ws.CalculateEVs(bs,ed.nature);
+	vector<int> TrueEV = CalculateEVs(ws,bs,ed.nature);
 	if(TrueEV != ed.EV) {
 		cout << "Changed for EID: " << ed.ID << '\n';
 		for(unsigned i = 0; i < TrueEV.size(); i++) {

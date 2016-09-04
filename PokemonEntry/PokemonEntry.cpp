@@ -58,7 +58,7 @@ void PokemonEntry::Construct(string eid,int IV) {
 	EntryData ed = EntryIDToEntryData[eid];
 	vector<int> bs = DexIDToBaseStats[ed.DexID];
 	types = DexIDToTypes[ed.DexID];
-	ws = WorkingStats(bs,ed.EV,IV,ed.nature);
+	ws = CalcWorkingStats(bs,ed.EV,IV,ed.nature);
 	moves.resize(4);
 	name = DexIDToName[ed.DexID];
 	for(unsigned i = 0; i < 4; i++) {
@@ -67,8 +67,8 @@ void PokemonEntry::Construct(string eid,int IV) {
 }
 
 int PokemonEntry::getStat(int which) {
-	if(ws.stats.size() == 6 && which >= 0 && which < 6)
-		return ws.stats[which];
+	if(ws.size() == 6 && which >= 0 && which < 6)
+		return ws[which];
 	else
 		return -1;
 }

@@ -28,7 +28,7 @@ class PokemonEntry {
 
 	private:
 		string name;
-		WorkingStats ws;
+		vector<int> ws;
 		vector<MoveData> moves;
 		vector<string> types;
 /*
