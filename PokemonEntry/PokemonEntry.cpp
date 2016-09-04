@@ -28,8 +28,18 @@ PokemonEntry::PokemonEntry(string id,int IV) {
 		InitializeMaps();
 		initialized = true;
 	}
-	Construct(id,IV);
+	
+	EntryData ed = EntryIDToEntryData[id];
+	Construct(ed,IV);
 
+}
+
+PokemonEntry::PokemonEntry(EntryData &edata,int IV) {
+	if(!initialized) {
+		InitializeMaps();
+		initialized = true;
+	}
+	Construct(edata,IV);	
 }
 
 void PokemonEntry::InitializeMaps() {
@@ -54,8 +64,7 @@ MoveData PokemonEntry::getMove(int which) {
 		return mm;
 }
 
-void PokemonEntry::Construct(string eid,int IV) {
-	EntryData ed = EntryIDToEntryData[eid];
+void PokemonEntry::Construct(EntryData &ed,int IV) {
 	vector<int> bs = DexIDToBaseStats[ed.DexID];
 	types = DexIDToTypes[ed.DexID];
 	ws = CalcWorkingStats(bs,ed.EV,IV,ed.nature);

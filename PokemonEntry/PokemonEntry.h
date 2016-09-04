@@ -18,6 +18,7 @@ using namespace std;
 class PokemonEntry {
 	public:
 		PokemonEntry(string entryID,int IV);
+		PokemonEntry(EntryData &edata,int IV);
 		int getStat(int which);
 		string getName();
 		pair<int,int> getMoveDamageRange(PokemonEntry &defender,int which);
@@ -49,7 +50,7 @@ class PokemonEntry {
 		static map<string, map<string, int> > typeMul;
 		//TODO: ADD AND INIT NATURE STAT MAP
 		void InitializeMaps();
-		void Construct(string eid,int IV);
+		void Construct(EntryData &edata,int IV);
 		double dmgMultiplier(string att, string def);
 };
 
