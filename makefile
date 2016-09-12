@@ -11,8 +11,12 @@ EF_DIR = $(FH_DIR)/EntryFilter
 PE_DIR = $(FH_DIR)/PokemonEntry
 WS_DIR = $(FH_DIR)/WorkingStats
 DR_DIR = $(FH_DIR)/DataResolution
+BS_DIR = $(FH_DIR)/BattleSim
 
 FLAGS = -I$(FH_DIR) -c -Wall
+
+BattleSimulator: $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o
+	g++ -o BattleSimulator $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o
 
 PokemonEntryTester:$(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 	g++ -o PokemonEntryTester $(MG_DIR)/MapGenerator.o  $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
@@ -74,4 +78,9 @@ $(DR_DIR)/DataResolution.o:$(DR_DIR)/DataResolution.h $(DR_DIR)/DataResolution.c
 $(DR_DIR)/DataResolutionTester.o:$(DR_DIR)/DataResolution.h $(DR_DIR)/DataResolutionTester.cpp
 	g++ $(FLAGS) -o  $(DR_DIR)/DataResolutionTester.o $(DR_DIR)/DataResolutionTester.cpp
 
+$(BS_DIR)/BattleSim.o: $(BS_DIR)/BattleSim.h $(BS_DIR)/BattleSim.cpp
+	g++ $(FLAGS) -o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSim.cpp
 
+$(BS_DIR)/BattleSimulator.o: $(BS_DIR)/BattleSim.h $(BS_DIR)/BattleSimulator.cpp
+	g++ $(FLAGS) -o $(BS_DIR)/BattleSimulator.o $(BS_DIR)/BattleSimulator.cpp
+	

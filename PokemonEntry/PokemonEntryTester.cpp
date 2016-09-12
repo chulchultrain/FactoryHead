@@ -9,7 +9,24 @@
 using namespace std;
 
 
-
+int stringToInt(string s) {
+	int res = 0;
+	for(unsigned i = 0; i < s.size(); i++) {
+		res *= 10;
+		if(s[i] >= '0' && s[i] <= '9') {
+			res += (int)(s[i] - '0');
+		}
+		else {
+			res = -1;
+			break;
+		}
+		if(res < 0) {
+			res = -1;
+			break;
+		}
+	}	
+	return res;
+}
 
 void PokemonEntryUnitTest() {
 	
