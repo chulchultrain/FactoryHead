@@ -5,6 +5,12 @@
 #include <PokemonEntry/PokemonEntry.h>
 #include <EntryFilter/EntryFilter.h>
 
+/*
+	TODO:SET TYPE FILTER
+	     MAGIC NUMBERS
+	
+*/
+
 using namespace std;
 
 class BattleEvaluator {
