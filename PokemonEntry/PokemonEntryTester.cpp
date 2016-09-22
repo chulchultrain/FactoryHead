@@ -151,7 +151,24 @@ void BattleMenu() {
 
 
 int main() {
-	PokemonEntryUnitTest();
-	BattleMenu();
+	//PokemonEntryUnitTest();
+	//BattleMenu();
+	string n = "Charizard";
+	vector<int> s(6);
+	for(int i = 0; i < 6; i++)
+		s[i] = 100;
+	vector<string> m(4);
+	for(int i = 0; i < 4; i++)
+		m[i] = "Flamethrower";
+	PokemonEntry c(n,s,m);
+	cout << c.getName() << endl;
+	for(int i = 0; i < 4; i++) {
+		cout << c.getMove(i).name << '\n';
+	}
+	for(int i = 0; i < 6; i++) {
+		cout << c.getStat(i) << '\n';
+	}
+
+
 	return 0;
 }

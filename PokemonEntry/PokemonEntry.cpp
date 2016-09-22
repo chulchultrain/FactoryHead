@@ -2,8 +2,9 @@
 
 #include <MapGenerator/MapGenerator.h>
 
-
+		map<string,string> PokemonEntry::NameToDexID;
 		map<string, MoveData> PokemonEntry::MoveIDToMoveData;
+		map<string,string> PokemonEntry::MoveNameToMoveID;
 		map<string, vector<int> > PokemonEntry::DexIDToBaseStats;
 		map<string, vector<string> > PokemonEntry::DexIDToTypes;
 		map<string, EntryData> PokemonEntry::EntryIDToEntryData;
@@ -22,7 +23,14 @@ map<string, string> DexIDToName;
 
 #include <iostream>
 
-
+PokemonEntry::PokemonEntry() {
+	if(!initialized) {
+		InitializeMaps();
+		initialized = true;
+	}
+	EntryData ed;
+	Construct(ed,0);
+}
 PokemonEntry::PokemonEntry(string id,int IV) {
 	if(!initialized) {
 		InitializeMaps();
@@ -42,14 +50,33 @@ PokemonEntry::PokemonEntry(EntryData &edata,int IV) {
 	Construct(edata,IV);	
 }
 
+PokemonEntry::PokemonEntry(string knownName, vector<int> &stats, vector<string> &knownMoves)  {
+	if(!initialized) {
+		InitializeMaps();
+		initialized = true;
+	}
+	name = knownName;
+	ws = stats;
+	moves.clear();
+	for(unsigned i = 0; i < knownMoves.size(); i++) {
+		moves.push_back( MoveIDToMoveData[MoveNameToMoveID[knownMoves[i]]]);
+	}	
+	
+	types = DexIDToTypes[NameToDexID[name]];
+
+}
+
+
 void PokemonEntry::InitializeMaps() {
 	MapGenerator mg;
+	mg.NameToDexIDMap(NameToDexID);
 	mg.DexIDToBaseStatsMap(DexIDToBaseStats);
 	mg.EntryIDToEntryDataMap(EntryIDToEntryData);
 	mg.DexIDToTypeVectorMap(DexIDToTypes);
 	mg.DexIDToNameMap(DexIDToName);
 	mg.MoveIDToMoveDataMap(MoveIDToMoveData);
 	mg.TypeMultiplierMap(typeMul);
+	mg.MoveNameToMoveIDMap(MoveNameToMoveID);
 }
 
 string PokemonEntry::getName() {

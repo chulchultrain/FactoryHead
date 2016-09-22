@@ -11,7 +11,7 @@ EntryData::EntryData(string x1, string x2, vector<string> &x3, string x4, string
 
 EntryData::EntryData() {
 	ID = "";
-	DexID = "";
+	DexID = "001";
 	moveID.resize(4,"");
 	nature = "";
 	item = "";

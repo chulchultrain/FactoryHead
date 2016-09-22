@@ -33,6 +33,7 @@ class BattleSim {
 	private:
 		struct Criteria {
 			string name;
+			string type;
 			vector<string> moves;
 			Criteria() { name = ""; moves.resize(4);}
 		};	

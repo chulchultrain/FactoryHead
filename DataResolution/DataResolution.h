@@ -15,6 +15,9 @@ class DataResolution {
 		DataResolution();
 		void Input(string name, const vector<string> &moveList, const vector<int> &ws);
 		
+		struct Criteria {
+			
+		};
 
 
 	private:

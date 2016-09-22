@@ -17,8 +17,10 @@ using namespace std;
 
 class PokemonEntry {
 	public:
+		PokemonEntry();
 		PokemonEntry(string entryID,int IV);
-		PokemonEntry(EntryData &edata,int IV);
+		PokemonEntry(EntryData &edata,int IV); // Data that will apply to all instances of Entry, instance specific data
+		PokemonEntry(string name, vector<int> &stats, vector<string> &knownMoves);
 		int getStat(int which);
 		string getName();
 		pair<int,int> getMoveDamageRange(PokemonEntry &defender,int which);
@@ -42,6 +44,8 @@ class PokemonEntry {
 */
 		static bool initialized;
 		static map<string, MoveData> MoveIDToMoveData;
+		static map<string,string> MoveNameToMoveID;
+		static map<string,string> NameToDexID;
 		static map<string, vector<int> > DexIDToBaseStats;
 		static map<string, vector<string> > DexIDToTypes;
 		static map<string, EntryData> EntryIDToEntryData;

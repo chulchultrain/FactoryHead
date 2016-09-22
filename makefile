@@ -12,11 +12,15 @@ PE_DIR = $(FH_DIR)/PokemonEntry
 WS_DIR = $(FH_DIR)/WorkingStats
 DR_DIR = $(FH_DIR)/DataResolution
 BS_DIR = $(FH_DIR)/BattleSim
+BE_DIR = $(FH_DIR)/BattleEvaluator
 
 FLAGS = -I$(FH_DIR) -c -Wall
 
 BattleSimulator: $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o
 	g++ -o BattleSimulator $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o
+
+BattleEvaluatorTester: $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BE_DIR)/BattleEvaluator.o $(BE_DIR)/BattleEvalTester.o
+	g++ -o BattleEvaluatorTester $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BE_DIR)/BattleEvaluator.o $(BE_DIR)/BattleEvalTester.o
 
 PokemonEntryTester:$(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
 	g++ -o PokemonEntryTester $(MG_DIR)/MapGenerator.o  $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o
@@ -83,4 +87,10 @@ $(BS_DIR)/BattleSim.o: $(BS_DIR)/BattleSim.h $(BS_DIR)/BattleSim.cpp
 
 $(BS_DIR)/BattleSimulator.o: $(BS_DIR)/BattleSim.h $(BS_DIR)/BattleSimulator.cpp
 	g++ $(FLAGS) -o $(BS_DIR)/BattleSimulator.o $(BS_DIR)/BattleSimulator.cpp
-	
+
+
+$(BE_DIR)/BattleEvaluator.o: $(BE_DIR)/BattleEvaluator.h $(BE_DIR)/BattleEvaluator.cpp
+	g++ $(FLAGS) -o $(BE_DIR)/BattleEvaluator.o $(BE_DIR)/BattleEvaluator.cpp
+
+$(BE_DIR)/BattleEvalTester.o: $(BE_DIR)/BattleEvalTester.cpp $(BE_DIR)/BattleEvaluator.h
+	g++ $(FLAGS) -o $(BE_DIR)/BattleEvalTester.o $(BE_DIR)/BattleEvalTester.cpp

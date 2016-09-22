@@ -78,7 +78,7 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 	string option;
 	str_code sc = INITCODE;
 	while(sc != EXIT) {	
-		pout << "Enter Choice(SETENTRY,PRINTSELECTIONS,EXIT)\n";
+		pout << "Enter Choice(SETENTRY,PRINTSELECTIONS,SIMULATE,EXIT)\n";
 	
 		getline(fin,option);
 	
@@ -142,12 +142,12 @@ void BattleSim::Simulate(ostream &pout,ostream &fout) {
 	entries.push_back(PokemonEntry(res[0][0],31));
 	entries.push_back(PokemonEntry(res[1][0],31));
 	for(int i = 0; i < 2; i++) {
-		cout << entries[i].getName() << '\n';
+		fout << entries[i].getName() << '\n';
 		for(int j = 0; j < 4; j++) {
 			pair<int,int> damage = entries[i].getMoveDamageRange(entries[1-i],j);
-			cout << entries[i].getMove(j).name << " does " << damage.first << " to " << damage.second << '\n';
+			fout << entries[i].getMove(j).name << " does " << damage.first << " to " << damage.second << '\n';
 		}
-		cout << '\n';
+		fout << '\n';
 	}
 }
 
