@@ -8,7 +8,8 @@
 /*
 	TODO:SET TYPE FILTER
 	     MAGIC NUMBERS
-	
+	     GET FITCRITERIA
+	     SET IVs
 */
 
 using namespace std;
@@ -26,20 +27,27 @@ class BattleEvaluator {
 			string name;
 			string type;
 			vector<string> moves;
-			Criteria() { name = ""; moves.resize(4);}
+			int IV;
+			Criteria() { name = ""; moves.resize(4); IV = 0;}
 		};	
 
-		BattleEvaluator();
+		BattleEvaluator(); 
 		BattleEvaluator(int numWayBattle);
 		~BattleEvaluator();
-		void SetParticipant(int whichCriteria, int whichEntry);
-		void Evaluate();
-		void RetrieveResults(vector< vector<MoveResult> > &res);
-		
+
+		//SETTING CRITERIA
 		void SetName(int whichCriteria,string nameToBe);
 		void SetType(int whichCriteria, string type);
 		void SetMove(int whichCriteria, int whichMove, string moveName);
+		void SetIVs(int whichCriteria,int IV);
+
+		//EVALUTE CRITERIA AND RETRIEVE RESULTS
 		void EvaluateCriteria(int whichCriteria);
+		void SetParticipant(int whichCriteria, int whichEntry);
+		void Evaluate(int i,int j);
+		void RetrieveResults( vector<MoveResult> &results,int i,int j);
+
+		//HELPER
 		bool inBoundCriteria(int whichCriteria);
 
 	private:
@@ -47,7 +55,7 @@ class BattleEvaluator {
 		vector< vector<PokemonEntry> > fitsCriteria;
 		vector<Criteria> crit;
 		vector<PokemonEntry> battleEntries;
-		vector< vector<MoveResult> > res;
+		vector<vector< vector<MoveResult> > >res;
 		int numCriteria;
 
 
