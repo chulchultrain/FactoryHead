@@ -7,37 +7,46 @@
 
 
 BattleSim::BattleSim() {
-	crit.resize(2);
-	promptSetOn = true;
+	promptSetOn = true; // TODO:Do something about PromptSetOn
 }
 
 
 
-void BattleSim::SetName(ostream &pout, istream &fin, string &name) {
+void BattleSim::SetName(ostream &pout, istream &fin, int whichCriteria) {
+	string name;
 	pout << "Enter Name\n";
 	getline(fin,name);
-	
+	be.SetName(whichCriteria,name);
 }
 
-void BattleSim::SetMoves(ostream &pout, istream &fin, vector<string> &moves) {
+void BattleSim::SetMoves(ostream &pout, istream &fin, int whichCriteria) {
 	pout << "Enter the number of the move to change.(0-4)\n";
 	string whichMove;
 	getline(fin,whichMove);
 	int whichMoveInt = StringToIntHelper(whichMove);
 	if(whichMoveInt >= 0 && whichMoveInt < 4) {
-		SetMove(pout,fin,moves[whichMoveInt]);
+		SetMove(pout,fin,whichCriteria,whichMoveInt);
 		
 	} else {
 		pout << "Incorrect Move Choice. You have to choose between " << 0 << " and " << 4 << '\n';
 	}
 }
 
-void BattleSim::SetMove(ostream &pout, istream &fin, string &move) {
+void BattleSim::SetMove(ostream &pout, istream &fin, int whichCriteria, int whichMove) {
+	string move;
 	pout <<"Enter Move\n";
 	getline(fin,move);
+	be.SetMove(whichCriteria,move);
 }	
 
-void BattleSim::SetCriterion(ostream &pout, istream &fin, Criteria &c) {
+void BattleSim::SetType(ostream &pout, istream &fin, int whichCriteria) {
+	string type;
+	pout << "Enter Type\n";
+	getline(fin,type);
+	be.SetType(whichCriteria,type);
+}
+
+void BattleSim::SetCriterion(ostream &pout, istream &fin, int whichCriteria) {
 
 	string option;
 	str_code sc = INITCODE;
@@ -47,9 +56,11 @@ void BattleSim::SetCriterion(ostream &pout, istream &fin, Criteria &c) {
 		sc = HashString(option);
 		switch(sc) {
 			case SETNAME:
-				SetName(pout,fin,c.name); break;
+				SetName(pout,fin,whichCriteria); break;
 			case SETMOVE: 
-				SetMoves(pout,fin,c.moves); break;
+				SetMoves(pout,fin,whichCriteria); break;
+			case SETTYPE:
+				SetType(pout,fin,whichCriteria);
 			case EXIT:
 				pout << "Exit Criteria Menu\n"; break;
 			default:
@@ -59,7 +70,7 @@ void BattleSim::SetCriterion(ostream &pout, istream &fin, Criteria &c) {
 }
 
 void BattleSim::SetCriteria(ostream &pout, istream &fin) {
-	
+	//TODO: FIX
 	string whichEntry;
 	int whichEntryInt;
 
@@ -67,7 +78,7 @@ void BattleSim::SetCriteria(ostream &pout, istream &fin) {
 	getline(fin,whichEntry);
 	whichEntryInt = StringToIntHelper(whichEntry);
 	if(whichEntryInt == 0 || whichEntryInt == 1) {
-		SetCriterion(pout,fin,crit[whichEntryInt]);
+		SetCriterion(pout,fin,whichEntryInt);
 	} else {
 		pout << "Invalid Choice.(0 or 1)\n";
 	}
@@ -124,31 +135,7 @@ int BattleSim::StringToIntHelper(const string &a) {
 }
 
 void BattleSim::Simulate(ostream &pout,ostream &fout) {
-	vector<vector<string> > res(2);
-	vector<EntryFilter> ef(2);
 	
-	for(unsigned i = 0; i < 2; i++) {
-		ef[i].SetNameFilter(crit[i].name);
-		for(unsigned j = 0; j < crit[i].moves.size(); j++) {
-			ef[i].SetMoveFilter(j,crit[i].moves[j]);
-		}
-		ef[i].Evaluate(res[i]);
-	}
-	if(res[0].size() != 1 || res[1].size() != 1) {
-		cout << "Cannot Simulate Battle due to not enough information\n";
-		return;
-	}
-	vector<PokemonEntry> entries;
-	entries.push_back(PokemonEntry(res[0][0],31));
-	entries.push_back(PokemonEntry(res[1][0],31));
-	for(int i = 0; i < 2; i++) {
-		fout << entries[i].getName() << '\n';
-		for(int j = 0; j < 4; j++) {
-			pair<int,int> damage = entries[i].getMoveDamageRange(entries[1-i],j);
-			fout << entries[i].getMove(j).name << " does " << damage.first << " to " << damage.second << '\n';
-		}
-		fout << '\n';
-	}
 }
 
 
@@ -161,6 +148,10 @@ BattleSim::str_code BattleSim::HashString(string s) {
 		return SETNAME;
 	else if(s == "SETMOVE")
 		return SETMOVE;
+	else if(s == "SETTYPE")
+		return SETTYPE;
+	else if(s == "SETIV")
+		return SETIV;
 	else if(s == "EXIT")
 		return EXIT;
 	else if(s == "PRINTSELECTIONS")

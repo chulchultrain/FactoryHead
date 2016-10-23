@@ -5,30 +5,25 @@
 
 //CONSTRUCTOR
 BattleEvaluator::BattleEvaluator() {
-	numCriteria = 2;
-	crit.resize(numCriteria);
-	fitsCriteria.resize(numCriteria);
-	battleEntries.resize(numCriteria);
-	res.resize(numCriteria);
-	for(int i = 0 ; i < numCriteria; i++) {
-		res[i].resize(numCriteria);
-		for(int j = 0; j < numCriteria; j++)
+	resize(2);
+}
+
+void BattleEvaluator::resize(int n) {
+	crit.resize(n);
+	fitsCriteria.resize(n);
+	battleEntries.resize(n);
+	res.resize(n);
+	for(int i = 0; i < n; i++) {
+		res[i].resize(n);
+		for(int j = 0; j < n; j++)
 			res[i][j].resize(4);
 	}
+	numCriteria = n;
 }
 
 BattleEvaluator::BattleEvaluator(int numPokemon) {
 	
-	crit.resize(numPokemon);
-	fitsCriteria.resize(numPokemon);
-	battleEntries.resize(numPokemon);
-	res.resize(numPokemon); //TODO: NOT RIGHT
-	numCriteria = numPokemon;
-	for(int i = 0 ; i < numPokemon; i++) { //ALSO THIS
-		res[i].resize(numPokemon);
-		for(int j = 0; j < numPokemon; j++)
-			res[i][j].resize(4);
-	}
+	resize(numPokemon);
 }
 
 //DESTRUCTOR
@@ -84,7 +79,10 @@ void BattleEvaluator::SetParticipant(int whichCriteria, int whichEntry) {
 			battleEntries[whichCriteria] = fitsCriteria[whichCriteria][whichEntry];
 }
 
-
+/*
+	i = attacker
+	j = defender
+*/
 void BattleEvaluator::Evaluate(int i, int j) {
 
 		
@@ -118,6 +116,19 @@ void BattleEvaluator::RetrieveResults(vector<BattleEvaluator::MoveResult> &resul
 }
 		
 
+void BattleEvaluator::FitCriteriaResult(int whichCriteria, int whichEntry, PokemonEntry &res) {
+	if(inBoundCriteria(whichCriteria) ) {
+		if(whichEntry < (int)(fitsCriteria.size() ) ) {
+			res = fitsCriteria[whichCriteria][whichEntry];
+		}
+	}
+}
 
+int BattleEvaluator::FitCriteriaSize(int whichCriteria) {
+	if(inBoundCriteria(whichCriteria) ) {
+		return fitsCriteria.size();
+	}	
+	return -1;
+}
 
 

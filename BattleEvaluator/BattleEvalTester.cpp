@@ -30,22 +30,30 @@ void BattleEvaluatorUnitTest() {
 	be.RetrieveResults(rr,0,1);
 	PrintRes(rr);
 
-	be.SetName(0,"Bastiodon");
-	be.SetMove(0,0,"Iron Head");
-	be.SetMove(0,1,"Iron Defense");
+	be.resize(100);
+
+	be.SetName(96,"Bastiodon");
+	be.SetMove(96,0,"Iron Head");
+	be.SetMove(96,1,"Iron Defense");
+	be.SetIVs(96,31);
+	be.SetIVs(1,31);
 
 	be.SetName(1,"Porygon-Z");
 	be.SetMove(1,0,"Tri Attack");
 	be.SetMove(1,1,"Conversion 2");
 
-	be.EvaluateCriteria(0);
+	be.EvaluateCriteria(96);
 	be.EvaluateCriteria(1);
 
-	be.SetParticipant(0,0);
+	PokemonEntry pe;
+	be.FitCriteriaResult(1,0,pe);
+	cout << pe.toString() << endl;
+
+	be.SetParticipant(96,0);
 	be.SetParticipant(1,0);
 
-	be.Evaluate(0,1);	
-	be.RetrieveResults(rr,0,1);
+	be.Evaluate(96,1);	
+	be.RetrieveResults(rr,96,1);
 
 
 	PrintRes(rr);

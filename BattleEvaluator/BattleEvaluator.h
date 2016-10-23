@@ -9,7 +9,9 @@
 	TODO:SET TYPE FILTER
 	     MAGIC NUMBERS
 	     GET FITCRITERIA
-	     SET IVs
+	     SET IVS
+
+	     RESET CRITERIA
 */
 
 using namespace std;
@@ -35,6 +37,8 @@ class BattleEvaluator {
 		BattleEvaluator(int numWayBattle);
 		~BattleEvaluator();
 
+		void resize(int n);
+
 		//SETTING CRITERIA
 		void SetName(int whichCriteria,string nameToBe);
 		void SetType(int whichCriteria, string type);
@@ -43,6 +47,11 @@ class BattleEvaluator {
 
 		//EVALUTE CRITERIA AND RETRIEVE RESULTS
 		void EvaluateCriteria(int whichCriteria);
+	
+		//TODO: IMPLEMENT
+		void FitCriteriaResult(int whichCriteria, int whichEntry, PokemonEntry &res);
+		int FitCriteriaSize(int whichCriteria);
+
 		void SetParticipant(int whichCriteria, int whichEntry);
 		void Evaluate(int i,int j);
 		void RetrieveResults( vector<MoveResult> &results,int i,int j);

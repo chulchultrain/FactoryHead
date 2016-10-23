@@ -23,6 +23,7 @@ class PokemonEntry {
 		PokemonEntry(string name, vector<int> &stats, vector<string> &knownMoves);
 		int getStat(int which);
 		string getName();
+		string toString();
 		pair<int,int> getMoveDamageRange(PokemonEntry &defender,int which);
 		vector<string> getTypes() {return types;}
 		pair<int,int> getMoveDamageRange(PokemonEntry &defender, string moveName);
@@ -30,6 +31,8 @@ class PokemonEntry {
 		//int getDamage(const PokemonEntry &defender, int whichMove);
 
 	private:
+		string IntToStringHelper(int x);
+
 		string name;
 		vector<int> ws;
 		vector<MoveData> moves;

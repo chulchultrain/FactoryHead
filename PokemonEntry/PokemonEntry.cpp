@@ -91,6 +91,7 @@ MoveData PokemonEntry::getMove(int which) {
 		return mm;
 }
 
+
 void PokemonEntry::Construct(EntryData &ed,int IV) {
 	vector<int> bs = DexIDToBaseStats[ed.DexID];
 	types = DexIDToTypes[ed.DexID];
@@ -167,7 +168,47 @@ double PokemonEntry::dmgMultiplier(string att, string def) {
 	return 0;
 }
 
+string PokemonEntry::toString() {
+	string res = "NAME: ";
+	res += (name + string("\n") );
+	res += (string("HP: ") + IntToStringHelper(ws[0]) + string("\n") );
+	res += (string("A: ") + IntToStringHelper(ws[1]) + string("\n") );
+	res += (string("D: ") + IntToStringHelper(ws[2]) + string("\n") );
+	res += (string("SA: ") + IntToStringHelper(ws[3]) + string("\n") );
+	res += (string("SD: ") + IntToStringHelper(ws[4]) + string("\n") );	
+	res += (string("S: ") + IntToStringHelper(ws[5]) + string("\n") );
 
+	res += (moves[0].name + string("\n"));
+	res += (moves[1].name + string("\n"));
+	res += (moves[2].name + string("\n"));
+	res += (moves[3].name + string("\n"));
+
+	return res;
+}	
+
+
+//HELPERS:
+
+string PokemonEntry::IntToStringHelper(int a) {
+	string result = "";
+	int temp = a;
+	bool neg = false;
+	if(temp < 0) {
+		temp *= -1;
+		neg = true;
+	}
+	int digN;
+	char dig = 0;
+	while(temp > 0) {
+		digN = temp % 10;
+		temp /= 10;
+		dig = digN + '0';
+		result = dig + result;
+	}
+	if(neg)
+		result = '-' + result;
+	return result;
+}
 
 
 
