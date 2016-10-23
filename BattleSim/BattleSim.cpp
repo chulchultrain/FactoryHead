@@ -70,7 +70,7 @@ void BattleSim::SetCriterion(ostream &pout, istream &fin, int whichCriteria) {
 }
 
 void BattleSim::SetCriteria(ostream &pout, istream &fin) {
-	//TODO: FIX
+	//TODO: FIX MAGIC NUMBER of 2
 	string whichEntry;
 	int whichEntryInt;
 
@@ -85,6 +85,8 @@ void BattleSim::SetCriteria(ostream &pout, istream &fin) {
 
 }
 
+
+
 void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 	string option;
 	str_code sc = INITCODE;
@@ -97,7 +99,11 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 		switch(sc) {
 			case SETENTRY:
 				SetCriteria(pout,fin); break;
-			case PRINTSELECTIONS:
+			case PRINTCRITERIA:
+				PrintCriteria(pout,fin); break;
+			case PRINTCANDIDATES:
+				PrintCandidates(pout,fin); break;
+			case PRINTPARTICIPANTS:
 				PrintSelections(pout); break;
 			case SIMULATE:
 				Simulate(pout,fout); break;
@@ -109,12 +115,32 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 	}
 }
 
+void BattleSim::PrintCriterion(ostream &pout, int wcInt) {
+	string r = be.(wcInt);
+	pout << r << '\n';
+}
+
+void BattleSim::PrintCriteria(ostream &pout, istream &fin) {
+	/*
+		Prompt:
+		Get Input Number:
+		Call PrintCriterion Function with param
+	*/
+	pout << "Enter which criterion to print.\n";
+	string whichCriterion;
+	getline(fin,whichCriterion);	
+	int wcInt = StringToIntHelper(whichCriterion);
+	if(wcInt == 0 || wcInt == 1) {
+		PrintCriterion(ostream &pout, wcInt);
+	} else {
+		pout << "Invalid Choice.(0 or 1)\n";
+	}
+}
+
 void BattleSim::PrintSelections(ostream &pout) {
+	static vector<PokemonEntry> entrySelections(2);
 	for(unsigned i = 0; i < 2; i++) {
-		pout << crit[i].name << ":\n";
-		for(unsigned j = 0; j < 4; j++)
-			pout << crit[i].moves[j] << '\n';
-		pout << '\n';
+		
 	}
 	pout << '\n';
 }
@@ -154,8 +180,10 @@ BattleSim::str_code BattleSim::HashString(string s) {
 		return SETIV;
 	else if(s == "EXIT")
 		return EXIT;
-	else if(s == "PRINTSELECTIONS")
-		return PRINTSELECTIONS;
+	else if(s == "PRINTPARTICIPANTS")
+		return PRINTPARTICIPANTS;
+	else if(s == "PRINTCRITERIA")
+		return PRINTCRITERIA;
 	else if(s == "SIMULATE")
 		return SIMULATE;
 	else 

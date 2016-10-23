@@ -45,9 +45,13 @@ void BattleEvaluatorUnitTest() {
 	be.EvaluateCriteria(96);
 	be.EvaluateCriteria(1);
 
-	PokemonEntry pe;
-	be.FitCriteriaResult(1,0,pe);
-	cout << pe.toString() << endl;
+	string pe;
+	be.CandidateDescription(1,0,pe);
+	cout << pe << endl;
+
+	string cs;
+	be.CriteriaDescription(1,cs);
+	cout << cs << endl;
 
 	be.SetParticipant(96,0);
 	be.SetParticipant(1,0);

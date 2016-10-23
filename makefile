@@ -16,8 +16,8 @@ BE_DIR = $(FH_DIR)/BattleEvaluator
 
 FLAGS = -I$(FH_DIR) -c -Wall
 
-BattleSimulator: $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o
-	g++ -o BattleSimulator $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o
+BattleSimulator: $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o $(BE_DIR)/BattleEvaluator.o
+	g++ -o BattleSimulator $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BS_DIR)/BattleSim.o $(BS_DIR)/BattleSimulator.o $(BE_DIR)/BattleEvaluator.o
 
 BattleEvaluatorTester: $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonEntryTester.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BE_DIR)/BattleEvaluator.o $(BE_DIR)/BattleEvalTester.o
 	g++ -o BattleEvaluatorTester $(MG_DIR)/MapGenerator.o $(MD_DIR)/MoveData.o $(ED_DIR)/EntryData.o $(PE_DIR)/PokemonEntry.o $(WS_DIR)/WorkingStats.o $(EF_DIR)/EntryFilter.o $(TE_DIR)/TypeTokenEvaluator.o $(TE_DIR)/NameTokenEvaluator.o $(TE_DIR)/MoveTokenEvaluator.o $(BE_DIR)/BattleEvaluator.o $(BE_DIR)/BattleEvalTester.o

@@ -31,6 +31,8 @@ class BattleEvaluator {
 			vector<string> moves;
 			int IV;
 			Criteria() { name = ""; moves.resize(4); IV = 0;}
+			string toString();
+					    
 		};	
 
 		BattleEvaluator(); 
@@ -45,14 +47,20 @@ class BattleEvaluator {
 		void SetMove(int whichCriteria, int whichMove, string moveName);
 		void SetIVs(int whichCriteria,int IV);
 
+		void CriteriaDescription(int whichCriteria, string &res);
+
 		//EVALUTE CRITERIA AND RETRIEVE RESULTS
 		void EvaluateCriteria(int whichCriteria);
 	
 		//TODO: IMPLEMENT
-		void FitCriteriaResult(int whichCriteria, int whichEntry, PokemonEntry &res);
-		int FitCriteriaSize(int whichCriteria);
+		void CandidateDescription(int whichCriteria, int whichEntry, string &res);
+		int CandidateListSize(int whichCriteria);
 
 		void SetParticipant(int whichCriteria, int whichEntry);
+
+		void ParticipantDescription(int whichCriteria, string &res);
+		
+
 		void Evaluate(int i,int j);
 		void RetrieveResults( vector<MoveResult> &results,int i,int j);
 
@@ -61,9 +69,9 @@ class BattleEvaluator {
 
 	private:
 		EntryFilter ef;
-		vector< vector<PokemonEntry> > fitsCriteria;
+		vector< vector<PokemonEntry> > candidates;
 		vector<Criteria> crit;
-		vector<PokemonEntry> battleEntries;
+		vector<PokemonEntry> participants;
 		vector<vector< vector<MoveResult> > >res;
 		int numCriteria;
 
