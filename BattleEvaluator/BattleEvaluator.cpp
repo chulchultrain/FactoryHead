@@ -152,6 +152,10 @@ void BattleEvaluator::ParticipantDescription(int whichCriteria, string &res) {
 
 //HELPERS:
 
+int BattleEvaluator::size() {
+	return numCriteria;
+}
+
 bool BattleEvaluator::inBoundCriteria(int whichCriteria) {
 	return whichCriteria >= 0 && whichCriteria < numCriteria;
 	

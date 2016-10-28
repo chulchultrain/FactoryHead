@@ -39,10 +39,12 @@ class BattleSim {
 		enum str_code{
 			INITCODE,
 			PRINTCRITERIA,
-			PRINTCANDIDATES
+			EVALUATECRITERIA,
+			SETPARTICIPANTS,
+			PRINTCANDIDATES,
 			PRINTPARTICIPANTS,
 			SIMULATE,
-			SETENTRY,
+			SETCRITERIA,
 			SETNAME,
 			SETMOVE,
 			SETTYPE,
@@ -59,14 +61,26 @@ class BattleSim {
 		void SetMoves(ostream &pout, istream &fin, int whichCriteria);
 		void SetMove(ostream &pout, istream &fin, int whichCriteria,int whichMove);
 		void SetType(ostream &pout, istream &fin, int whichCriteria);
+		void SetIV(ostream &pout, istream &fin, int whichCriteria);
 
-		void SetParticipant(ostream &pout,istream &fin);
 		void EvaluateCriteria(ostream &pout, istream &fin);
+		void EvaluateCriterion(ostream &pout, int whichCriteria);
+
+		void PrintCriteria(ostream &pout, istream &fin);
+		void PrintCriterion(ostream &pout, int wcInt);
+
+		void PrintCandidates(ostream &pout, istream &fin);
+		void PrintCandidate(ostream &pout, istream &fin, int whichCriteria);
+		void PrintAllCandidates(ostream &pout, int whichCriteria);
+
+		void SetParticipants(ostream &pout,istream &fin);
+		void SetParticipant(ostream &pout, istream &fin, int whichEntryInt);
+		//void EvaluateCriteria(ostream &pout, istream &fin);
 		void Simulate(ostream &pout,ostream &fout);
+		void PrintParticipants(ostream &pout);
 
 		bool promptSetOn;
 
-		void PrintSelections(ostream &pout);
 		
 		void PrintBattle(ostream &fout);
 		string Prompt(ostream &pout, istream &pin);

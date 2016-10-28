@@ -64,6 +64,8 @@ class BattleEvaluator {
 		void Evaluate(int i,int j);
 		void RetrieveResults( vector<MoveResult> &results,int i,int j);
 
+		int size();
+
 		//HELPER
 		bool inBoundCriteria(int whichCriteria);
 

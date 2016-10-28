@@ -36,7 +36,7 @@ void BattleSim::SetMove(ostream &pout, istream &fin, int whichCriteria, int whic
 	string move;
 	pout <<"Enter Move\n";
 	getline(fin,move);
-	be.SetMove(whichCriteria,move);
+	be.SetMove(whichCriteria,whichMove,move);
 }	
 
 void BattleSim::SetType(ostream &pout, istream &fin, int whichCriteria) {
@@ -46,12 +46,23 @@ void BattleSim::SetType(ostream &pout, istream &fin, int whichCriteria) {
 	be.SetType(whichCriteria,type);
 }
 
+void BattleSim::SetIV(ostream &pout, istream &fin, int whichCriteria) {
+	string iv;
+	getline(fin,iv);
+	int ivInt = StringToIntHelper(iv);
+	if(ivInt != -1) {
+		be.SetIVs(whichCriteria,ivInt);
+	} else {
+		pout << "Enter valid value for IV(positive integer 0 - 31)\n";
+	}
+}
+
 void BattleSim::SetCriterion(ostream &pout, istream &fin, int whichCriteria) {
 
 	string option;
 	str_code sc = INITCODE;
 	while(sc != EXIT) {
-		pout << "Enter what to change.(SETNAME,SETMOVE)\n";
+		pout << "Enter what to change.(SETNAME,SETMOVE,SETTYPE)\n";
 		getline(fin,option);
 		sc = HashString(option);
 		switch(sc) {
@@ -91,20 +102,26 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 	string option;
 	str_code sc = INITCODE;
 	while(sc != EXIT) {	
-		pout << "Enter Choice(SETENTRY,PRINTSELECTIONS,SIMULATE,EXIT)\n";
+		pout << "Enter Choice: SETCRITERIA,EVALUATECRITERIA,SETPARTICIPANTS\n";
+		pout << "PRINTCRITERIA, PRINTCANDIDATES, PRINTPARTICIPANTS, SIMULATE\n";
 	
 		getline(fin,option);
 	
 		sc = HashString(option);
+		//TODO: EVALUATE CRITERIA OPTION
 		switch(sc) {
-			case SETENTRY:
+			case SETCRITERIA:
 				SetCriteria(pout,fin); break;
+			case EVALUATECRITERIA:
+				EvaluateCriteria(pout,fin); break;
+			case SETPARTICIPANTS:
+				SetParticipants(pout,fin); break;
 			case PRINTCRITERIA:
 				PrintCriteria(pout,fin); break;
 			case PRINTCANDIDATES:
 				PrintCandidates(pout,fin); break;
 			case PRINTPARTICIPANTS:
-				PrintSelections(pout); break;
+				PrintParticipants(pout); break;
 			case SIMULATE:
 				Simulate(pout,fout); break;
 			case EXIT: break;
@@ -115,9 +132,27 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 	}
 }
 
+
+void BattleSim::EvaluateCriteria(ostream &pout, istream &fin) {
+	string whichCriteria;
+	getline(fin,whichCriteria);
+	int wcInt = StringToIntHelper(whichCriteria);
+	if(wcInt == 0 || wcInt == 1) {
+		EvaluateCriterion(pout,wcInt);
+	} else {
+		pout << "Invalid choice\n";
+	}
+}
+
+
+void BattleSim::EvaluateCriterion(ostream &pout, int whichCriteria) {
+	be.EvaluateCriteria(whichCriteria);
+}
+
 void BattleSim::PrintCriterion(ostream &pout, int wcInt) {
-	string r = be.(wcInt);
-	pout << r << '\n';
+	string r;
+        be.CriteriaDescription(wcInt,r);
+	pout << r << endl;
 }
 
 void BattleSim::PrintCriteria(ostream &pout, istream &fin) {
@@ -131,20 +166,54 @@ void BattleSim::PrintCriteria(ostream &pout, istream &fin) {
 	getline(fin,whichCriterion);	
 	int wcInt = StringToIntHelper(whichCriterion);
 	if(wcInt == 0 || wcInt == 1) {
-		PrintCriterion(ostream &pout, wcInt);
+		PrintCriterion(pout, wcInt);
 	} else {
 		pout << "Invalid Choice.(0 or 1)\n";
 	}
 }
 
-void BattleSim::PrintSelections(ostream &pout) {
-	static vector<PokemonEntry> entrySelections(2);
-	for(unsigned i = 0; i < 2; i++) {
+
+void BattleSim::PrintCandidates(ostream &pout, istream &fin) {
+	string whichEntry;
+	int whichEntryInt;
+
+	pout << "Enter Which Candidate List to Print from\n";
+	getline(fin,whichEntry);
+	whichEntryInt = StringToIntHelper(whichEntry);
+	if(whichEntryInt == 0 || whichEntryInt == 1) {
+		PrintAllCandidates(pout, whichEntryInt);
+	} else {
+		pout << "Invalid Choice.(0 or 1)\n";
+	}
 		
+}
+		
+void BattleSim::PrintCandidate(ostream &pout, istream &fin, int whichCriteria) {
+	cout << "DERP\n";
+}
+		
+void BattleSim::PrintAllCandidates(ostream &pout,int whichCriteria) {
+	//get num criteria not can list siz
+	int sz = be.CandidateListSize(whichCriteria);
+	string res;
+	//ADD COUNTERS / A HEADER TO PRINT???
+	for(int i = 0; i < sz; i++) {
+		be.CandidateDescription(whichCriteria,i,res);
+		pout << res << '\n';
+	}
+}
+
+void BattleSim::PrintParticipants(ostream &pout) {
+	//static vector<PokemonEntry> entrySelections(2);
+	string res;
+	for(unsigned i = 0; i < 2; i++) {
+		be.ParticipantDescription(i,res);
+		pout << res << '\n';
 	}
 	pout << '\n';
 }
 
+//HELPERS:
 
 int BattleSim::StringToIntHelper(const string &a) {
 	unsigned i = 0;
@@ -160,16 +229,45 @@ int BattleSim::StringToIntHelper(const string &a) {
 	
 }
 
-void BattleSim::Simulate(ostream &pout,ostream &fout) {
+void BattleSim::SetParticipants(ostream &pout,istream &fin) {
+	string whichEntry;
+	int whichEntryInt;
 	
+	pout << "Enter which participant to set\n";
+	getline(fin,whichEntry);
+	whichEntryInt = StringToIntHelper(whichEntry);
+	if(whichEntryInt == 0 || whichEntryInt == 1) {
+		SetParticipant(pout, fin, whichEntryInt);
+	} else {
+		pout << "Invalid choice(0 or 1)\n";
+	}	
 }
+
+void BattleSim::SetParticipant(ostream &pout, istream &fin, int whichEntryInt) {
+	string whichChoice;
+	int whichChoiceInt;
+	pout << "Enter which Candidate to set\n";
+	getline(fin,whichChoice);
+	whichChoiceInt = StringToIntHelper(whichChoice);
+
+	if(be.CandidateListSize(whichEntryInt) > whichChoiceInt && whichChoiceInt >= 0) {
+		be.SetParticipant(whichEntryInt,whichChoiceInt);
+	} else {
+		pout << "Invalid Choice\n";
+	}
+}
+
+void BattleSim::Simulate(ostream &pout,ostream &fout) {
+	//TODO:
+}
+
 
 
 BattleSim::str_code BattleSim::HashString(string s) {
 	if(s == "INITCODE")
 		return INITCODE;
-	else if(s == "SETENTRY")
-		return SETENTRY;
+	else if(s == "SETCRITERIA")
+		return SETCRITERIA;
 	else if(s == "SETNAME")
 		return SETNAME;
 	else if(s == "SETMOVE")
@@ -178,8 +276,14 @@ BattleSim::str_code BattleSim::HashString(string s) {
 		return SETTYPE;
 	else if(s == "SETIV")
 		return SETIV;
+	else if(s == "EVALUATECRITERIA")
+		return EVALUATECRITERIA;
+	else if(s == "SETPARTICIPANTS")
+		return SETPARTICIPANTS;
 	else if(s == "EXIT")
 		return EXIT;
+	else if(s == "PRINTCANDIDATES")
+		return PRINTCANDIDATES;
 	else if(s == "PRINTPARTICIPANTS")
 		return PRINTPARTICIPANTS;
 	else if(s == "PRINTCRITERIA")
