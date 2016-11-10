@@ -3,23 +3,11 @@
 
 #include<iostream>
 
-//CONSTRUCTOR
+//DEFAULT CONSTRUCTOR
 BattleEvaluator::BattleEvaluator() {
 	resize(2);
 }
 
-void BattleEvaluator::resize(int n) {
-	crit.resize(n);
-	candidates.resize(n);
-	participants.resize(n);
-	res.resize(n);
-	for(int i = 0; i < n; i++) {
-		res[i].resize(n);
-		for(int j = 0; j < n; j++)
-			res[i][j].resize(4);
-	}
-	numCriteria = n;
-}
 
 BattleEvaluator::BattleEvaluator(int numPokemon) {
 	
@@ -31,7 +19,8 @@ BattleEvaluator::~BattleEvaluator() {
 
 }
 
-//SETTING CRITERIA METHODS
+//CRITERIA QUERIES
+
 void BattleEvaluator::SetName(int whichCriteria, string name) {
 	if(inBoundCriteria(whichCriteria))
 		crit[whichCriteria].name = name;
@@ -55,7 +44,13 @@ void BattleEvaluator::SetIVs(int whichCriteria,int IV) {
 			crit[whichCriteria].IV = IV;
 }
 
+void BattleEvaluator::CriteriaDescription(int whichCriteria, string &res) {
+	if(inBoundCriteria(whichCriteria) ) {
+		res = crit[whichCriteria].toString();
+	}
+}
 
+//EVALUATORS
 void BattleEvaluator::EvaluateCriteria(int whichCriteria) {
 	if(inBoundCriteria(whichCriteria) ) {
 		ef.ResetAllFilters();
@@ -68,17 +63,45 @@ void BattleEvaluator::EvaluateCriteria(int whichCriteria) {
 		ef.Evaluate(resIDs);
 		candidates[whichCriteria].resize(resIDs.size());
 		int IV = crit[whichCriteria].IV;
+		
 		for(unsigned x = 0; x < resIDs.size(); x++) {
-			candidates[whichCriteria][x] = PokemonEntry(resIDs[x],IV); //TODO: ADD IVs to criteria AND CHANGE MAGIC NUMBER
+			candidates[whichCriteria][x] = PokemonEntry(resIDs[x],IV); 
 		}		
 	}	
 }
+
+//CANDIDATE QUERIES
+
+int BattleEvaluator::CandidateListSize(int whichCriteria) {
+	if(inBoundCriteria(whichCriteria) ) {
+		return candidates[whichCriteria].size();
+	}	
+	return -1;
+}
+
+
+void BattleEvaluator::CandidateDescription(int whichCriteria, int whichEntry, string &res) {
+	if(inBoundCriteria(whichCriteria) ) {
+		if(whichEntry < (int)(candidates[whichCriteria].size() ) ) {
+			res = candidates[whichCriteria][whichEntry].toString();
+		}
+	}
+}
+
+//PARTICIPANT QUERIES
 
 void BattleEvaluator::SetParticipant(int whichCriteria, int whichEntry) {
 	if(inBoundCriteria(whichCriteria))
 		if(whichEntry >= 0 && whichEntry < (int)candidates[whichCriteria].size() )
 			participants[whichCriteria] = candidates[whichCriteria][whichEntry];
 }
+
+void BattleEvaluator::ParticipantDescription(int whichCriteria, string &res) {
+	if(inBoundCriteria(whichCriteria) ) {
+		res = participants[whichCriteria].toString();
+	}		
+}
+
 
 /*
 	i = attacker
@@ -92,65 +115,35 @@ void BattleEvaluator::Evaluate(int i, int j) {
 		res[i][j][x].participants = make_pair(participants[i].getName(),participants[j].getName() );
 		res[i][j][x].moveName = participants[i].getMove(x).name;
 	}
-/**
-		for(int i = 0; i < numCriteria; i++) {
-		cout << battleEntries[i].getName() << '\n';
-		for(int j = 0; j < 4; j++) {
-			pair<int,int> damage = battleEntries[i].getMoveDamageRange(battleEntries[1-i],j);
-			res[i][j].participants = make_pair(battleEntries[i].getName(),battleEntries[1-i].getName() );
-			res[i][j].moveName = battleEntries[i].getMove(j).name;
-			res[i][j].damage = damage;
-			cout << battleEntries[i].getMove(j).name << " does " << damage.first << " to " << damage.second << '\n';
-		}
-		cout << '\n';
-	}
-**/
+
 }
 
 
-
-
-int BattleEvaluator::CandidateListSize(int whichCriteria) {
-	if(inBoundCriteria(whichCriteria) ) {
-		return candidates.size();
-	}	
-	return -1;
-}
-
-//RESULT ACCESSOR:
 
 void BattleEvaluator::RetrieveResults(vector<BattleEvaluator::MoveResult> &results, int i, int j) {
 	results = res[i][j];
 }
 
-
-//DESCRIPTION ACCESSORS:
-
-
-void BattleEvaluator::CriteriaDescription(int whichCriteria, string &res) {
-	if(inBoundCriteria(whichCriteria) ) {
-		res = crit[whichCriteria].toString();
-	}
-}
-
 		
 
-void BattleEvaluator::CandidateDescription(int whichCriteria, int whichEntry, string &res) {
-	if(inBoundCriteria(whichCriteria) ) {
-		if(whichEntry < (int)(candidates[whichCriteria].size() ) ) {
-			res = candidates[whichCriteria][whichEntry].toString();
-		}
-	}
-}
 
-void BattleEvaluator::ParticipantDescription(int whichCriteria, string &res) {
-	if(inBoundCriteria(whichCriteria) ) {
-		res = participants[whichCriteria].toString();
-	}		
-}
 
 
 //HELPERS:
+
+
+void BattleEvaluator::resize(int n) {
+	crit.resize(n);
+	candidates.resize(n);
+	participants.resize(n);
+	res.resize(n);
+	for(int i = 0; i < n; i++) {
+		res[i].resize(n);
+		for(int j = 0; j < n; j++)
+			res[i][j].resize(4);
+	}
+	numCriteria = n;
+}
 
 int BattleEvaluator::size() {
 	return numCriteria;

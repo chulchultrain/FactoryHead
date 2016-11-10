@@ -75,9 +75,9 @@ class BattleSim {
 
 		void SetParticipants(ostream &pout,istream &fin);
 		void SetParticipant(ostream &pout, istream &fin, int whichEntryInt);
-		//void EvaluateCriteria(ostream &pout, istream &fin);
-		void Simulate(ostream &pout,ostream &fout);
 		void PrintParticipants(ostream &pout);
+		void Simulate(ostream &pout,ostream &fout);
+
 
 		bool promptSetOn;
 

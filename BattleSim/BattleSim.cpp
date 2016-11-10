@@ -11,6 +11,46 @@ BattleSim::BattleSim() {
 }
 
 
+//TOP LEVEL QUERY
+
+void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
+	string option;
+	str_code sc = INITCODE;
+	while(sc != EXIT) {	
+		pout << "Enter Choice: SETCRITERIA,EVALUATECRITERIA,SETPARTICIPANTS\n";
+		pout << "PRINTCRITERIA, PRINTCANDIDATES, PRINTPARTICIPANTS, SIMULATE\n";
+	
+		getline(fin,option);
+	
+		sc = HashString(option);
+		//TODO: EVALUATE CRITERIA OPTION
+		switch(sc) {
+			case SETCRITERIA:
+				SetCriteria(pout,fin); break;
+			case EVALUATECRITERIA:
+				EvaluateCriteria(pout,fin); break;
+			case SETPARTICIPANTS:
+				SetParticipants(pout,fin); break;
+			case PRINTCRITERIA:
+				PrintCriteria(pout,fin); break;
+			case PRINTCANDIDATES:
+				PrintCandidates(pout,fin); break;
+			case PRINTPARTICIPANTS:
+				PrintParticipants(pout); break;
+			case SIMULATE:
+				Simulate(pout,fout); break;
+			case EXIT: break;
+			default:
+				pout << "Invalid Choice\n";
+
+		}
+	}
+}
+
+
+//CRITERIA QUERIES
+
+//SET
 
 void BattleSim::SetName(ostream &pout, istream &fin, int whichCriteria) {
 	string name;
@@ -96,58 +136,7 @@ void BattleSim::SetCriteria(ostream &pout, istream &fin) {
 
 }
 
-
-
-void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
-	string option;
-	str_code sc = INITCODE;
-	while(sc != EXIT) {	
-		pout << "Enter Choice: SETCRITERIA,EVALUATECRITERIA,SETPARTICIPANTS\n";
-		pout << "PRINTCRITERIA, PRINTCANDIDATES, PRINTPARTICIPANTS, SIMULATE\n";
-	
-		getline(fin,option);
-	
-		sc = HashString(option);
-		//TODO: EVALUATE CRITERIA OPTION
-		switch(sc) {
-			case SETCRITERIA:
-				SetCriteria(pout,fin); break;
-			case EVALUATECRITERIA:
-				EvaluateCriteria(pout,fin); break;
-			case SETPARTICIPANTS:
-				SetParticipants(pout,fin); break;
-			case PRINTCRITERIA:
-				PrintCriteria(pout,fin); break;
-			case PRINTCANDIDATES:
-				PrintCandidates(pout,fin); break;
-			case PRINTPARTICIPANTS:
-				PrintParticipants(pout); break;
-			case SIMULATE:
-				Simulate(pout,fout); break;
-			case EXIT: break;
-			default:
-				pout << "Invalid Choice\n";
-
-		}
-	}
-}
-
-
-void BattleSim::EvaluateCriteria(ostream &pout, istream &fin) {
-	string whichCriteria;
-	getline(fin,whichCriteria);
-	int wcInt = StringToIntHelper(whichCriteria);
-	if(wcInt == 0 || wcInt == 1) {
-		EvaluateCriterion(pout,wcInt);
-	} else {
-		pout << "Invalid choice\n";
-	}
-}
-
-
-void BattleSim::EvaluateCriterion(ostream &pout, int whichCriteria) {
-	be.EvaluateCriteria(whichCriteria);
-}
+//RETRIEVE
 
 void BattleSim::PrintCriterion(ostream &pout, int wcInt) {
 	string r;
@@ -172,6 +161,26 @@ void BattleSim::PrintCriteria(ostream &pout, istream &fin) {
 	}
 }
 
+//EVALUATE
+//TODO:PROMPT STATEMENT
+void BattleSim::EvaluateCriteria(ostream &pout, istream &fin) {
+	string whichCriteria;
+	getline(fin,whichCriteria);
+	int wcInt = StringToIntHelper(whichCriteria);
+	if(wcInt == 0 || wcInt == 1) {
+		EvaluateCriterion(pout,wcInt);
+	} else {
+		pout << "Invalid choice\n";
+	}
+}
+
+
+void BattleSim::EvaluateCriterion(ostream &pout, int whichCriteria) {
+	be.EvaluateCriteria(whichCriteria);
+}
+
+
+//CANDIDATE QUERIES
 
 void BattleSim::PrintCandidates(ostream &pout, istream &fin) {
 	string whichEntry;
@@ -188,9 +197,12 @@ void BattleSim::PrintCandidates(ostream &pout, istream &fin) {
 		
 }
 		
+//TODO: IMPLEMENT
 void BattleSim::PrintCandidate(ostream &pout, istream &fin, int whichCriteria) {
 	cout << "DERP\n";
 }
+
+
 		
 void BattleSim::PrintAllCandidates(ostream &pout,int whichCriteria) {
 	//get num criteria not can list siz
@@ -203,31 +215,8 @@ void BattleSim::PrintAllCandidates(ostream &pout,int whichCriteria) {
 	}
 }
 
-void BattleSim::PrintParticipants(ostream &pout) {
-	//static vector<PokemonEntry> entrySelections(2);
-	string res;
-	for(unsigned i = 0; i < 2; i++) {
-		be.ParticipantDescription(i,res);
-		pout << res << '\n';
-	}
-	pout << '\n';
-}
+//PARTICIPANT QUERIES
 
-//HELPERS:
-
-int BattleSim::StringToIntHelper(const string &a) {
-	unsigned i = 0;
-	unsigned len = a.size();
-	int res = 0;
-	for(i = 0; i < len; i++) {
-		res *= 10;
-		res += (int)(a.at(i) - '0');
-		if(res < 0)
-			return -1;
-	}
-	return res;
-	
-}
 
 void BattleSim::SetParticipants(ostream &pout,istream &fin) {
 	string whichEntry;
@@ -257,9 +246,38 @@ void BattleSim::SetParticipant(ostream &pout, istream &fin, int whichEntryInt) {
 	}
 }
 
+void BattleSim::PrintParticipants(ostream &pout) {
+	//static vector<PokemonEntry> entrySelections(2);
+	string res;
+	for(unsigned i = 0; i < 2; i++) {
+		be.ParticipantDescription(i,res);
+		pout << res << '\n';
+	}
+	pout << '\n';
+}
+
+
+
 void BattleSim::Simulate(ostream &pout,ostream &fout) {
 	//TODO:
 }
+
+//HELPERS:
+
+int BattleSim::StringToIntHelper(const string &a) {
+	unsigned i = 0;
+	unsigned len = a.size();
+	int res = 0;
+	for(i = 0; i < len; i++) {
+		res *= 10;
+		res += (int)(a.at(i) - '0');
+		if(res < 0)
+			return -1;
+	}
+	return res;
+	
+}
+
 
 
 
