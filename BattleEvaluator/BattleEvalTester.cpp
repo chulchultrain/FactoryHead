@@ -61,6 +61,11 @@ void BattleEvaluatorUnitTest() {
 
 
 	PrintRes(rr);
+	be.Evaluate(1,96);	
+	be.RetrieveResults(rr,1,96);
+
+
+	PrintRes(rr);
 }
 
 int main() {

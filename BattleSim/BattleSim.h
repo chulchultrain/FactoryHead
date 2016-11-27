@@ -44,6 +44,7 @@ class BattleSim {
 			PRINTCANDIDATES,
 			PRINTPARTICIPANTS,
 			SIMULATE,
+			RETRIEVERESULTS,
 			SETCRITERIA,
 			SETNAME,
 			SETMOVE,
@@ -76,9 +77,11 @@ class BattleSim {
 		void SetParticipants(ostream &pout,istream &fin);
 		void SetParticipant(ostream &pout, istream &fin, int whichEntryInt);
 		void PrintParticipants(ostream &pout);
-		void Simulate(ostream &pout,ostream &fout);
+		void Simulate(ostream &pout,istream &fin, ostream &fout);
 
 
+		void RetrieveResults(ostream &pout,istream &fin, ostream &fout);
+		void RetrieveResult(ostream &pout, ostream &fout, int wcInt1, int wcInt2);
 		bool promptSetOn;
 
 		
@@ -86,6 +89,14 @@ class BattleSim {
 		string Prompt(ostream &pout, istream &pin);
 	//Helpers
 		int StringToIntHelper(const string &a); 
+	//TODO: a helper function that will retrieve an int from an input stream and ret a bool value that says whether or not
+	//the int value was successfully retrieved or if there were problems.
+
+
+	//Message Printers
+	//Error Message
+	void PrintOutOfBoundError(ostream &pout);
+	
 };
 
 

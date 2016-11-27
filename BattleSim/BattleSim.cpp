@@ -19,11 +19,11 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 	while(sc != EXIT) {	
 		pout << "Enter Choice: SETCRITERIA,EVALUATECRITERIA,SETPARTICIPANTS\n";
 		pout << "PRINTCRITERIA, PRINTCANDIDATES, PRINTPARTICIPANTS, SIMULATE\n";
-	
+		pout << "RETRIEVERESULTS\n";
 		getline(fin,option);
 	
 		sc = HashString(option);
-		//TODO: EVALUATE CRITERIA OPTION
+		//TODO: EVALUATE CRITERIA OPTION, print results option
 		switch(sc) {
 			case SETCRITERIA:
 				SetCriteria(pout,fin); break;
@@ -38,7 +38,9 @@ void BattleSim::Menu(ostream &pout, istream &fin, ostream &fout) {
 			case PRINTPARTICIPANTS:
 				PrintParticipants(pout); break;
 			case SIMULATE:
-				Simulate(pout,fout); break;
+				Simulate(pout,fin,fout); break;
+			case RETRIEVERESULTS:
+				RetrieveResults(pout,fin,fout); break; 
 			case EXIT: break;
 			default:
 				pout << "Invalid Choice\n";
@@ -128,10 +130,10 @@ void BattleSim::SetCriteria(ostream &pout, istream &fin) {
 	pout << "Enter Which Entry To Modify\n";
 	getline(fin,whichEntry);
 	whichEntryInt = StringToIntHelper(whichEntry);
-	if(whichEntryInt == 0 || whichEntryInt == 1) {
+	if(whichEntryInt >= 0 && whichEntryInt < be.size() ) {
 		SetCriterion(pout,fin,whichEntryInt);
 	} else {
-		pout << "Invalid Choice.(0 or 1)\n";
+		pout << "Invalid Choice\n"; //TODO: TELL SIZE?
 	}
 
 }
@@ -165,7 +167,9 @@ void BattleSim::PrintCriteria(ostream &pout, istream &fin) {
 //TODO:PROMPT STATEMENT
 void BattleSim::EvaluateCriteria(ostream &pout, istream &fin) {
 	string whichCriteria;
+	pout << "Enter which criterion to evaluate.\n";
 	getline(fin,whichCriteria);
+	
 	int wcInt = StringToIntHelper(whichCriteria);
 	if(wcInt == 0 || wcInt == 1) {
 		EvaluateCriterion(pout,wcInt);
@@ -258,9 +262,66 @@ void BattleSim::PrintParticipants(ostream &pout) {
 
 
 
-void BattleSim::Simulate(ostream &pout,ostream &fout) {
+void BattleSim::Simulate(ostream &pout,istream &fin, ostream &fout) {
 	//TODO:
+	string whichEntry;
+	int whichEntryInt1,whichEntryInt2;
+	
+	pout << "Enter first participant to set\n";
+	getline(fin,whichEntry);
+	whichEntryInt1 = StringToIntHelper(whichEntry);	
+	pout << "Enter second participant to set\n";
+	getline(fin,whichEntry);
+	whichEntryInt2 = StringToIntHelper(whichEntry);
+	if(whichEntryInt1 >= 0 && whichEntryInt1 <= 1 && whichEntryInt2 >= 0 && whichEntryInt2 <= 1) {
+		be.Evaluate(whichEntryInt1,whichEntryInt2);
+		be.Evaluate(whichEntryInt2,whichEntryInt1);
+	} else {
+		pout << "Invalid Choices\n";
+	}
 }
+
+void BattleSim::RetrieveResults(ostream &pout,istream &fin, ostream &fout) {
+	string whichEntry;
+	int whichEntryInt1,whichEntryInt2;
+	
+	pout << "Enter first participant to set\n";
+	getline(fin,whichEntry);
+	whichEntryInt1 = StringToIntHelper(whichEntry);	
+	pout << "Enter second participant to set\n";
+	getline(fin,whichEntry);
+	whichEntryInt2 = StringToIntHelper(whichEntry);	
+	if(whichEntryInt1 >= 0 && whichEntryInt1 <= 1 && whichEntryInt2 >= 0 && whichEntryInt2 <= 1) {
+		RetrieveResult(pout,fout,whichEntryInt1,whichEntryInt2);
+	} else {
+		pout << "Invalid Choices\n";
+	}
+}
+
+
+
+void PrintMoveRes(BattleEvaluator::MoveResult &r) {
+	cout << r.participants.first << " to " << r.participants.second << " using: ";
+	cout << r.moveName << " does " << r.damage.first << " to " << r.damage.second;
+	cout << ".\n";
+}
+
+void PrintRes(vector<BattleEvaluator::MoveResult> &a) {
+	int sz = a.size();
+	for(int i = 0; i < sz; i++) {
+		PrintMoveRes(a[i]);
+	}
+}
+
+void BattleSim::RetrieveResult(ostream &pout, ostream &fout, int wcInt1, int wcInt2) {
+	vector<BattleEvaluator::MoveResult> rr;
+	be.RetrieveResults(rr,wcInt1,wcInt2);
+	PrintRes(rr);
+	be.RetrieveResults(rr,wcInt2,wcInt1);
+	PrintRes(rr);	
+}
+
+
 
 //HELPERS:
 
@@ -278,7 +339,13 @@ int BattleSim::StringToIntHelper(const string &a) {
 	
 }
 
-
+//Message Printers
+//Error Message
+void BattleSim::PrintOutOfBoundError(ostream &pout) {
+	pout << "Out of Criteria Bound. Enter valid Number. ";
+	pout << 0 << " to " << be.size() - 1 << '\n';
+}
+	
 
 
 BattleSim::str_code BattleSim::HashString(string s) {
@@ -308,6 +375,8 @@ BattleSim::str_code BattleSim::HashString(string s) {
 		return PRINTCRITERIA;
 	else if(s == "SIMULATE")
 		return SIMULATE;
+	else if(s == "RETRIEVERESULTS")
+		return RETRIEVERESULTS;
 	else 
 		return INVALID;
 }
