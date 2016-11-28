@@ -104,7 +104,7 @@ void BattleSim::SetCriterion(ostream &pout, istream &fin, int whichCriteria) {
 	string option;
 	str_code sc = INITCODE;
 	while(sc != EXIT) {
-		pout << "Enter what to change.(SETNAME,SETMOVE,SETTYPE)\n";
+		pout << "Enter what to change.(SETNAME,SETMOVE,SETTYPE,SETIV)\n";
 		getline(fin,option);
 		sc = HashString(option);
 		switch(sc) {
@@ -113,7 +113,9 @@ void BattleSim::SetCriterion(ostream &pout, istream &fin, int whichCriteria) {
 			case SETMOVE: 
 				SetMoves(pout,fin,whichCriteria); break;
 			case SETTYPE:
-				SetType(pout,fin,whichCriteria);
+				SetType(pout,fin,whichCriteria); break;
+			case SETIV:
+				SetIV(pout,fin,whichCriteria); break;
 			case EXIT:
 				pout << "Exit Criteria Menu\n"; break;
 			default:
