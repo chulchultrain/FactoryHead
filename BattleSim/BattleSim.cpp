@@ -158,25 +158,24 @@ void BattleSim::PrintCriteria(ostream &pout, istream &fin) {
 	string whichCriterion;
 	getline(fin,whichCriterion);	
 	int wcInt = StringToIntHelper(whichCriterion);
-	if(wcInt == 0 || wcInt == 1) {
+	if(wcInt == 0 || wcInt == 1) { //TODO::MAGIC NUMBER HERE
 		PrintCriterion(pout, wcInt);
 	} else {
-		pout << "Invalid Choice.(0 or 1)\n";
+		pout << "Invalid Choice.\n"; //TODO: TELL SIZE?
 	}
 }
 
 //EVALUATE
-//TODO:PROMPT STATEMENT
 void BattleSim::EvaluateCriteria(ostream &pout, istream &fin) {
 	string whichCriteria;
 	pout << "Enter which criterion to evaluate.\n";
 	getline(fin,whichCriteria);
 	
 	int wcInt = StringToIntHelper(whichCriteria);
-	if(wcInt == 0 || wcInt == 1) {
+	if(wcInt == 0 || wcInt == 1) { //TODO::MAGIC NUMBER HERE
 		EvaluateCriterion(pout,wcInt);
 	} else {
-		pout << "Invalid choice\n";
+		pout << "Invalid choice\n"; //TODO: TELL SIZE?
 	}
 }
 
@@ -195,10 +194,10 @@ void BattleSim::PrintCandidates(ostream &pout, istream &fin) {
 	pout << "Enter Which Candidate List to Print from\n";
 	getline(fin,whichEntry);
 	whichEntryInt = StringToIntHelper(whichEntry);
-	if(whichEntryInt == 0 || whichEntryInt == 1) {
+	if(whichEntryInt == 0 || whichEntryInt == 1) { //TODO::MAGIC NUMBER HERE
 		PrintAllCandidates(pout, whichEntryInt);
 	} else {
-		pout << "Invalid Choice.(0 or 1)\n";
+		pout << "Invalid Choice.\n"; //TODO: TELL SIZE?
 	}
 		
 }
@@ -211,10 +210,10 @@ void BattleSim::PrintCandidate(ostream &pout, istream &fin, int whichCriteria) {
 
 		
 void BattleSim::PrintAllCandidates(ostream &pout,int whichCriteria) {
-	//get num criteria not can list siz
+
 	int sz = be.CandidateListSize(whichCriteria);
 	string res;
-	//ADD COUNTERS / A HEADER TO PRINT???
+	//TODO::ADD COUNTERS / A HEADER TO PRINT???
 	for(int i = 0; i < sz; i++) {
 		be.CandidateDescription(whichCriteria,i,res);
 		pout << res << '\n';
@@ -231,10 +230,10 @@ void BattleSim::SetParticipants(ostream &pout,istream &fin) {
 	pout << "Enter which participant to set\n";
 	getline(fin,whichEntry);
 	whichEntryInt = StringToIntHelper(whichEntry);
-	if(whichEntryInt == 0 || whichEntryInt == 1) {
+	if(whichEntryInt == 0 || whichEntryInt == 1) {  //TODO::MAGIC NUMBER HERE
 		SetParticipant(pout, fin, whichEntryInt);
 	} else {
-		pout << "Invalid choice(0 or 1)\n";
+		pout << "Invalid choice(0 or 1)\n"; //TODO: TELL SIZE?
 	}	
 }
 
@@ -253,7 +252,6 @@ void BattleSim::SetParticipant(ostream &pout, istream &fin, int whichEntryInt) {
 }
 
 void BattleSim::PrintParticipants(ostream &pout) {
-	//static vector<PokemonEntry> entrySelections(2);
 	string res;
 	for(unsigned i = 0; i < 2; i++) {
 		be.ParticipantDescription(i,res);
@@ -275,11 +273,11 @@ void BattleSim::Simulate(ostream &pout,istream &fin, ostream &fout) {
 	pout << "Enter second participant to set\n";
 	getline(fin,whichEntry);
 	whichEntryInt2 = StringToIntHelper(whichEntry);
-	if(whichEntryInt1 >= 0 && whichEntryInt1 <= 1 && whichEntryInt2 >= 0 && whichEntryInt2 <= 1) {
+	if(whichEntryInt1 >= 0 && whichEntryInt1 <= 1 && whichEntryInt2 >= 0 && whichEntryInt2 <= 1) { //TODO::MAGIC NUMBER HERE
 		be.Evaluate(whichEntryInt1,whichEntryInt2);
 		be.Evaluate(whichEntryInt2,whichEntryInt1);
 	} else {
-		pout << "Invalid Choices\n";
+		pout << "Invalid Choices\n"; //TODO: TELL SIZE?
 	}
 }
 
@@ -300,9 +298,10 @@ void BattleSim::RetrieveResults(ostream &pout,istream &fin, ostream &fout) {
 	}
 }
 
-
+//TODO::i dontl ike this organization of PMR and PR. 
 
 void PrintMoveRes(BattleEvaluator::MoveResult &r) {
+	//TODO::Replace cout. probably have to make it part of BS
 	cout << r.participants.first << " to " << r.participants.second << " using: ";
 	cout << r.moveName << " does " << r.damage.first << " to " << r.damage.second;
 	cout << ".\n";
