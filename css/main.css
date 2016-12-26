@@ -26,8 +26,11 @@
 	background-color: #33BEBE;
 	color: white;
 	border: 20px solid blue !important;
+	margin-left: auto;
+	margin-right: auto;
 	
 }
+
 
 @media only screen and (max-width: 600px) {
 	.row{
@@ -37,6 +40,7 @@
 		display:none;
 	}
 }
+
 
 .app, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
 	padding: 10px;
@@ -101,5 +105,11 @@
 	width: 100%;	
 }
 
+
+.BannerArt {
+	width: 750px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 
