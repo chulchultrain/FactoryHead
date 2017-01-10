@@ -1,6 +1,7 @@
 #include <EntryFilter/EntryFilter.h>
-
+#include <MapGenerator/MapGenerator.h>
 #include <iostream>
+#include <fstream>
 #include <cassert>
 using namespace std;
 
@@ -17,6 +18,8 @@ using namespace std;
 
 	
 */
+
+
 
 void EntryFilterUnitTest() {
 	EntryFilter ef;
@@ -68,10 +71,107 @@ void EntryFilterUnitTest() {
 	assert(res.size() == 5);
 }
 
-int main () {
 
-	EntryFilterUnitTest();
 
-	cout << "Entry Filter Tests Finished Without a Hitch\n";
+
+map<string,string> dexIdToName;
+map<string,MoveData> moveIdToMoveData;
+map<string, EntryData> eIDToED;
+
+void InitMaps() {
+	MapGenerator mg;
+	mg.DexIDToNameMap(dexIdToName);
+	mg.MoveIDToMoveDataMap(moveIdToMoveData);
+	mg.EntryIDToEntryDataMap(eIDToED);
+}
+
+/*
+	string ID;
+	string DexID;
+	vector<string> moveID;
+	string item;
+	string nature;
+	vector<int> EV;
+*/
+/*
+Name:
+
+Type:
+
+
+Moves:
+
+*/
+string PITS(int x) {
+	if(x == 0)
+		return "0";
+	string res = "";
+	while(x > 0) {
+		int dig = x % 10;
+		char c = '0' + dig;
+		res = c + res;
+		x /= 10;
+	}
+	return res;
+}
+
+string TranslateEntryData(EntryData &ed) {
+	string res = "";
+	res += (dexIdToName[ed.DexID] + "\n");
+	for(int i = 0; i < 6; i++) 
+		res += ("HP EV: " + PITS(ed.EV[i]) + "\n");
+	res += (ed.item + "\n");
+	res += (ed.nature + "\n");
+	for(int i = 0; i < 4; i++) 
+		res += (moveIdToMoveData[ed.moveID[i]].name + "\n");
+
+	return res;	
+}
+
+void ProcessFile(ifstream &fin, vector<string> &res) {
+	res.clear();
+	EntryFilter ef;
+	string temp;
+	string lastTagSeen = "";
+	int counter = 0;
+	while(getline(fin,temp)) {
+		if(lastTagSeen == "") {
+			if(temp == "Name:" || temp == "Type:" || temp == "Moves:")
+				lastTagSeen = temp;
+		} else {
+			if(temp == "Name:" || temp == "Type:" || temp == "Moves:") {
+				lastTagSeen = temp;
+				counter = 0;
+			}
+			else {
+				if(lastTagSeen == "Name:") {
+					ef.SetNameFilter(temp);
+				} else if(lastTagSeen == "Type:") {
+					ef.SetTypeFilter(counter,temp);
+					counter++;
+				} else {
+					ef.SetMoveFilter(counter,temp);
+					counter++;
+				}
+			}
+		}
+	}
+	vector<string> efres;
+	ef.Evaluate(efres);
+	int rsz = efres.size();
+	for(int i = 0; i < rsz; i++) {
+		res.push_back(TranslateEntryData(eIDToED[efres[i]]));
+	}
+}
+
+int main() {
+	InitMaps();
+	ifstream fin("inputfile.txt");
+	vector<string> res;
+	ProcessFile(fin,res);
+	int rsz = res.size();
+	for(int i = 0; i < rsz; i++) {
+		cout << res[i] << '\n';
+	}
 	return 0;
 }
