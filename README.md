@@ -24,18 +24,28 @@ Then, create your criteria file with the requirements below:
 file name:"inputfile.txt"
 file format: 
 Three tags(each on separate lines):
-"Name:"
-"Type:"
-"Moves:"
+
+Name:
+
+Type:
+
+Moves:
+
 Then below each tag you should have that information in a line.
 If you have more than one move or one type known, then put them on separate lines.
 
 e.g.:
+
 Name:
+
 Type:
+
 Fire
+
 Flying
+
 Moves:
+
 Flamethrower
 
 Should be no trailing or leading whitespaces in any of the lines.
