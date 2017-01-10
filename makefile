@@ -13,6 +13,8 @@ WS_DIR = $(FH_DIR)/WorkingStats
 DR_DIR = $(FH_DIR)/DataResolution
 BS_DIR = $(FH_DIR)/BattleSim
 BE_DIR = $(FH_DIR)/BattleEvaluator
+FT_DIR = $(FH_DIR)/Fighter
+FD_DIR = $(FH_DIR)/Field
 
 FLAGS = -I$(FH_DIR) -c -Wall
 
@@ -64,7 +66,7 @@ $(ED_DIR)/EntryData.o: $(ED_DIR)/EntryData.h $(ED_DIR)/EntryData.cpp
 $(EF_DIR)/EntryFilter.o: $(EF_DIR)/EntryFilter.h $(EF_DIR)/EntryFilter.cpp $(TE_DIR)/TypeTokenEvaluator.h $(TE_DIR)/MoveTokenEvaluator.h $(TE_DIR)/NameTokenEvaluator.h 
 	g++ $(FLAGS) -o $(EF_DIR)/EntryFilter.o $(EF_DIR)/EntryFilter.cpp
 
-$(EF_DIR)/EntryFilterTester.o: $(EF_DIR)/EntryFilter.h $(EF_DIR)/EntryFilterTester.cpp
+$(EF_DIR)/EntryFilterTester.o: $(EF_DIR)/EntryFilter.h $(EF_DIR)/EntryFilterTester.cpp $(MG_DIR)/MapGenerator.h
 	g++ $(FLAGS) -o $(EF_DIR)/EntryFilterTester.o $(EF_DIR)/EntryFilterTester.cpp
 
 $(PE_DIR)/PokemonEntry.o: $(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonEntry.cpp $(WS_DIR)/WorkingStats.h
@@ -94,3 +96,13 @@ $(BE_DIR)/BattleEvaluator.o: $(BE_DIR)/BattleEvaluator.h $(BE_DIR)/BattleEvaluat
 
 $(BE_DIR)/BattleEvalTester.o: $(BE_DIR)/BattleEvalTester.cpp $(BE_DIR)/BattleEvaluator.h
 	g++ $(FLAGS) -o $(BE_DIR)/BattleEvalTester.o $(BE_DIR)/BattleEvalTester.cpp
+
+#$(FT_DIR)/Fighter.o: $(FT_DIR)/Fighter.h $(FT_DIR)/Fighter.cpp
+#	g++ $(FLAGS) -o $(FT_DIR)/Fighter.o $(FT_DIR)/Fighter.cpp
+
+#$(FD_DIR)/Field.o: $(FD_DIR)/Field.h $(FD_DIR)/Field.cpp
+#	g++ $(FLAGS) -o $(FD_DIR)/Field.o $(FD_DIR)/Field.cpp
+
+#$(FT_DIR)/FighterFieldTester.o: (FT_DIR)/FighterFieldTester.cpp $(FT_DIR)/Fighter.h $(FD_DIR)/Field.h
+#	g++ $(FLAGS) -o $(FT_DIR)/FighterFieldTester.o $(FT_DIR)/FighterFieldTester.cpp
+
