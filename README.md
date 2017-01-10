@@ -15,6 +15,34 @@ we can map that information to the Pokemon in that list that are consistent with
 
 You feed it a little information, and it will retrieve the list of Pokemon consistent with that information.
 
+#Requirements
+GCC (TODO: Version number)
+
+#How to Use
+First, compile with command make EntryFilterTester
+Then, create your criteria file with the requirements below:
+file name:"inputfile.txt"
+file format: 
+Three tags(each on separate lines):
+"Name:"
+"Type:"
+"Moves:"
+Then below each tag you should have that information in a line.
+If you have more than one move or one type known, then put them on separate lines.
+
+e.g.:
+Name:
+Type:
+Fire
+Flying
+Moves:
+Flamethrower
+
+Should be no trailing or leading whitespaces in any of the lines.
+
+#Tested on:
+Ubuntu 12.04 32-bit machine with GCC(TODO: Version Number)
+
 #Other helpful resources
 Now, species and movesets do not give us the full picture. However, I have found a site that calculates damage done
 between two entries. That site is http://pokemonshowdown.com/damagecalc/
