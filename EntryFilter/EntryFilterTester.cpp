@@ -164,14 +164,24 @@ void ProcessFile(ifstream &fin, vector<string> &res) {
 	}
 }
 
-int main() {
-	InitMaps();
-	ifstream fin("inputfile.txt");
-	vector<string> res;
-	ProcessFile(fin,res);
+void OutputList(ostream &fout, string title, vector<string> &res) {
+	fout << title << '\n';
 	int rsz = res.size();
 	for(int i = 0; i < rsz; i++) {
-		cout << res[i] << '\n';
+		fout << res[i] << '\n';
+	}
+
+}
+
+int main(int nargs, char* args[]) {
+	InitMaps();
+	//ifstream fin("inputfile.txt");
+	vector<string> res;
+	for(int i = 1; i < nargs; i++) {
+		ifstream fin(args[i] );
+		ProcessFile(fin,res);
+		fin.close();
+		OutputList(cout,args[i],res);
 	}
 	return 0;
 }
