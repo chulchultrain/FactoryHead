@@ -16,7 +16,7 @@ we can map that information to the Pokemon in that list that are consistent with
 You feed it a little information, and it will retrieve the list of Pokemon consistent with that information.
 
 #Requirements
-GCC (TODO: Version number)
+GCC 4.6.3
 
 #How to Use
 First, compile with command make EntryFilterTester
@@ -51,7 +51,7 @@ Flamethrower
 Should be no trailing or leading whitespaces in any of the lines.
 
 #Tested on:
-Ubuntu 12.04 32-bit machine with GCC(TODO: Version Number)
+Ubuntu 12.04 32-bit machine with GCC 4.6.3
 
 #Other helpful resources
 Now, species and movesets do not give us the full picture. However, I have found a site that calculates damage done
