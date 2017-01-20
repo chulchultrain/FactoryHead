@@ -57,6 +57,9 @@ Ubuntu 12.04 32-bit machine with GCC 4.6.3
 Now, species and movesets do not give us the full picture. However, I have found a site that calculates damage done
 between two entries. That site is http://pokemonshowdown.com/damagecalc/
 
+#Future Projects
+That damage calculator site does not have everything to fully simulate a battle.(It does not account for stat changes due to things like swords dance, and effectively is only one turn deep. This gives motivation to create a Battle Simulator that accounts for all these things and can fully simulate and follow a battle N turns deep.
+
 #Problems
 I have recently found out that the PsyPokes Pokemon Entry List is not 100% accurate with respect to EVs(every other aspect
 of data is accurate). Also, this list does not include Pokemon abilities(e.g. Synchronize, Sand Veil).
