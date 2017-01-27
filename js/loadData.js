@@ -16,7 +16,8 @@ function loadDoc(url,doFunc) {
 function ff(xhttp) {
 	var newText = xhttp.responseText.split("\n");
 	for(var e in newText) {
-		console.log(e);
+		if(newText[e] != "")
+			console.log(newText[e]);
 	}
 }
 
