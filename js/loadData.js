@@ -46,10 +46,14 @@ function LoadNameToDexIDMap(xhttp) {
 		i++;
 		var key = newText[i];
 		NameToDexIDMap[key] = value;
+		i++;
 	}
 	//TODO: Rid console log
 	for(var e in NameToDexIDMap) {
-		console.log(e + ' ' + NameToDexIDMap[e]);
+		if(NameToDexIDMap.hasOwnProperty(e) ) {
+			console.log("HI");
+			console.log(e + ' ' + NameToDexIDMap[e]);
+		}
 	}
 }
 
