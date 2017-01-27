@@ -49,7 +49,7 @@ function LoadNameToDexIDMap(xhttp) {
 	}
 	//TODO: Rid console log
 	for(var e in NameToDexIDMap) {
-		console.log(e + ' ' NameToDexIDMap[e]);
+		console.log(e + ' ' + NameToDexIDMap[e]);
 	}
 }
 
