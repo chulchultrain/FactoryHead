@@ -32,32 +32,45 @@ function loadDoc(url,doFunc) {
 	xhttp.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200) {
 			doFunc(xhttp);
+			console.log("AFTER LOAD DOC");
 		}
 	}
 	xhttp.open("GET",url,true);
 	xhttp.send();
-	
+
 }
 
 function LoadNameToDexIDMap(xhttp) {
+	console.log(xhttp.responseText);
+	/*
 	var newText = xhttp.responseText.split("\n");
 	console.log("I have started logging Func");
 	for(var i = 0; i < newText.length; i++) {
 		var value = newText[i];
 		i++;
 		var key = newText[i];
-		NameToDexIDMap[key] = value;
+		if(key != undefined) {
+			NameToDexIDMap[key] = value;
+			console.log(key + ' ' + value + ' ' + typeof key + ' ' + typeof value);			
+		}
+
 		i++;
 	}
 	console.log("I have finished initializing map");
+	*/
 	//TODO: Rid console log
+	/*
 	for(var e in NameToDexIDMap) {
 		if(NameToDexIDMap.hasOwnProperty(e) ) {
-			console.log("HI");
-			console.log(e + ' ' + NameToDexIDMap[e]);
+			//console.log("HI");
+			console.log(e + ' ' + NameToDexIDMap[e] + ' ' + typeof e + ' ' + typeof NameToDexIDMap[e]);
 		}
 	}
+	*/
 	console.log("I have finished printing map");
+	console.log(NameToDexIDMap.Bulbasaur);
+	console.log(NameToDexIDMap["Bulbasaur"]);
+	return false;
 }
 
 function LoadMoveNameToMoveIDMap(xhttp) {
@@ -85,5 +98,37 @@ function ff(xhttp) {
 	}
 }
 
+function CalculateNameQuery() {
+	var nameVal = document.getElementById("nameInput").value;
+	console.log(NameToDexIDMap.Ivysaur);
+	console.log(nameVal);
+	console.log("Function Called");
+	/*
+	for(var e in NameToDexIDMap) {
+		if(e == nameVal) {
+			console.log(NameToDexIDMap[e]);
+		} else {
+			console.log(e + ' ' + typeof e + ' ' + nameVal + ' ' + typeof nameVal );			
+		}
+	}
+	*/
+	//document.getElementById("resOutput").value = NameToDexIDMap[nameVal];
+	if(NameToDexIDMap.hasOwnProperty(nameVal)) {
+		//$("#header").append(NameToDexIDMap[nameVal]);
+		//console.log(NameToDexIDMap[nameVal]);
+		document.getElementById("resOutput").value = NameToDexIDMap[nameVal];
+	} else {
+		console.log("CANNOT FIND");
+	}
+	return false;
+}
 
 loadDoc("BASE/NAME/Names.txt",LoadNameToDexIDMap);
+console.log("AFTER ALL");
+
+var derpus = {};
+var a = "100";
+derpus[a] = "200";
+var b = "100";
+console.log(derpus.b);
+console.log(derpus[b]);
