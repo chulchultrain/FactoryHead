@@ -41,6 +41,7 @@ function loadDoc(url,doFunc) {
 
 function LoadNameToDexIDMap(xhttp) {
 	var newText = xhttp.responseText.split("\n");
+	console.log("I have started logging Func");
 	for(var i = 0; i < newText.length; i++) {
 		var value = newText[i];
 		i++;
@@ -48,6 +49,7 @@ function LoadNameToDexIDMap(xhttp) {
 		NameToDexIDMap[key] = value;
 		i++;
 	}
+	console.log("I have finished initializing map");
 	//TODO: Rid console log
 	for(var e in NameToDexIDMap) {
 		if(NameToDexIDMap.hasOwnProperty(e) ) {
@@ -55,6 +57,7 @@ function LoadNameToDexIDMap(xhttp) {
 			console.log(e + ' ' + NameToDexIDMap[e]);
 		}
 	}
+	console.log("I have finished printing map");
 }
 
 function LoadMoveNameToMoveIDMap(xhttp) {
