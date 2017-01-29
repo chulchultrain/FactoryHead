@@ -19,7 +19,7 @@
 	Only things I can see is from headers from the requests. I seriously doubt I'll go over 100GB a month.
 */
 
-var NameToDexIDMap = {};
+var NameToDexIDMap = { 'Bulbasaur':'001'};
 var MoveNameToMoveIDMap = {};
 var DexIDToTypeMap = {};
 var DexIDToEntryIDMap = {};
@@ -29,6 +29,7 @@ var EntryIDToEntryDataMap = {};
 
 function loadDoc(url,doFunc) {
 	var xhttp = new XMLHttpRequest();
+	xhttp.responseType = 'text';
 	xhttp.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200) {
 			doFunc(xhttp);
@@ -41,35 +42,24 @@ function loadDoc(url,doFunc) {
 }
 
 function LoadNameToDexIDMap(xhttp) {
-	console.log(xhttp.responseText);
-	/*
+	
 	var newText = xhttp.responseText.split("\n");
-	console.log("I have started logging Func");
+	//console.log("I have started logging Func");
 	for(var i = 0; i < newText.length; i++) {
-		var value = newText[i];
-		i++;
-		var key = newText[i];
-		if(key != undefined) {
+		if(newText[i] != undefined && newText[i+1] != undefined) {
+			var value = newText[i].trim();
+			i++;
+			var key = newText[i].trim();
 			NameToDexIDMap[key] = value;
-			console.log(key + ' ' + value + ' ' + typeof key + ' ' + typeof value);			
+			//console.log(key + ' ' + value + ' ' + typeof key + ' ' + typeof value);			
+			i++;			
 		}
 
-		i++;
 	}
-	console.log("I have finished initializing map");
-	*/
+	//console.log("I have finished initializing map");
+	
 	//TODO: Rid console log
-	/*
-	for(var e in NameToDexIDMap) {
-		if(NameToDexIDMap.hasOwnProperty(e) ) {
-			//console.log("HI");
-			console.log(e + ' ' + NameToDexIDMap[e] + ' ' + typeof e + ' ' + typeof NameToDexIDMap[e]);
-		}
-	}
-	*/
-	console.log("I have finished printing map");
-	console.log(NameToDexIDMap.Bulbasaur);
-	console.log(NameToDexIDMap["Bulbasaur"]);
+	//console.log("I have finished printing map");
 	return false;
 }
 
@@ -98,24 +88,22 @@ function ff(xhttp) {
 	}
 }
 
+function objSize(obj) {
+	var size = 0;
+	for(var e in obj) {
+		size++;
+	}
+	return size;
+}
+
 function CalculateNameQuery() {
-	var nameVal = document.getElementById("nameInput").value;
-	console.log(NameToDexIDMap.Ivysaur);
+	var nameVal = document.getElementById("nameInput").value.trim();
+	/*
+
 	console.log(nameVal);
 	console.log("Function Called");
-	/*
-	for(var e in NameToDexIDMap) {
-		if(e == nameVal) {
-			console.log(NameToDexIDMap[e]);
-		} else {
-			console.log(e + ' ' + typeof e + ' ' + nameVal + ' ' + typeof nameVal );			
-		}
-	}
 	*/
-	//document.getElementById("resOutput").value = NameToDexIDMap[nameVal];
 	if(NameToDexIDMap.hasOwnProperty(nameVal)) {
-		//$("#header").append(NameToDexIDMap[nameVal]);
-		//console.log(NameToDexIDMap[nameVal]);
 		document.getElementById("resOutput").value = NameToDexIDMap[nameVal];
 	} else {
 		console.log("CANNOT FIND");
@@ -124,11 +112,3 @@ function CalculateNameQuery() {
 }
 
 loadDoc("BASE/NAME/Names.txt",LoadNameToDexIDMap);
-console.log("AFTER ALL");
-
-var derpus = {};
-var a = "100";
-derpus[a] = "200";
-var b = "100";
-console.log(derpus.b);
-console.log(derpus[b]);
