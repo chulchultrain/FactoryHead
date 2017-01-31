@@ -19,11 +19,17 @@
 	Only things I can see is from headers from the requests. I seriously doubt I'll go over 100GB a month.
 */
 
-var NameToDexIDMap = { 'Bulbasaur':'001'};
-var MoveNameToMoveIDMap = {};
+var NameToDexIDMap = {};
+var MoveIDToMoveNameMap = {};
 var DexIDToTypeMap = {};
 var DexIDToEntryIDMap = {};
 var EntryIDToEntryDataMap = {};
+
+
+var NameDataLoaded = false;
+var TypeDataLoaded = false;
+var EntryDataLoaded = false;
+var MoveDataLoaded = false;
 
 
 
@@ -34,12 +40,20 @@ function loadDoc(url,doFunc) {
 		if(this.readyState == 4 && this.status == 200) {
 			doFunc(xhttp);
 			console.log("AFTER LOAD DOC");
+			if(AllLoadedQuery()) {
+				LoadRestData();
+			}
 		}
 	}
 	xhttp.open("GET",url,true);
 	xhttp.send();
 
 }
+
+function LoadRestData() {
+	LoadDexIDToEntryIDMap();	
+}
+
 
 function LoadNameToDexIDMap(xhttp) {
 	
@@ -60,40 +74,107 @@ function LoadNameToDexIDMap(xhttp) {
 	
 	//TODO: Rid console log
 	//console.log("I have finished printing map");
+	NameDataLoaded = true;
 	return false;
 }
 
-function LoadMoveNameToMoveIDMap(xhttp) {
+function LoadMoveIDToMoveNameMap(xhttp) {
+	var newText = xhttp.responseText.split('\n');
+	for(var i = 0; i < newText.length; i += 6) {
+		if(newText[i+1] != undefined) {
+			var moveID = newText[i].trim();
+			var moveName = newText[i+1].trim();
+			MoveIDToMoveNameMap[moveID] = moveName;			
+		}
 
+		
+	}
+	MoveDataLoaded = true;
 }
 
-function LoadDexIDToTypeMap(xhttp) {
 
+function CreateEntryData(unfilteredDataArray){ 
+	var i = 0;
+	var entryData = {};
+	var dataArray = [];
+	for(var k = 0; k < unfilteredDataArray.length; k++) {
+		dataArray.push(unfilteredDataArray[k].trim());
+	}
+	entryData.entryID = dataArray[i];
+	i++;
+	entryData.dexID = dataArray[i];
+	i++;
+	entryData.moves = [];
+	for(var j = 0; j < 4; j++,i++) {
+		entryData.moves.push(dataArray[i]);
+	}
+	entryData.item = dataArray[i];
+	i++;
+	entryData.nature = dataArray[i];
+	i++;
+	entryData.EVs = [];
+	for(var k = 0; k < 6; k++,i++) {
+		entryData.EVs.push(dataArray[i]);
+	}
+	return entryData;
+}
+
+function LoadDexIDToEntryIDMap() {
+	for(var eID in EntryIDToEntryDataMap) {
+		var entryData = EntryIDToEntryDataMap[eID];
+		if(!DexIDToEntryIDMap.hasOwnProperty(entryData.dexID)) {
+			DexIDToEntryIDMap[entryData.dexID] = [];
+		}
+		DexIDToEntryIDMap[entryData.dexID].push(entryData.entryID);
+	}
+	console.log("DIDENTRYIDFIN");
 }
 
 function LoadEntryIDToEntryDataMap(xhttp) {
-
-}
-
-function CalculateNameToEntryIDMap() {
-
-}
-
-
-function ff(xhttp) {
-	var newText = xhttp.responseText.split("\n");
-	for(var e in newText) {
-		if(newText[e] != "")
-			console.log(newText[e]);
+	var newText = xhttp.responseText.split('\n');
+	for(var i = 0; i < newText.length; i += 15) {
+		var entryData = CreateEntryData(newText.slice(i,i+14));
+		//console.log(newText[i]);
+		EntryIDToEntryDataMap[entryData.entryID] = entryData;
 	}
+	
+	EntryDataLoaded = true;
+	console.log("Finised This one");
+	return false;
 }
 
-function objSize(obj) {
-	var size = 0;
-	for(var e in obj) {
-		size++;
+
+
+function LoadDexIDToTypeMap(xhttp) {
+	var newText = xhttp.responseText.split('\n');
+	for(var i = 0; i < newText.length; i++) {
+		if(newText[i] != undefined) {
+			var dataPieces = newText[i].trim().split(' ');
+			var dexID = dataPieces[0];
+			var numTypes = Number(dataPieces[1]);
+			var typeList = [];
+			for(var j = 0; j < numTypes; j++) {
+				typeList.push(dataPieces[j+2]);
+			}
+			DexIDToTypeMap[dexID] = typeList;
+		}
+
 	}
-	return size;
+	TypeDataLoaded = true;
+}
+
+function StringListIntersection(list1,list2) {
+	var res = [];
+	var seen = {};
+	for(var i = 0; i < list1.length; i++) {
+		seen[list1[i]] = true;
+	}
+	for(var j = 0; j < list2.length; j++) {
+		if(seen.hasOwnProperty(list2[j]) ) {
+			res.push(list2[j]);
+		}
+	}
+	return res;
 }
 
 function CalculateNameQuery() {
@@ -104,11 +185,69 @@ function CalculateNameQuery() {
 	console.log("Function Called");
 	*/
 	if(NameToDexIDMap.hasOwnProperty(nameVal)) {
-		document.getElementById("resOutput").value = NameToDexIDMap[nameVal];
-	} else {
-		console.log("CANNOT FIND");
+		var dID = NameToDexIDMap[nameVal];
+		if(DexIDToEntryIDMap.hasOwnProperty(dID)) {
+			return DexIDToEntryIDMap[dID];
+		}
 	}
+	
+	return [];
+}
+
+function CalculateEntryQuery() {
+	var resList = [];
+
+	var NameQueryResIDs = CalculateNameQuery();
+	if(NameQueryResIDs.length > 0) {
+		resList.push(NameQueryResIDs);
+	} else {
+		console.log("GG Failed");
+	}
+	var res = [];
+	if(resList.length >= 2) {
+		res = StringListIntersection(resList[0],resList[1]);
+		for(var i = 2; i < resList.length; i++) {
+			res = StringListIntersection(res,resList[i]);
+		}
+	} else {
+		res = resList[0];
+	}
+	
+	var whichEntry = Number(document.getElementById("whichEntryInput").value);
+	var chosenOne = res[whichEntry % (res.length)];
+	OutputEntryData(chosenOne);
 	return false;
 }
 
-loadDoc("BASE/NAME/Names.txt",LoadNameToDexIDMap);
+function OutputEntryData(x) {
+	//TODO: Type
+	var entryData = EntryIDToEntryDataMap[x];
+	if(entryData == undefined) {
+		console.log("und");
+		return false;
+	}
+	document.getElementById("typeOutput").value = DexIDToTypeMap[entryData.dexID].join(' ');
+	for(var i = 0; i < 4; i++) {
+		document.getElementById("moveOutput" + String(i)).value = MoveIDToMoveNameMap[entryData.moves[i]];
+	}
+	for(var j = 0; j < 6; j++) {
+		document.getElementById("EVOutput" + String(j)).value = entryData.EVs[j];
+	}
+	document.getElementById("itemOutput").value = entryData.item;
+	document.getElementById("natureOutput").value = entryData.nature;
+	return false;
+}
+
+function AllLoadedQuery() {
+	return NameDataLoaded && EntryDataLoaded && TypeDataLoaded && MoveDataLoaded;
+}
+
+function LoadAllData() {
+	loadDoc("BASE/NAME/Names.txt",LoadNameToDexIDMap);
+	loadDoc("BASE/ENTRY/OutputEntryData.txt",LoadEntryIDToEntryDataMap);
+	loadDoc("BASE/TYPE/Types.txt",LoadDexIDToTypeMap);
+	loadDoc("BASE/MOVE/MoveData.txt",LoadMoveIDToMoveNameMap);
+
+}
+
+LoadAllData();
