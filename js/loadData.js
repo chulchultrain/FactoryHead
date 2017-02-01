@@ -20,11 +20,57 @@
 */
 
 var NameToDexIDMap = {};
+var DexIDToNameMap = {};
 var MoveIDToMoveNameMap = {};
+var MoveNameToMoveIDMap = {};
 var DexIDToTypeMap = {};
+var TypeToEntryIDMap = {};
 var DexIDToEntryIDMap = {};
+var MoveIDToEntryIDMap = {};
 var EntryIDToEntryDataMap = {};
 
+function LoadMoveIDToEntryIDMap() {
+	for(var entryID in EntryIDToEntryDataMap) {
+		var moveList = EntryIDToEntryDataMap[entryID].moves;
+		if(moveList != undefined) {
+			for(var i = 0; i < moveList.length; i++) {
+				if(!MoveIDToEntryIDMap.hasOwnProperty(moveList[i])) {
+					MoveIDToEntryIDMap[moveList[i]] = [];
+				}
+				MoveIDToEntryIDMap[moveList[i]].push(entryID);
+			}
+		}
+	}
+}
+
+function LoadDexIDToNameMap() {
+	for(var name in NameToDexIDMap) {
+		var dexID = NameToDexIDMap[name];
+		DexIDToNameMap[dexID] = name;
+	}
+}
+
+function LoadMoveNameToMoveIDMap() {
+	for(var moveID in MoveIDToMoveNameMap) {
+		var moveName = MoveIDToMoveNameMap[moveID];
+		MoveNameToMoveIDMap[moveName] = moveID;
+	}
+}
+
+function LoadTypeToEntryIDMap() {
+	for(var entryID in EntryIDToEntryDataMap) {
+		var typeList = DexIDToTypeMap[EntryIDToEntryDataMap[entryID].dexID];
+		if(typeList != undefined) {
+			for(var i = 0; i < typeList.length; i++) {
+				if(!TypeToEntryIDMap.hasOwnProperty(typeList[i]) ) {
+					TypeToEntryIDMap[typeList[i]] = [];
+				}
+				TypeToEntryIDMap[typeList[i]].push(entryID);
+			}			
+		}
+
+	}
+}
 
 var NameDataLoaded = false;
 var TypeDataLoaded = false;
@@ -51,7 +97,11 @@ function loadDoc(url,doFunc) {
 }
 
 function LoadRestData() {
-	LoadDexIDToEntryIDMap();	
+	LoadDexIDToEntryIDMap();
+	LoadDexIDToNameMap();
+	LoadMoveNameToMoveIDMap();
+	LoadTypeToEntryIDMap();	
+	LoadMoveIDToEntryIDMap();
 }
 
 
@@ -194,14 +244,33 @@ function CalculateNameQuery() {
 	return [];
 }
 
-function CalculateEntryQuery() {
-	var resList = [];
+function CalculateTypeQuery() {
+	var typeVal = document.getElementById("typeInput").value.trim();
+	if(TypeToEntryIDMap.hasOwnProperty(typeVal)) {
+		return TypeToEntryIDMap[typeVal];
+	}
+	return [];
+}
 
-	var NameQueryResIDs = CalculateNameQuery();
-	if(NameQueryResIDs.length > 0) {
-		resList.push(NameQueryResIDs);
-	} else {
-		console.log("GG Failed");
+function CalculateSingleMoveQuery(move) {
+	var moveID = MoveNameToMoveIDMap[move];
+	if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
+		var moveID = MoveNameToMoveIDMap[move];
+		if(MoveIDToEntryIDMap.hasOwnProperty(moveID) ) {
+			return MoveIDToEntryIDMap[moveID];
+		}
+	}
+
+	return [];
+}
+
+function CalculateMovesQuery() {
+	var resList = [];
+	for(var i = 0; i < 4; i++) {
+		var moveName = document.getElementById("moveInput" + String(i)).value.trim();
+		if(moveName.length > 0) {
+			resList.push(CalculateSingleMoveQuery(moveName));
+		}
 	}
 	var res = [];
 	if(resList.length >= 2) {
@@ -212,7 +281,39 @@ function CalculateEntryQuery() {
 	} else {
 		res = resList[0];
 	}
-	
+	return res;
+}
+
+function CalculateEntryQuery() {
+	var resList = [];
+
+	var NameQueryResIDs = CalculateNameQuery();
+	if(NameQueryResIDs.length > 0) {
+		resList.push(NameQueryResIDs);
+	} else {
+		console.log("GG Failed");
+	}
+	var TypeQueryResIDs = CalculateTypeQuery();
+	if(TypeQueryResIDs.length > 0) {
+		resList.push(TypeQueryResIDs);
+	} else {
+		console.log("Type Fail");
+	}
+	var MoveQueryResIDs = CalculateMovesQuery();
+	if(MoveQueryResIDs.length > 0) {
+		resList.push(MoveQueryResIDs);
+	} else {
+		console.log("Move Fail");
+	}
+	var res = [];
+	if(resList.length >= 2) {
+		res = StringListIntersection(resList[0],resList[1]);
+		for(var i = 2; i < resList.length; i++) {
+			res = StringListIntersection(res,resList[i]);
+		}
+	} else {
+		res = resList[0];
+	}	
 	var whichEntry = Number(document.getElementById("whichEntryInput").value);
 	var chosenOne = res[whichEntry % (res.length)];
 	OutputEntryData(chosenOne);
