@@ -278,11 +278,15 @@ function CalculateMovesQuery() {
 		for(var i = 2; i < resList.length; i++) {
 			res = StringListIntersection(res,resList[i]);
 		}
-	} else {
+	} else if(resList.length == 1){
 		res = resList[0];
+	} else {
+		res = resList;
 	}
 	return res;
 }
+
+var queryRes = [];
 
 function CalculateEntryQuery() {
 	var resList = [];
@@ -314,8 +318,14 @@ function CalculateEntryQuery() {
 	} else {
 		res = resList[0];
 	}	
+	queryRes = res;
+	document.getElementById("querySize").value = res.length;
+	return false;
+}
+
+function GetSelectedEntry() {
 	var whichEntry = Number(document.getElementById("whichEntryInput").value);
-	var chosenOne = res[whichEntry % (res.length)];
+	var chosenOne = queryRes[whichEntry % (queryRes.length)];
 	OutputEntryData(chosenOne);
 	return false;
 }
