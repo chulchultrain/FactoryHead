@@ -5,6 +5,7 @@
 <head>
 	<meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -35,47 +36,43 @@
 		</div>
 		
 		<div class = "row">
-			<form id = "inputForm" onsubmit = "return CalculateEntryQuery();">
-				Name Input <input id = "nameInput" type = "text"> <br>
-				Type Input <input id = "typeInput" type = "text"> <br>
-				Move Input 0<input id = "moveInput0" type = "text"> <br>
-				Move Input 1<input id = "moveInput1" type = "text"> <br>
-				Move Input 2<input id = "moveInput2" type = "text"> <br>
-				Move Input 3<input id = "moveInput3" type = "text"> <br>
+			<form id = "entryInputForm"  onsubmit = "return CalculateEntryQuery();">
 
-				<input type = "submit" value = "submit"> <br>
-				Query Size<input id = "querySize" type = "text"> <br>
+			</form>
+		</div>
+		
+		<div class = "row">
+			<form id = 'querySizeForm'>
 			</form>
 		</div>
 		
 		<div class = "row">
 			<form id = "whichEntryForm" onsubmit = "return GetSelectedEntry();">
-				Which Entry Input <input id = "whichEntryInput" type = "text"> <br>
-				<input type = "submit" value = "Submit">
-				
+
 			</form>
 		
 		<div class = "row">
-			<form id = "outputForm">
-				Type Output<input id = "typeOutput" type = "text"> <br>
-				Move Output 0<input id = "moveOutput0" type = "text"> <br>
-				Move Output 1<input id = "moveOutput1" type = "text"> <br>
-				Move Output 2<input id = "moveOutput2" type = "text"> <br>
-				Move Output 3<input id = "moveOutput3" type = "text"> <br>
-				Item Output<input id = "itemOutput" type = "text"> <br>
-				Nature Output<input id = "natureOutput" type = "text"> <br>
-				HP EV Output<input id = "EVOutput0" type = "text"> <br>
-				Attack EV Output<input id = "EVOutput1" type = "text"> <br>
-				Defense EV Output<input id = "EVOutput2" type = "text"> <br>
-				Special Attack EV Output<input id = "EVOutput3" type = "text"> <br>
-				Special Defense EV Output<input id = "EVOutput4" type = "text"> <br>
-				Speed EV Output<input id = "EVOutput5" type = "text"> <br>
+			<form id = "entryOutputForm">
+
 			</form>
 		<script src = "js/formQuery.js"></script>		
 		<div Id = "queryResultsRow" class = "row">
 			
 		</div>
+		
 	</div>
+	
+	<div class = "row">
+		<select id = "selectForm">
+			<option value="volvo">Volvo</option>
+			<option value="saab">Saab</option>
+			<option value="mercedes">Mercedes</option>
+		</select>
+	</div>
+
+	
+	
+	<script src = "js/dynamicBuild.js"></script>
 </body>
 
 </html>

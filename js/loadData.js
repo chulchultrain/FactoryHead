@@ -29,6 +29,7 @@ var DexIDToEntryIDMap = {};
 var MoveIDToEntryIDMap = {};
 var EntryIDToEntryDataMap = {};
 
+
 function LoadMoveIDToEntryIDMap() {
 	for(var entryID in EntryIDToEntryDataMap) {
 		var moveList = EntryIDToEntryDataMap[entryID].moves;

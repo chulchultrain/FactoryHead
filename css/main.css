@@ -112,4 +112,7 @@
 	margin-right: auto;
 }
 
-
+#entryInputForm,#querySizeForm,#whichEntryForm,#entryOutputForm {
+	margin-left: auto;
+	margin-right: auto;
+}
