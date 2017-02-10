@@ -347,6 +347,8 @@ function OutputEntryData(x) {
 	}
 	document.getElementById("itemOutput").value = entryData.item;
 	document.getElementById("natureOutput").value = entryData.nature;
+	$('#nonono').append("nerpus");
+	$('#outputTag').val(entryData.item);
 	return false;
 }
 
