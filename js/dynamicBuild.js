@@ -1,4 +1,5 @@
 var inputTemplate = '%description%<input id = "%id%" type = "text"> <br>'
+var outputTemplate = '%description%: <output id = "%id%"></output> <br>'
 
 var entryInputFormID = 'entryInputForm';
 var inputSubmitButton = '<input type = "submit" value = "submit"> <br>';
@@ -8,6 +9,10 @@ var whichEntryFormID = 'whichEntryForm';
 
 function BuildInputString(id,description) {
 	return inputTemplate.replace('%id%',id).replace('%description%',description);
+}
+
+function BuildOutputString(id,description) {
+	return outputTemplate.replace('%id%',id).replace('%description%',description);
 }
 
 var entryInputFormItems = [
@@ -45,20 +50,26 @@ var entryOutputFormItems = [
 	['EVOutput5','Speed EV Output']
 ];
 
-function BuildFormItems(formID,formItems) {
+function BuildInputItems(formID,formItems) {
 	for(var i = 0; i < formItems.length; i++) {
 		$('#' + formID).append(BuildInputString(formItems[i][0],formItems[i][1]));
 	}	
 }
 
+function BuildOutputItems(formID,formItems) {
+	for(var i = 0; i < formItems.length; i++) {
+		$('#' + formID).append(BuildOutputString(formItems[i][0],formItems[i][1]));
+	}	
+}
+
 
 function BuildInputForm(formID,formItems) {
-	BuildFormItems(formID,formItems);
+	BuildInputItems(formID,formItems);
 	$('#' + formID).append(inputSubmitButton);
 }
 
 function BuildOutputForm(formID,formItems) {
-	BuildFormItems(formID,formItems);
+	BuildOutputItems(formID,formItems);
 }
 
 

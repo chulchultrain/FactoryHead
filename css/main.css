@@ -1,5 +1,5 @@
 * {
-	border: 1px solid red !important;
+	//border: 1px solid red !important;
 }
 
 * {
@@ -20,6 +20,7 @@
 	display:flex;
 	flex-wrap:wrap;
 	overflow:auto;
+	border-bottom: 5px solid red !important;
 }
 
 .Title {
@@ -105,6 +106,17 @@
 	width: 100%;	
 }
 
+input {
+		//padding: 20px;
+		margin:20px;
+}
+
+output {
+	width:20px;
+	margin-bottom:50px;
+	background:red;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.25);
+}
 
 .BannerArt {
 	width: 750px;
@@ -115,4 +127,5 @@
 #entryInputForm,#querySizeForm,#whichEntryForm,#entryOutputForm {
 	margin-left: auto;
 	margin-right: auto;
+	text-align:center;
 }
