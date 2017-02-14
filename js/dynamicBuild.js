@@ -1,11 +1,15 @@
-var inputTemplate = '%description%<input id = "%id%" type = "text"> <br>'
-var outputTemplate = '%description%: <output id = "%id%"></output> <br>'
+var inputTemplate = '<p class = "inputSpace"><span class = "inputDescriptionClass">%description%</span><input id = "%id%" type = "text"> </p>'
+var outputTemplate = '<p class = "outputSpace"> <span class = "outputDescriptionClass">%description%: </span><output id = "%id%"></output> </p>'
 
 var entryInputFormID = 'entryInputForm';
 var inputSubmitButton = '<input type = "submit" value = "submit"> <br>';
+var customSubmitButton = '<input type = "submit" value = "%text%"> <br>';
 var entryOutputFormID = 'entryOutputForm';
+var entryOutputSpaceID = 'entryOutputPart';
 var querySizeFormID = 'querySizeForm';
 var whichEntryFormID = 'whichEntryForm';
+var prevEntryFormID = 'prevEntryForm';
+var nextEntryFormID = 'nextEntryForm';
 
 function BuildInputString(id,description) {
 	return inputTemplate.replace('%id%',id).replace('%description%',description);
@@ -13,6 +17,10 @@ function BuildInputString(id,description) {
 
 function BuildOutputString(id,description) {
 	return outputTemplate.replace('%id%',id).replace('%description%',description);
+}
+
+function BuildCustomSubmitButtonString(val) {
+	return customSubmitButton.replace('%text%',val);
 }
 
 var entryInputFormItems = [
@@ -35,19 +43,35 @@ var whichEntryFormItems = [
 ];
 
 var entryOutputFormItems = [
+	
+	[
+	['nameOutput','Name Output'],
 	['typeOutput','Type Output'],
+	['itemOutput','Item Output'],
+	['natureOutput','Nature Output']
+	],
+	[
 	['moveOutput0','Move Output 0'],
 	['moveOutput1','Move Output 1'],
 	['moveOutput2','Move Output 2'],
-	['moveOutput3','Move Output 3'],
-	['itemOutput','Item Output'],
-	['natureOutput','Nature Output'],
+	['moveOutput3','Move Output 3']
+	],
+	[
+	['baseStatOutput0','HP Base Stat'],
+	['baseStatOutput1','A Base Stat'],
+	['baseStatOutput2','D Base Stat'],
+	['baseStatOutput3','SA Base Stat'],
+	['baseStatOutput4','SD Base Stat'],
+	['baseStatOutput5','S Base Stat']
+	],
+	[
 	['EVOutput0','HP EV Output'],
 	['EVOutput1','Attack EV Output'],
 	['EVOutput2','Defense EV Output'],
 	['EVOutput3','Special Attack EV Output'],
 	['EVOutput4','Special Defense EV Output'],
 	['EVOutput5','Speed EV Output']
+	]
 ];
 
 function BuildInputItems(formID,formItems) {
@@ -91,9 +115,33 @@ function BuildWhichEntryInputForm() {
 function BuildEntryOutputForm() {
 	BuildOutputForm(entryOutputFormID,entryOutputFormItems);
 }
+
+function BuildPrevForm() {
+	console.log(BuildCustomSubmitButtonString('prev'));
+	$('#' + prevEntryFormID).append(BuildCustomSubmitButtonString('prev'));
+}
+
+function BuildNextForm() {
+	console.log(BuildCustomSubmitButtonString('next'));
+	$('#' + nextEntryFormID).append(BuildCustomSubmitButtonString('next'));
+}
+
+function BuildPrevNextForms() {
+	BuildPrevForm();
+	BuildNextForm();
+}
+
+function BuildEntryOutputSpace() {
+	for(var i = 0; i < entryOutputFormItems.length; i++) {
+		BuildOutputItems(entryOutputSpaceID + String(i),entryOutputFormItems[i]);
+	}
+}
+
+
 BuildEntryInputForm();
 BuildQuerySizeForm();
 BuildWhichEntryInputForm();
-BuildEntryOutputForm();
-
+//BuildEntryOutputForm();
+BuildEntryOutputSpace();
+BuildPrevNextForms();
 //$('#selectForm').val('mercedes');
