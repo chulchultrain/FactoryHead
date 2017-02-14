@@ -20,6 +20,7 @@
 */
 
 var NameToDexIDMap = {};
+var DexIDToBaseStatsMap = {};
 var DexIDToNameMap = {};
 var MoveIDToMoveNameMap = {};
 var MoveNameToMoveIDMap = {};
@@ -28,6 +29,28 @@ var TypeToEntryIDMap = {};
 var DexIDToEntryIDMap = {};
 var MoveIDToEntryIDMap = {};
 var EntryIDToEntryDataMap = {};
+var selectedEntry = 0;
+
+var NameDataLoaded = false;
+var TypeDataLoaded = false;
+var EntryDataLoaded = false;
+var MoveDataLoaded = false;
+var StatDataLoaded = false;
+
+function LoadDexIDToBaseStatsMap(xhttp) {
+	var newText = xhttp.responseText.split("\n");
+	for(var i = 0; i < newText.length; i++) {
+		if(newText[i+6] != undefined) {
+			var dexID = newText[i].trim();
+			DexIDToBaseStatsMap[dexID] = [];
+			i++;
+			for(var j = 0; j < 6; j++,i++) {
+				DexIDToBaseStatsMap[dexID].push(newText[i].trim());
+			}
+		}
+	}
+	StatDataLoaded = true;
+}
 
 
 function LoadMoveIDToEntryIDMap() {
@@ -73,10 +96,6 @@ function LoadTypeToEntryIDMap() {
 	}
 }
 
-var NameDataLoaded = false;
-var TypeDataLoaded = false;
-var EntryDataLoaded = false;
-var MoveDataLoaded = false;
 
 
 
@@ -321,6 +340,26 @@ function CalculateEntryQuery() {
 	}	
 	queryRes = res;
 	document.getElementById("querySize").value = res.length;
+	if(res.length > 0) {
+		selectedEntry = 0;
+		OutputEntryData(queryRes[selectedEntry]);
+	}
+	return false;
+}
+
+function GetPrevEntry() {
+	selectedEntry--;
+	if(selectedEntry < 0) {
+		selectedEntry += queryRes.length;
+	}
+	OutputEntryData(queryRes[selectedEntry]);	
+	return false;
+}
+
+function GetNextEntry() {
+	selectedEntry++;
+	selectedEntry %= queryRes.length;
+	OutputEntryData(queryRes[selectedEntry]);
 	return false;
 }
 
@@ -338,6 +377,10 @@ function OutputEntryData(x) {
 		console.log("und");
 		return false;
 	}
+	for(var i = 0;i < 6; i++) {
+		document.getElementById('baseStatOutput' + String(i)).value = DexIDToBaseStatsMap[entryData.dexID][i];
+	}
+	document.getElementById("nameOutput").value = DexIDToNameMap[entryData.dexID];
 	document.getElementById("typeOutput").value = DexIDToTypeMap[entryData.dexID].join(' ');
 	for(var i = 0; i < 4; i++) {
 		document.getElementById("moveOutput" + String(i)).value = MoveIDToMoveNameMap[entryData.moves[i]];
@@ -347,11 +390,14 @@ function OutputEntryData(x) {
 	}
 	document.getElementById("itemOutput").value = entryData.item;
 	document.getElementById("natureOutput").value = entryData.nature;
+	$('#nonono').append("nerpus");
+	$('#outputTag').val(entryData.item);
+	$('#outputP').val(entryData.nature);
 	return false;
 }
 
 function AllLoadedQuery() {
-	return NameDataLoaded && EntryDataLoaded && TypeDataLoaded && MoveDataLoaded;
+	return NameDataLoaded && EntryDataLoaded && TypeDataLoaded && MoveDataLoaded && StatDataLoaded;
 }
 
 function LoadAllData() {
@@ -359,7 +405,7 @@ function LoadAllData() {
 	loadDoc("BASE/ENTRY/OutputEntryData.txt",LoadEntryIDToEntryDataMap);
 	loadDoc("BASE/TYPE/Types.txt",LoadDexIDToTypeMap);
 	loadDoc("BASE/MOVE/MoveData.txt",LoadMoveIDToMoveNameMap);
-
+	loadDoc("BASE/STATS/BaseStats.txt",LoadDexIDToBaseStatsMap);
 }
 
 LoadAllData();

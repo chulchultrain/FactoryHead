@@ -6,6 +6,8 @@
 	<meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/afterDynamicBuild.css">
 </head>
 
 <body>
@@ -17,7 +19,7 @@
 			<div class = "col-10">
 			
 			<div class = "BannerArt">
-				<img src= "images/CrudeBanner.png" alt="app picture">
+				<img src= "images/CrudeBanner.png" alt="app picture" href = "https://github.com/chulchultrain/FactoryHead"> 
 			</div>
 			
 			</div>
@@ -28,51 +30,73 @@
 		<div class = "row">
 			<h1 class = "Title"> <a href = "https://github.com/chulchultrain/FactoryHead"> Factory Head</a> </h1>
 		</div>
+		<!-- <div class = "row"> 
+			<a href = "BASE/STATS/BaseStats.txt"> <img src= "images/CrudeBanner.png" alt = "linkBase"> </a>
+		</div> -->
 		<div class = "row">
-		<div class="screenshot"><img src="images/bflogo.jpeg" ></div>
-		<div class = "description">
+			<div class="screenshot"><img src="images/bflogo.jpeg" ></div>
+			<div class = "description">
 			Factory Head - My Project to improve Pokemon Platinum Battle Factory Win Rate.
-		</div>
+			</div>
 		</div>
 		
-		<div class = "row">
-			<form id = "entryInputForm"  onsubmit = "return CalculateEntryQuery();">
+		<div id = "MapDiv" class = "row">
+			<div class = "col-4">
+				<form id = "entryInputForm"  onsubmit = "return CalculateEntryQuery();">
+				</form>
+			</div>
+			<div class = "col-4">
+				<form id = 'querySizeForm'>
+				</form>	
+				<form id = "whichEntryForm" onsubmit = "return GetSelectedEntry();">
+				</form>				
+				<form id = "prevEntryForm" onsubmit = "return GetPrevEntry();">
+				</form>
+				<form id = "nextEntryForm" onsubmit = "return GetNextEntry();">
+				</form>
+			</div>
+			<div class = "col-4">
+				<form id = "entryOutputForm">
+				</form>				
+			</div>
+		</div>
+		
+		<div id = "outputDiv" class = "row">
+			<div id = "entryOutputPart0" class = "col-3">
+			</div>
+			<div id = "entryOutputPart1" class = "col-3">
+			</div>
+			<div id = "entryOutputPart2" class = "col-3">
+			</div>
+			<div id = "entryOutputPart3" class = "col-3">
+			</div>
+		</div>
 
-			</form>
-		</div>
-		
-		<div class = "row">
-			<form id = 'querySizeForm'>
-			</form>
-		</div>
-		
-		<div class = "row">
-			<form id = "whichEntryForm" onsubmit = "return GetSelectedEntry();">
 
-			</form>
-		
-		<div class = "row">
-			<form id = "entryOutputForm">
 
-			</form>
-		<script src = "js/formQuery.js"></script>		
-		<div Id = "queryResultsRow" class = "row">
-			
-		</div>
 		
+
+<script src = "js/formQuery.js"></script>		
+
 	</div>
 	
-	<div class = "row">
+	<!-- <div class = "row"> 
 		<select id = "selectForm">
 			<option value="volvo">Volvo</option>
 			<option value="saab">Saab</option>
 			<option value="mercedes">Mercedes</option>
 		</select>
-	</div>
+	</div> -->
+	
+	<!-- <div id = "outputRow" class = "row"> 
+		Derp <output id = "outputTag" value = "derpus"></output>
+		<p id = "outputP" value = "herpus"></p>
+	</div> -->
 
+	<!-- <span class = "inputDescriptionClass">HiIIIIII</span> -->
 	
 	
 	<script src = "js/dynamicBuild.js"></script>
-</body>
 
+</body>
 </html>
