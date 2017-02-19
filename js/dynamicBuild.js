@@ -48,7 +48,8 @@ var entryOutputFormItems = [
 	['nameOutput','Name Output'],
 	['typeOutput','Type Output'],
 	['itemOutput','Item Output'],
-	['natureOutput','Nature Output']
+	['natureOutput','Nature Output'],
+	['abilityOutput','Ability Output']
 	],
 	[
 	['moveOutput0','Move Output 0'],
