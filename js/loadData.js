@@ -178,6 +178,8 @@ function CreateEntryData(unfilteredDataArray){
 	for(var j = 0; j < 4; j++,i++) {
 		entryData.moves.push(dataArray[i]);
 	}
+	entryData.ability = dataArray[i];
+	i++;
 	entryData.item = dataArray[i];
 	i++;
 	entryData.nature = dataArray[i];
@@ -202,8 +204,8 @@ function LoadDexIDToEntryIDMap() {
 
 function LoadEntryIDToEntryDataMap(xhttp) {
 	var newText = xhttp.responseText.split('\n');
-	for(var i = 0; i < newText.length; i += 15) {
-		var entryData = CreateEntryData(newText.slice(i,i+14));
+	for(var i = 0; i < newText.length; i += 16) {
+		var entryData = CreateEntryData(newText.slice(i,i+15));
 		//console.log(newText[i]);
 		EntryIDToEntryDataMap[entryData.entryID] = entryData;
 	}
@@ -382,6 +384,7 @@ function OutputEntryData(x) {
 	}
 	document.getElementById("nameOutput").value = DexIDToNameMap[entryData.dexID];
 	document.getElementById("typeOutput").value = DexIDToTypeMap[entryData.dexID].join(' ');
+	document.getElementById("abilityOutput").value = entryData.ability;
 	for(var i = 0; i < 4; i++) {
 		document.getElementById("moveOutput" + String(i)).value = MoveIDToMoveNameMap[entryData.moves[i]];
 	}
@@ -402,7 +405,7 @@ function AllLoadedQuery() {
 
 function LoadAllData() {
 	loadDoc("BASE/NAME/Names.txt",LoadNameToDexIDMap);
-	loadDoc("BASE/ENTRY/OutputEntryData.txt",LoadEntryIDToEntryDataMap);
+	loadDoc("BASE/ENTRY/WebEntryData.txt",LoadEntryIDToEntryDataMap);
 	loadDoc("BASE/TYPE/Types.txt",LoadDexIDToTypeMap);
 	loadDoc("BASE/MOVE/MoveData.txt",LoadMoveIDToMoveNameMap);
 	loadDoc("BASE/STATS/BaseStats.txt",LoadDexIDToBaseStatsMap);
