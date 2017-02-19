@@ -106,17 +106,6 @@
 	width: 100%;	
 }
 
-input {
-		//padding: 20px;
-		margin:20px;
-}
-
-output {
-	width:20px;
-	margin-bottom:50px;
-	background:red;
-	background: linear-gradient(to bottom, rgba(0,0,0,0.25);
-}
 
 .BannerArt {
 	width: 750px;
@@ -128,4 +117,23 @@ output {
 	margin-left: auto;
 	margin-right: auto;
 	text-align:center;
+
+}
+
+
+.outputDescriptionClass {
+	#padding:200px;
+	margin:20px;
+	#color:yellow;
+	#background:linear-gradient(to bottom,blue,red);
+}
+
+.inputDescriptionClass {
+	#width:200px;
+	#height:200px;
+	#padding-bottom:100px;
+	#margin-bottom:50px;
+	#background:black;
+	#color:white;
+	margin:20px;
 }
