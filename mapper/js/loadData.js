@@ -113,6 +113,8 @@ function loadDoc(url,doFunc) {
 			if(AllLoadedQuery()) {
 				LoadRestData();
 			}
+		} else {
+			console.log(this.status);
 		}
 	}
 	xhttp.open("GET",url,true);
@@ -237,6 +239,7 @@ function LoadDexIDToTypeMap(xhttp) {
 
 	}
 	TypeDataLoaded = true;
+	console.log(DexIDToTypeMap.length);
 }
 
 function StringListIntersection(list1,list2) {

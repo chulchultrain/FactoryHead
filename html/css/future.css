@@ -1,0 +1,14 @@
+.contentHeader {
+	font-size:50px;
+	text-align:center;
+	padding:10px;
+	border-bottom: 5px solid red !important;
+	border-top: 5px solid red !important;
+	margin-left: auto;
+	margin-right:auto;
+}
+
+.contentText {
+	font-size: 25px;
+	line-height:50px;
+}
