@@ -18,7 +18,242 @@
 	then I will hardcode the data into a javascript file. It probably won't reduce it by much, but hopefully enough.
 	Only things I can see is from headers from the requests. I seriously doubt I'll go over 100GB a month.
 */
+//TODO: Move all functions inside namespace and change syntax accordingly. Get rid of front-end link and parameterize EntryFilter
+//TODO: Precede mapSpace fields with mapSpace inside function scopes due to
+//it checking global scope instead of enclosing scope.
+var mapSpace = {
+	
+	mapData:{},
+	InitMapNames:function() {
+		mapSpace.NameToDexIDMap = {};
+		mapSpace.DexIDToBaseStatsMap = {};
+		mapSpace.DexIDToNameMap = {};
+		mapSpace.MoveIDToMoveNameMap = {};
+		mapSpace.MoveNameToMoveIDMap = {};
+		mapSpace.DexIDToTypeMap = {};
+		mapSpace.TypeToEntryIDMap = {};
+		mapSpace.DexIDToEntryIDMap = {};
+		mapSpace.MoveIDToEntryIDMap = {};
+		mapSpace.EntryIDToEntryDataMap = {};
+		mapSpace.NameDataLoaded = false;
+		mapSpace.TypeDataLoaded = false;
+		mapSpace.EntryDataLoaded = false;
+		mapSpace.MoveDataLoaded = false;
+		mapSpace.StatDataLoaded = false;	
+		mapSpace.entryDataItems = [];
+	} ,
+	LoadDexIDToBaseStatsMap:function(xhttp) {
+		var newText = xhttp.responseText.split("\n");
+		var DexIDToBaseStatsMap = mapSpace.DexIDToBaseStatsMap;
+		for(var i = 0; i < newText.length; i++) {
+			if(newText[i+6] != undefined) {
+				var dexID = newText[i].trim();
+				DexIDToBaseStatsMap[dexID] = [];
+				i++;
+				for(var j = 0; j < 6; j++,i++) {
+					DexIDToBaseStatsMap[dexID].push(newText[i].trim());
+				}
+			}
+		}
+		mapSpace.StatDataLoaded = true;
+	} ,
+	LoadMoveIDToEntryIDMap:function() {
+		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+		var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
+		for(var entryID in EntryIDToEntryDataMap) {
+			var moveList = EntryIDToEntryDataMap[entryID].moves;
+			if(moveList != undefined) {
+				for(var i = 0; i < moveList.length; i++) {
+					if(!MoveIDToEntryIDMap.hasOwnProperty(moveList[i])) {
+						MoveIDToEntryIDMap[moveList[i]] = [];
+					}
+					MoveIDToEntryIDMap[moveList[i]].push(entryID);
+				}
+			}
+		}
+	} ,
+	LoadDexIDToNameMap:function() {
+		var NameToDexIDMap = mapSpace.NameToDexIDMap;
+		var DexIDToNameMap = mapSpace.DexIDToNameMap;
+		for(var name in NameToDexIDMap) {
+			var dexID = NameToDexIDMap[name];
+			DexIDToNameMap[dexID] = name;
+		}
+	} ,
+	LoadMoveNameToMoveIDMap:function() {
+		var MoveIDToMoveNameMap = mapSpace.MoveIDToMoveNameMap;
+		var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
+		for(var moveID in MoveIDToMoveNameMap) {
+			var moveName = MoveIDToMoveNameMap[moveID];
+			MoveNameToMoveIDMap[moveName] = moveID;
+		}
+	} ,
+	LoadTypeToEntryIDMap:function() {
+		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+		var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
+		var TypeToEntryIDMap = mapSpace.TypeToEntryIDMap;	
+		for(var entryID in EntryIDToEntryDataMap) {
+			var typeList = DexIDToTypeMap[EntryIDToEntryDataMap[entryID].dexID];
+			if(typeList != undefined) {
+				for(var i = 0; i < typeList.length; i++) {
+					if(!TypeToEntryIDMap.hasOwnProperty(typeList[i]) ) {
+						TypeToEntryIDMap[typeList[i]] = [];
+					}
+					TypeToEntryIDMap[typeList[i]].push(entryID);
+				}			
+			}
 
+		}
+	} ,
+	loadDoc:function(url,doFunc) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.responseType = 'text';
+		xhttp.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200) {
+				doFunc(xhttp);
+				console.log("AFTER LOAD DOC");
+				if(mapSpace.AllLoadedQuery()) {
+					mapSpace.LoadRestData();
+				}
+			} else {
+				console.log(this.status);
+			}
+		}
+		xhttp.open("GET",url,true);
+		xhttp.send();
+
+	} ,
+	LoadRestData:function() {
+		mapSpace.LoadDexIDToEntryIDMap();
+		mapSpace.LoadDexIDToNameMap();
+		mapSpace.LoadMoveNameToMoveIDMap();
+		mapSpace.LoadTypeToEntryIDMap();	
+		mapSpace.LoadMoveIDToEntryIDMap();
+	} ,
+	LoadNameToDexIDMap:function(xhttp) {
+		
+		var newText = xhttp.responseText.split("\n");
+		//console.log("I have started logging Func");
+		for(var i = 0; i < newText.length; i++) {
+			if(newText[i] != undefined && newText[i+1] != undefined) {
+				var value = newText[i].trim();
+				i++;
+				var key = newText[i].trim();
+				mapSpace.NameToDexIDMap[key] = value;
+				//console.log(key + ' ' + value + ' ' + typeof key + ' ' + typeof value);			
+				i++;			
+			}
+
+		}
+		//console.log("I have finished initializing map");
+		
+		//TODO: Rid console log
+		//console.log("I have finished printing map");
+		mapSpace.NameDataLoaded = true;
+		return false;
+	} ,
+	LoadMoveIDToMoveNameMap:function(xhttp) {
+		var newText = xhttp.responseText.split('\n');
+		for(var i = 0; i < newText.length; i += 6) {
+			if(newText[i+1] != undefined) {
+				var moveID = newText[i].trim();
+				var moveName = newText[i+1].trim();
+				mapSpace.MoveIDToMoveNameMap[moveID] = moveName;			
+			}
+
+			
+		}
+		mapSpace.MoveDataLoaded = true;
+	} ,
+	CreateEntryData:function(unfilteredDataArray){ 
+		var i = 0;
+		var entryData = {};
+		var dataArray = [];
+		for(var k = 0; k < unfilteredDataArray.length; k++) {
+			dataArray.push(unfilteredDataArray[k].trim());
+		}
+		entryData.entryID = dataArray[i];
+		i++;
+		entryData.dexID = dataArray[i];
+		i++;
+		entryData.moves = [];
+		for(var j = 0; j < 4; j++,i++) {
+			entryData.moves.push(dataArray[i]);
+		}
+		entryData.ability = dataArray[i];
+		i++;
+		entryData.item = dataArray[i];
+		i++;
+		entryData.nature = dataArray[i];
+		i++;
+		entryData.EVs = [];
+		for(var k = 0; k < 6; k++,i++) {
+			entryData.EVs.push(dataArray[i]);
+		}
+		return entryData;
+	} ,
+	LoadDexIDToEntryIDMap:function() {
+		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+		var DexIDToEntryIDMap = mapSpace.DexIDToEntryIDMap;
+		
+		for(var eID in EntryIDToEntryDataMap) {
+			var entryData = EntryIDToEntryDataMap[eID];
+			if(!DexIDToEntryIDMap.hasOwnProperty(entryData.dexID)) {
+				DexIDToEntryIDMap[entryData.dexID] = [];
+			}
+			DexIDToEntryIDMap[entryData.dexID].push(entryData.entryID);
+		}
+		console.log("DIDENTRYIDFIN");
+	} ,
+	LoadEntryIDToEntryDataMap:function(xhttp) {
+		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+		var newText = xhttp.responseText.split('\n');
+		for(var i = 0; i < newText.length; i += 16) {
+			var entryData = mapSpace.CreateEntryData(newText.slice(i,i+15));
+			//console.log(newText[i]);
+			EntryIDToEntryDataMap[entryData.entryID] = entryData;
+		}
+		
+		mapSpace.EntryDataLoaded = true;
+		console.log("Finised This one");
+		return false;
+	} ,
+	LoadDexIDToTypeMap:function(xhttp) {
+		var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
+		
+		var newText = xhttp.responseText.split('\n');
+		for(var i = 0; i < newText.length; i++) {
+			if(newText[i] != undefined) {
+				var dataPieces = newText[i].trim().split(' ');
+				var dexID = dataPieces[0];
+				var numTypes = Number(dataPieces[1]);
+				var typeList = [];
+				for(var j = 0; j < numTypes; j++) {
+					typeList.push(dataPieces[j+2]);
+				}
+				DexIDToTypeMap[dexID] = typeList;
+			}
+
+		}
+		mapSpace.TypeDataLoaded = true;
+		console.log(DexIDToTypeMap.length);
+	}	,
+	AllLoadedQuery:function() {
+		return mapSpace.NameDataLoaded 
+		&& mapSpace.EntryDataLoaded 
+		&& mapSpace.TypeDataLoaded 
+		&& mapSpace.MoveDataLoaded 
+		&& mapSpace.StatDataLoaded;
+	} ,
+	LoadAllData:function() {
+		mapSpace.loadDoc("BASE/NAME/Names.txt",mapSpace.LoadNameToDexIDMap);
+		mapSpace.loadDoc("BASE/ENTRY/WebEntryData.txt",mapSpace.LoadEntryIDToEntryDataMap);
+		mapSpace.loadDoc("BASE/TYPE/Types.txt",mapSpace.LoadDexIDToTypeMap);
+		mapSpace.loadDoc("BASE/MOVE/MoveData.txt",mapSpace.LoadMoveIDToMoveNameMap);
+		mapSpace.loadDoc("BASE/STATS/BaseStats.txt",mapSpace.LoadDexIDToBaseStatsMap);
+	}	
+};
+/* PREVIOUS VARS
 var entryDataItems = [
 	
 ];
@@ -40,7 +275,8 @@ var TypeDataLoaded = false;
 var EntryDataLoaded = false;
 var MoveDataLoaded = false;
 var StatDataLoaded = false;
-
+*/
+/* PREVIOUS INIT FUNCTIONS
 function LoadDexIDToBaseStatsMap(xhttp) {
 	var newText = xhttp.responseText.split("\n");
 	for(var i = 0; i < newText.length; i++) {
@@ -241,6 +477,8 @@ function LoadDexIDToTypeMap(xhttp) {
 	TypeDataLoaded = true;
 	console.log(DexIDToTypeMap.length);
 }
+*/
+//TODO: Be careful starting here. This is the query portion and we need to decouple front-end back-end here.cccccc
 
 function StringListIntersection(list1,list2) {
 	var res = [];
@@ -258,6 +496,8 @@ function StringListIntersection(list1,list2) {
 
 function CalculateNameQuery() {
 	var nameVal = document.getElementById("nameInput").value.trim();
+	var NameToDexIDMap = mapSpace.NameToDexIDMap;
+	var DexIDToEntryIDMap = mapSpace.DexIDToEntryIDMap;
 	/*
 
 	console.log(nameVal);
@@ -274,6 +514,7 @@ function CalculateNameQuery() {
 }
 
 function CalculateTypeQuery() {
+	var TypeToEntryIDMap = mapSpace.TypeToEntryIDMap;
 	var typeVal = document.getElementById("typeInput").value.trim();
 	if(TypeToEntryIDMap.hasOwnProperty(typeVal)) {
 		return TypeToEntryIDMap[typeVal];
@@ -283,6 +524,9 @@ function CalculateTypeQuery() {
 
 function CalculateSingleMoveQuery(move) {
 	var moveID = MoveNameToMoveIDMap[move];
+	var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
+	var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
+	
 	if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
 		var moveID = MoveNameToMoveIDMap[move];
 		if(MoveIDToEntryIDMap.hasOwnProperty(moveID) ) {
@@ -316,8 +560,10 @@ function CalculateMovesQuery() {
 }
 
 var queryRes = [];
+var selectedEntry = 0;
 
-function CalculateEntryQuery() {
+//NEW TOP LEVEL
+function CalculateEntryQuery(entryQuery) {
 	var resList = [];
 
 	var NameQueryResIDs = CalculateNameQuery();
@@ -381,6 +627,12 @@ function GetSelectedEntry() {
 
 function OutputEntryData(x) {
 	//TODO: Type
+	var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+	var DexIDToBaseStatsMap = mapSpace.DexIDToBaseStatsMap;
+	var DexIDToNameMap = mapSpace.DexIDToNameMap;
+	var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
+	var MoveIDToMoveNameMap = mapSpace.MoveIDToMoveNameMap;
+	
 	var entryData = EntryIDToEntryDataMap[x];
 	if(entryData == undefined) {
 		console.log("und");
@@ -406,16 +658,6 @@ function OutputEntryData(x) {
 	return false;
 }
 
-function AllLoadedQuery() {
-	return NameDataLoaded && EntryDataLoaded && TypeDataLoaded && MoveDataLoaded && StatDataLoaded;
-}
 
-function LoadAllData() {
-	loadDoc("BASE/NAME/Names.txt",LoadNameToDexIDMap);
-	loadDoc("BASE/ENTRY/WebEntryData.txt",LoadEntryIDToEntryDataMap);
-	loadDoc("BASE/TYPE/Types.txt",LoadDexIDToTypeMap);
-	loadDoc("BASE/MOVE/MoveData.txt",LoadMoveIDToMoveNameMap);
-	loadDoc("BASE/STATS/BaseStats.txt",LoadDexIDToBaseStatsMap);
-}
-
-LoadAllData();
+mapSpace.InitMapNames();
+mapSpace.LoadAllData();

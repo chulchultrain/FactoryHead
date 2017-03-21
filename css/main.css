@@ -1,5 +1,5 @@
 * {
-	//border: 1px solid red !important;
+	#border: 1px solid red !important;
 }
 
 * {
@@ -20,7 +20,7 @@
 	display:flex;
 	flex-wrap:wrap;
 	overflow:auto;
-	border-bottom: 5px solid red !important;
+	#border-bottom: 5px solid red !important;
 }
 
 .Title {
@@ -106,6 +106,21 @@
 	width: 100%;	
 }
 
+.projectLink {
+	margin-left:auto;
+	margin-right:auto;
+	background:teal;
+	#border: 1px solid red !important;
+	box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5), inset -2px -2px 5px rgba(255,255,255,0.5);
+}
+
+.projectLinkText {
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;	
+	color:white;
+	background:teal;
+}
 
 .BannerArt {
 	width: 750px;
@@ -140,4 +155,8 @@
 
 #pageBarAbout {
 	margin-left:auto;
+}
+
+#PageBar {
+	border-bottom: 5px solid red !important;
 }

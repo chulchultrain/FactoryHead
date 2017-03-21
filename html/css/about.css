@@ -1,3 +1,24 @@
+
+/*
+#whatIsText,#motivationText {
+	font-size: 30px;
+}
+*/
+
+#whatIsHeader,#motivationHeader {
+	font-size:50px;
+	text-align:center;
+	padding:10px;
+	border-bottom: 5px solid red !important;
+	margin-left: auto;
+	margin-right:auto;
+}
+
+#whatIsText,#motivationText,.whatIsList {
+	font-size: 25px;
+	line-height:50px;
+}
+
 .contentHeader {
 	font-size:50px;
 	text-align:center;
