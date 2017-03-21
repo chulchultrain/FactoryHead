@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/gridFrame.css">
+	<link rel="stylesheet" type = "text/css" href = "css/future.css">
+</head>
+
+<body>
+
+</body>
+	<div class = "grid">
+		<div class = "row">
+			<div class = "col-2">
+			</div>
+			
+			<div class = "col-8">	
+				<h1 id = "resolverHeader" class = "contentHeader">
+					Statistic Resolver
+				</h1>
+				
+				<p id = "resolverText" class = "contentText">
+					One problem with my mapper is that not all of the EVs are accurate. The accuracy of my mapper determines
+					straegies regarding that entry. For example, I must be wary of an entry with max speed EVs if my pokemon
+					is fragile. Also, if my Pokemon has high special defense but low defense, I must be more wary of an entry with high
+					attack than one with high special attack.
+					So what I shall do is create a program that determines a Pokemon's EVs given its working stats.
+					
+					
+					#TODO: Add the use of this with respect to the mapper.
+				</p>
+			</div>
+			
+			<div class = "col-2">
+			</div>
+		</div>
+			
+
+		<div class = "row">
+			<div class = "col-2">
+			</div>
+			
+			<div class = "col-8">	
+				<h1 id = "predictorHeader" class = "contentHeader">
+					Correlative Move Predictor
+				</h1>
+				
+				<p id = "predictorText" class = "contentText">
+					One pain point with my mapper is that given what we know many different entries can be returned. 
+					However, some pieces of information given a certain query are more likely than others.
+					What I will do is create a program that given a query, 
+					the most likely information and their probabilities will be returned.
+					
+					
+					<br><br>
+					Let us say I am facing a certain Pokemon that I do not know much about. Using the mapper, I am given 
+					a selection of entries that this certain Pokemon could be. This certain Pokemon could have different kinds of 
+					movesets, and for each of these entries, I may need to employ a different strategy based on the information
+					that each entry carries. 
+					
+					In this case, information refers to any attribute and its value.
+					Moves are attributes and their names are the move attributes' values.
+					
+					Let us say for example, half of all the Ground-type entries
+					have the move Earthquake, and a quarter of all Ground-type entries have the move Earth Power. So, 
+					the program, given a Ground-type query, would return that it is 50% likely that a Ground-type Pokemon would have 
+					the move Earthquake, and that it is 25% likely that a Ground-type Pokemon would have the move Earthquake.
+				</p>
+			</div>
+			
+			<div class = "col-2">
+			</div>
+		</div>
+
+	</div>
+</html>
