@@ -13,72 +13,54 @@
 <body>
 	<script src = "js/loadData.js"></script>
 	<div class = "grid">
-		<div class = "row">
-			<div class = "col-1">
-			</div>
-			<div class = "col-10">
+		<div id = "PageBar" class = "row">
 			
-			<div class = "BannerArt">
-				<img src= "images/CrudeBanner.png" alt="app picture" href = "https://github.com/chulchultrain/FactoryHead"> 
-			</div>
+		</div>
+	
+	<div class = "row"> <!-- Space between top page bar and items below-->
 			
-			</div>
-			<div class = "col-1">
-			</div>
-		</div>
-
-		<div class = "row">
-			<h1 class = "Title"> <a href = "https://github.com/chulchultrain/FactoryHead"> Factory Head</a> </h1>
-		</div>
-		<!-- <div class = "row"> 
-			<a href = "BASE/STATS/BaseStats.txt"> <img src= "images/CrudeBanner.png" alt = "linkBase"> </a>
-		</div> -->
-		<div class = "row">
-			<div class="screenshot"><img src="images/bflogo.jpeg" ></div>
-			<div class = "description">
-			Factory Head - My Project to improve Pokemon Platinum Battle Factory Win Rate.
-			</div>
-		</div>
-		
-		<div id = "MapDiv" class = "row">
-			<div class = "col-4">
-				<form id = "entryInputForm"  onsubmit = "return CalculateEntryQuery();">
-				</form>
-			</div>
-			<div class = "col-4">
-				<form id = 'querySizeForm'>
-				</form>	
-				<form id = "whichEntryForm" onsubmit = "return GetSelectedEntry();">
-				</form>				
-				<form id = "prevEntryForm" onsubmit = "return GetPrevEntry();">
-				</form>
-				<form id = "nextEntryForm" onsubmit = "return GetNextEntry();">
-				</form>
-			</div>
-			<div class = "col-4">
-				<form id = "entryOutputForm">
-				</form>				
-			</div>
-		</div>
-		
-		<div id = "outputDiv" class = "row">
-			<div id = "entryOutputPart0" class = "col-3">
-			</div>
-			<div id = "entryOutputPart1" class = "col-3">
-			</div>
-			<div id = "entryOutputPart2" class = "col-3">
-			</div>
-			<div id = "entryOutputPart3" class = "col-3">
-			</div>
-		</div>
-
-
-
-		
-
-<script src = "js/formQuery.js"></script>		
-
 	</div>
+
+	
+		<div class = "row" id = "subProjectsRow">
+			<div class = "col-2">
+			</div>
+			<a class = "col-2 projectLink" href = "mapperPage.html"> 
+				<div class = "projectLinkText">
+					Mapper Project
+				 </div>
+			</a>
+			
+			<div class = "col-1">
+			</div>
+			
+			<a class = "col-2 projectLink" href = "resolverPage.html"> 
+				<div class = "projectLinkText">
+					Resolver Project
+				 </div>
+			</a>
+			
+			<div class = "col-1">
+			</div>
+			
+			<a class = "col-2 projectLink" href = "predictorPage.html"> 
+				<div class = "projectLinkText">
+					Predictor Project
+				 </div>
+			</a>		
+			
+			<div class = "col-2">
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<div class = "row">
+		
+	</div>
+	
+	<script src = "js/LoadPageBar.js"></script>
 	
 	<!-- <div class = "row"> 
 		<select id = "selectForm">
@@ -96,7 +78,6 @@
 	<!-- <span class = "inputDescriptionClass">HiIIIIII</span> -->
 	
 	
-	<script src = "js/dynamicBuild.js"></script>
 
 </body>
 </html>
