@@ -251,7 +251,127 @@ var mapSpace = {
 		mapSpace.loadDoc("BASE/TYPE/Types.txt",mapSpace.LoadDexIDToTypeMap);
 		mapSpace.loadDoc("BASE/MOVE/MoveData.txt",mapSpace.LoadMoveIDToMoveNameMap);
 		mapSpace.loadDoc("BASE/STATS/BaseStats.txt",mapSpace.LoadDexIDToBaseStatsMap);
-	}	
+	} ,
+	StringListIntersection:function(list1,list2) {
+		var res = [];
+		var seen = {};
+		for(var i = 0; i < list1.length; i++) {
+			seen[list1[i]] = true;
+		}
+		for(var j = 0; j < list2.length; j++) {
+			if(seen.hasOwnProperty(list2[j]) ) {
+				res.push(list2[j]);
+			}
+		}
+		return res;
+	} ,
+
+	CalculateNameQuery:function(name) {
+		var nameVal = name.trim();
+		var NameToDexIDMap = mapSpace.NameToDexIDMap;
+		var DexIDToEntryIDMap = mapSpace.DexIDToEntryIDMap;
+		/*
+
+		console.log(nameVal);
+		console.log("Function Called");
+		*/
+		if(NameToDexIDMap.hasOwnProperty(nameVal)) {
+			var dID = NameToDexIDMap[nameVal];
+			if(DexIDToEntryIDMap.hasOwnProperty(dID)) {
+				return DexIDToEntryIDMap[dID];
+			}
+		}
+		
+		return [];
+	} ,
+
+	CalculateTypeQuery:function(type) {
+		var TypeToEntryIDMap = mapSpace.TypeToEntryIDMap;
+		var typeVal = type.trim();
+		if(TypeToEntryIDMap.hasOwnProperty(typeVal)) {
+			return TypeToEntryIDMap[typeVal];
+		}
+		return [];
+	} ,
+
+	CalculateSingleMoveQuery:function(move) {
+		var moveID = MoveNameToMoveIDMap[move];
+		var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
+		var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
+		
+		if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
+			var moveID = MoveNameToMoveIDMap[move];
+			if(MoveIDToEntryIDMap.hasOwnProperty(moveID) ) {
+				return MoveIDToEntryIDMap[moveID];
+			}
+		}
+
+		return [];
+	} ,
+
+	CalculateMovesQuery:function(moveList) {
+		var resList = [];
+		var StringListIntersection = mapSpace.StringListIntersection;
+		var CalculateSingleMoveQuery = mapSpace.CalculateSingleMoveQuery;
+		
+		for(var i = 0; i < 4; i++) {
+			var moveName = moveList[i].trim();
+			if(moveName.length > 0) {
+				resList.push(CalculateSingleMoveQuery(moveName));
+			}
+		}
+		var res = [];
+		if(resList.length >= 2) {
+			res = StringListIntersection(resList[0],resList[1]);
+			for(var i = 2; i < resList.length; i++) {
+				res = StringListIntersection(res,resList[i]);
+			}
+		} else if(resList.length == 1){
+			res = resList[0];
+		} else {
+			res = resList;
+		}
+		return res;
+	} ,
+
+	CalculateEntryQuery:function(entryQuery) {
+		var resList = [];
+		
+		var CalculateNameQuery = mapSpace.CalculateNameQuery;
+		var CalculateTypeQuery = mapSpace.CalculateTypeQuery;
+		var CalculateMovesQuery = mapSpace.CalculateMovesQuery;
+		var StringListIntersection = mapSpace.StringListIntersection;
+
+		var NameQueryResIDs = CalculateNameQuery(entryQuery.name);
+		if(NameQueryResIDs.length > 0) {
+			resList.push(NameQueryResIDs);
+		} else {
+			console.log("GG Failed");
+		}
+		var TypeQueryResIDs = CalculateTypeQuery(entryQuery.type);
+		if(TypeQueryResIDs.length > 0) {
+			resList.push(TypeQueryResIDs);
+		} else {
+			console.log("Type Fail");
+		}
+		var MoveQueryResIDs = CalculateMovesQuery(entryQuery.moveList);
+		if(MoveQueryResIDs.length > 0) {
+			resList.push(MoveQueryResIDs);
+		} else {
+			console.log("Move Fail");
+		}
+		var res = [];
+		if(resList.length >= 2) {
+			res = StringListIntersection(resList[0],resList[1]);
+			for(var i = 2; i < resList.length; i++) {
+				res = StringListIntersection(res,resList[i]);
+			}
+		} else {
+			res = resList[0];
+		}
+		return res;
+	}
+
 };
 /* PREVIOUS VARS
 var entryDataItems = [
@@ -480,127 +600,34 @@ function LoadDexIDToTypeMap(xhttp) {
 */
 //TODO: Be careful starting here. This is the query portion and we need to decouple front-end back-end here.cccccc
 
-function StringListIntersection(list1,list2) {
-	var res = [];
-	var seen = {};
-	for(var i = 0; i < list1.length; i++) {
-		seen[list1[i]] = true;
-	}
-	for(var j = 0; j < list2.length; j++) {
-		if(seen.hasOwnProperty(list2[j]) ) {
-			res.push(list2[j]);
-		}
-	}
-	return res;
-}
-
-function CalculateNameQuery() {
-	var nameVal = document.getElementById("nameInput").value.trim();
-	var NameToDexIDMap = mapSpace.NameToDexIDMap;
-	var DexIDToEntryIDMap = mapSpace.DexIDToEntryIDMap;
-	/*
-
-	console.log(nameVal);
-	console.log("Function Called");
-	*/
-	if(NameToDexIDMap.hasOwnProperty(nameVal)) {
-		var dID = NameToDexIDMap[nameVal];
-		if(DexIDToEntryIDMap.hasOwnProperty(dID)) {
-			return DexIDToEntryIDMap[dID];
-		}
-	}
-	
-	return [];
-}
-
-function CalculateTypeQuery() {
-	var TypeToEntryIDMap = mapSpace.TypeToEntryIDMap;
-	var typeVal = document.getElementById("typeInput").value.trim();
-	if(TypeToEntryIDMap.hasOwnProperty(typeVal)) {
-		return TypeToEntryIDMap[typeVal];
-	}
-	return [];
-}
-
-function CalculateSingleMoveQuery(move) {
-	var moveID = MoveNameToMoveIDMap[move];
-	var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
-	var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
-	
-	if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
-		var moveID = MoveNameToMoveIDMap[move];
-		if(MoveIDToEntryIDMap.hasOwnProperty(moveID) ) {
-			return MoveIDToEntryIDMap[moveID];
-		}
-	}
-
-	return [];
-}
-
-function CalculateMovesQuery() {
-	var resList = [];
-	for(var i = 0; i < 4; i++) {
-		var moveName = document.getElementById("moveInput" + String(i)).value.trim();
-		if(moveName.length > 0) {
-			resList.push(CalculateSingleMoveQuery(moveName));
-		}
-	}
-	var res = [];
-	if(resList.length >= 2) {
-		res = StringListIntersection(resList[0],resList[1]);
-		for(var i = 2; i < resList.length; i++) {
-			res = StringListIntersection(res,resList[i]);
-		}
-	} else if(resList.length == 1){
-		res = resList[0];
-	} else {
-		res = resList;
-	}
-	return res;
-}
 
 var queryRes = [];
 var selectedEntry = 0;
 
 //NEW TOP LEVEL
-function CalculateEntryQuery(entryQuery) {
-	var resList = [];
+function BuildEntryQuery() {
+	var entryQuery = {};
+	entryQuery.name = $('#' + 'nameInput').val();
+	console.log(entryQuery.name + " " + typeof(entryQuery.name));
+	entryQuery.type = $('#' + 'typeInput').val();
+	entryQuery.moveList = [];
+	for(var i = 0; i < 4; i++) {
+		entryQuery.moveList[i] = $('#' + 'moveInput' + String(i)).val();
+	}
+	return entryQuery;
+}
 
-	var NameQueryResIDs = CalculateNameQuery();
-	if(NameQueryResIDs.length > 0) {
-		resList.push(NameQueryResIDs);
-	} else {
-		console.log("GG Failed");
-	}
-	var TypeQueryResIDs = CalculateTypeQuery();
-	if(TypeQueryResIDs.length > 0) {
-		resList.push(TypeQueryResIDs);
-	} else {
-		console.log("Type Fail");
-	}
-	var MoveQueryResIDs = CalculateMovesQuery();
-	if(MoveQueryResIDs.length > 0) {
-		resList.push(MoveQueryResIDs);
-	} else {
-		console.log("Move Fail");
-	}
-	var res = [];
-	if(resList.length >= 2) {
-		res = StringListIntersection(resList[0],resList[1]);
-		for(var i = 2; i < resList.length; i++) {
-			res = StringListIntersection(res,resList[i]);
-		}
-	} else {
-		res = resList[0];
-	}	
+function EntryFormSubmit() {
+	var entryQuery = BuildEntryQuery();
+	var res = mapSpace.CalculateEntryQuery(entryQuery);
+	selectedEntry = 0;
 	queryRes = res;
-	document.getElementById("querySize").value = res.length;
-	if(res.length > 0) {
-		selectedEntry = 0;
-		OutputEntryData(queryRes[selectedEntry]);
-	}
+	
+	OutputEntryData(queryRes[selectedEntry]);
+	document.getElementById('querySize').value = queryRes.length;
 	return false;
 }
+
 
 function GetPrevEntry() {
 	selectedEntry--;
@@ -652,9 +679,9 @@ function OutputEntryData(x) {
 	}
 	document.getElementById("itemOutput").value = entryData.item;
 	document.getElementById("natureOutput").value = entryData.nature;
-	$('#nonono').append("nerpus");
-	$('#outputTag').val(entryData.item);
-	$('#outputP').val(entryData.nature);
+	// $('#nonono').append("nerpus");
+	// $('#outputTag').val(entryData.item); jquery example of setting HTML element value
+
 	return false;
 }
 

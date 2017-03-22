@@ -14,6 +14,7 @@ var nextEntryFormID = 'nextEntryForm';
 
 var mapperHelpID = 'mapperHelp';
 
+//BUILD LOW-LEVEL ITEMS
 function BuildLink(name,loc) {
 	return linkTemplate.replace('%data%',loc).replace('%text%',name);
 }
@@ -30,6 +31,8 @@ function BuildCustomSubmitButtonString(val) {
 	return customSubmitButton.replace('%text%',val);
 }
 
+
+//HIGH-LEVEL ITEMS
 var mapperHelpItems = [
 	['Instructions','mapper/instructions']
 ];
@@ -86,6 +89,8 @@ var entryOutputFormItems = [
 	]
 ];
 
+
+//BUILD HIGH-LEVEL ITEMSFUNCTIONS
 function BuildInputItems(formID,formItems) {
 	for(var i = 0; i < formItems.length; i++) {
 		$('#' + formID).append(BuildInputString(formItems[i][0],formItems[i][1]));
