@@ -1,8 +1,12 @@
-var queryRes = [];
+var queryResIDs = [];
 var selectedEntry = 0;
 
+/*
+	TODO:Make sure all buttons prev,next,forms work
+*/
+
 //NEW TOP LEVEL
-function BuildEntryQuery() {
+function RetrieveEntryQueryInput() {
 	var entryQuery = {};
 	entryQuery.name = $('#' + 'nameInput').val();
 	console.log(entryQuery.name + " " + typeof(entryQuery.name));
@@ -15,13 +19,13 @@ function BuildEntryQuery() {
 }
 
 function EntryFormSubmit() {
-	var entryQuery = BuildEntryQuery();
-	var res = mapSpace.CalculateEntryQuery(entryQuery);
+	var entryQuery = RetrieveEntryQueryInput();
+	var resIDs = mapSpace.CalculateEntryIDList(entryQuery);
 	selectedEntry = 0;
-	queryRes = res;
-	
-	OutputEntryData(queryRes[selectedEntry]);
-	document.getElementById('querySize').value = queryRes.length;
+	queryResIDs = resIDs;
+	var entryData = mapSpace.CalculateFullEntryData(resIDs[0]);
+	OutputEntryData(entryData);
+	document.getElementById('querySize').value = queryResIDs.length;
 	return false;
 }
 
@@ -29,55 +33,60 @@ function EntryFormSubmit() {
 function GetPrevEntry() {
 	selectedEntry--;
 	if(selectedEntry < 0) {
-		selectedEntry += queryRes.length;
+		selectedEntry += queryResIDs.length;
 	}
-	OutputEntryData(queryRes[selectedEntry]);	
+	OutputEntryData(mapSpace.CalculateFullEntryData(queryResIDs[selectedEntry]));	
 	return false;
 }
 
 function GetNextEntry() {
 	selectedEntry++;
-	selectedEntry %= queryRes.length;
-	OutputEntryData(queryRes[selectedEntry]);
+	selectedEntry %= queryResIDs.length;
+	OutputEntryData(mapSpace.CalculateFullEntryData(queryResIDs[selectedEntry]));
 	return false;
 }
 
 function GetSelectedEntry() {
 	var whichEntry = Number(document.getElementById("whichEntryInput").value);
-	var chosenOne = queryRes[whichEntry % (queryRes.length)];
-	OutputEntryData(chosenOne);
+	selectedEntry = whichEntry % (queryResIDs.length);
+	document.getElementById("whichEntryInput").value = selectedEntry;
+	OutputEntryData(mapSpace.CalculateFullEntryData(queryResIDs[selectedEntry]));
 	return false;
 }
 
-function OutputEntryData(x) {
+function OutputEntryData(entryData) {
+	
+			// baseStats - list
+			// moves - list
+			// EVs - list
+			// name - string
+			// type  - string
+			// item - string
+			// nature - string
 	//TODO: Type
 	var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
 	var DexIDToBaseStatsMap = mapSpace.DexIDToBaseStatsMap;
 	var DexIDToNameMap = mapSpace.DexIDToNameMap;
 	var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
 	var MoveIDToMoveNameMap = mapSpace.MoveIDToMoveNameMap;
-	
-	var entryData = EntryIDToEntryDataMap[x];
 	if(entryData == undefined) {
-		console.log("und");
 		return false;
 	}
 	for(var i = 0;i < 6; i++) {
-		document.getElementById('baseStatOutput' + String(i)).value = DexIDToBaseStatsMap[entryData.dexID][i];
+		document.getElementById('baseStatOutput' + String(i)).value = entryData.baseStats[i];
 	}
-	document.getElementById("nameOutput").value = DexIDToNameMap[entryData.dexID];
-	document.getElementById("typeOutput").value = DexIDToTypeMap[entryData.dexID].join(' ');
+	document.getElementById("nameOutput").value = entryData.name;
+	document.getElementById("typeOutput").value = entryData.type;
 	document.getElementById("abilityOutput").value = entryData.ability;
 	for(var i = 0; i < 4; i++) {
-		document.getElementById("moveOutput" + String(i)).value = MoveIDToMoveNameMap[entryData.moves[i]];
+		document.getElementById("moveOutput" + String(i)).value = entryData.moves[i];
 	}
 	for(var j = 0; j < 6; j++) {
-		document.getElementById("EVOutput" + String(j)).value = entryData.EVs[j];
+		document.getElementById("EVOutput" + String(j)).value = entryData.EVs[i];
 	}
 	document.getElementById("itemOutput").value = entryData.item;
 	document.getElementById("natureOutput").value = entryData.nature;
-	// $('#nonono').append("nerpus");
-	// $('#outputTag').val(entryData.item); jquery example of setting HTML element value
+	
 
 	return false;
 }

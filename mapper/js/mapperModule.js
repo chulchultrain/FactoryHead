@@ -21,6 +21,31 @@
 //TODO: Move all functions inside namespace and change syntax accordingly. Get rid of front-end link and parameterize EntryFilter
 //TODO: Precede mapSpace fields with mapSpace inside function scopes due to
 //it checking global scope instead of enclosing scope.
+
+/*
+	IMPORTANT PARTS:
+	Given an entryQuery, you can calculate a list of Entries whose data are consistent with the query. These entries shall be represented by their IDs as a return type
+	for that function. mapSpace.CalculateEntryIDList(entryQuery)
+	The attributes that an entryQuery object that will be used for calculation are:
+		name - a string
+		type - a string
+		moveList - a list of up to 4 strings indicating the moves themselves.
+	Return type:
+		a list of strings which are the entryIDs.
+	
+	Given an entryID, you can retrieve the full entry data associated with that ID. mapSpace.CalculateFullEntryData(entryID)
+		entryID - string
+	Return type:
+		an object with the attributes:
+			baseStats - list
+			moves - list
+			EVs - list
+			name - string
+			type  - string
+			item - string
+			nature - string
+			
+*/
 var mapSpace = {
 	
 	mapData:{},
@@ -295,9 +320,10 @@ var mapSpace = {
 	} ,
 
 	CalculateSingleMoveQuery:function(move) {
-		var moveID = MoveNameToMoveIDMap[move];
+
 		var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
 		var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
+		var moveID = MoveNameToMoveIDMap[move];
 		
 		if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
 			var moveID = MoveNameToMoveIDMap[move];
@@ -334,7 +360,7 @@ var mapSpace = {
 		return res;
 	} ,
 
-	CalculateEntryQuery:function(entryQuery) {
+	CalculateEntryIDList:function(entryQuery) {
 		var resList = [];
 		
 		var CalculateNameQuery = mapSpace.CalculateNameQuery;
@@ -370,7 +396,42 @@ var mapSpace = {
 			res = resList[0];
 		}
 		return res;
+	} ,
+
+	CalculateFullEntryData:function(entryID) {
+		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+		var DexIDToBaseStatsMap = mapSpace.DexIDToBaseStatsMap;
+		var DexIDToNameMap = mapSpace.DexIDToNameMap;
+		var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
+		var MoveIDToMoveNameMap = mapSpace.MoveIDToMoveNameMap;
+		
+		var entryData = EntryIDToEntryDataMap[entryID];
+		if(entryData == undefined) {
+			console.log("und");
+			return undefined;
+		}
+		var res = {};
+		res.baseStats = [];
+		res.moves = [];
+		res.EVs = [];
+		
+		for(var i = 0;i < 6; i++) {
+			res.baseStats.push(DexIDToBaseStatsMap[entryData.dexID][i]);
+		}
+		res.name = DexIDToNameMap[entryData.dexID];
+		res.type = DexIDToTypeMap[entryData.dexID].join(' ');
+		res.ability = entryData.ability;
+		for(var i = 0; i < 4; i++) {
+			res.moves.push(MoveIDToMoveNameMap[entryData.moves[i]]);
+		}
+		for(var j = 0; j < 6; j++) {
+			res.EVs.push(entryData.EVs[j]);
+		}
+		res.item = entryData.item;
+		res.nature = entryData.nature;
+		return res;
 	}
+
 
 };
 /* PREVIOUS VARS

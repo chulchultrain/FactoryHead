@@ -37,6 +37,19 @@ var mapperHelpItems = [
 	['Instructions','mapper/instructions']
 ];
 
+/*
+	Form items - User Side Items
+	InputForm Items will have IDs that are the first entry in each item of entryInputFormItems
+	For example, if an item in entryInputFormItems is ["foo","bar"], then there will be an input form with the document id of foo.
+	Current Input Form Items - 03/23/17
+	['nameInput','Name Input'],
+	['typeInput','Type Input'],
+	['moveInput0','Move Input 0'],
+	['moveInput1','Move Input 1'],
+	['moveInput2','Move Input 2'],
+	['moveInput3','Move Input 3']	
+*/
+
 var entryInputFormItems = [
 	['nameInput','Name Input'],
 	['typeInput','Type Input'],
@@ -52,10 +65,44 @@ var querySizeFormItems = [
 	['querySize','Query Size']
 ];
 
+
 var whichEntryFormItems = [
 	['whichEntryInput','Which Entry Input']
 ];
 
+/*
+	OutputForm Items will have IDs that are the first entry of each subitem in each item of entryOutputFormItems
+	For example, if an item in entryOutputFormItems is ["foo","bar"], then there will be an output text area with the document id of foo.
+	[
+	['nameOutput','Name Output'],
+	['typeOutput','Type Output'],
+	['itemOutput','Item Output'],
+	['natureOutput','Nature Output'],
+	['abilityOutput','Ability Output']
+	],
+	[
+	['moveOutput0','Move Output 0'],
+	['moveOutput1','Move Output 1'],
+	['moveOutput2','Move Output 2'],
+	['moveOutput3','Move Output 3']
+	],
+	[
+	['baseStatOutput0','HP Base Stat'],
+	['baseStatOutput1','A Base Stat'],
+	['baseStatOutput2','D Base Stat'],
+	['baseStatOutput3','SA Base Stat'],
+	['baseStatOutput4','SD Base Stat'],
+	['baseStatOutput5','S Base Stat']
+	],
+	[
+	['EVOutput0','HP EV Output'],
+	['EVOutput1','Attack EV Output'],
+	['EVOutput2','Defense EV Output'],
+	['EVOutput3','Special Attack EV Output'],
+	['EVOutput4','Special Defense EV Output'],
+	['EVOutput5','Speed EV Output']
+	]
+	*/
 var entryOutputFormItems = [
 	
 	[
@@ -165,8 +212,6 @@ function BuildMapperHelp() {
 BuildEntryInputForm();
 BuildQuerySizeForm();
 BuildWhichEntryInputForm();
-//BuildEntryOutputForm();
 BuildEntryOutputSpace();
 BuildPrevNextForms();
 BuildMapperHelp();
-//$('#selectForm').val('mercedes');
