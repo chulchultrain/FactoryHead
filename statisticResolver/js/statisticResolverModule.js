@@ -131,5 +131,9 @@ function afterWait() {
 	}
 }
 
+function CalculateStatisticResolverQuery(SRQuery) {
+	return CalculateEVs(SRQuery.name,SRQuery.nature,SRQuery.stats);
+}
+
 setTimeout(afterWait,1000);
 
