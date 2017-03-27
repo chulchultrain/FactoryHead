@@ -5,6 +5,16 @@ var selectedEntry = 0;
 	TODO:Make sure all buttons prev,next,forms work
 */
 
+function EntryQToString(entryQuery) {
+	var res = "";
+	res += entryQuery.name + '\n';
+	res += entryQuery.type + '\n';
+	for(var i = 0; i < entryQuery.moveList.length; i++) {
+		res += entryQuery.moveList[i] + '\n';
+	}
+	return res;
+}
+
 //NEW TOP LEVEL
 function RetrieveEntryQueryInput() {
 	var entryQuery = {};
@@ -15,6 +25,7 @@ function RetrieveEntryQueryInput() {
 	for(var i = 0; i < 4; i++) {
 		entryQuery.moveList[i] = $('#' + 'moveInput' + String(i)).val();
 	}
+	console.log(EntryQToString(entryQuery));
 	return entryQuery;
 }
 
