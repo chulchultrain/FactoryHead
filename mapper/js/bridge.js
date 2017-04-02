@@ -93,7 +93,7 @@ function OutputEntryData(entryData) {
 		document.getElementById("moveOutput" + String(i)).value = entryData.moves[i];
 	}
 	for(var j = 0; j < 6; j++) {
-		document.getElementById("EVOutput" + String(j)).value = entryData.EVs[i];
+		document.getElementById("EVOutput" + String(j)).value = entryData.EVs[j];
 	}
 	document.getElementById("itemOutput").value = entryData.item;
 	document.getElementById("natureOutput").value = entryData.nature;
