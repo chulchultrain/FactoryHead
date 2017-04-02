@@ -18,9 +18,7 @@
 	then I will hardcode the data into a javascript file. It probably won't reduce it by much, but hopefully enough.
 	Only things I can see is from headers from the requests. I seriously doubt I'll go over 100GB a month.
 */
-//TODO: Move all functions inside namespace and change syntax accordingly. Get rid of front-end link and parameterize EntryFilter
-//TODO: Precede mapSpace fields with mapSpace inside function scopes due to
-//it checking global scope instead of enclosing scope.
+//TODO:CHECK LOADNATUREMULMAP for not modular or not well organized code.
 
 /*
 	IMPORTANT PARTS:
@@ -60,11 +58,13 @@ var mapSpace = {
 		mapSpace.DexIDToEntryIDMap = {};
 		mapSpace.MoveIDToEntryIDMap = {};
 		mapSpace.EntryIDToEntryDataMap = {};
+		mapSpace.natureMulMap = {};
 		mapSpace.NameDataLoaded = false;
 		mapSpace.TypeDataLoaded = false;
 		mapSpace.EntryDataLoaded = false;
 		mapSpace.MoveDataLoaded = false;
-		mapSpace.StatDataLoaded = false;	
+		mapSpace.StatDataLoaded = false;
+		mapSpace.NatureDataLoaded = false;
 		mapSpace.entryDataItems = [];
 	} ,
 	LoadDexIDToBaseStatsMap:function(xhttp) {
@@ -82,6 +82,39 @@ var mapSpace = {
 		}
 		mapSpace.StatDataLoaded = true;
 	} ,
+	LoadNatureMulMap:function(xhttp) {
+		var IntToStat = [
+			'HP',
+			'A',
+			'D',
+			'SA',
+			'SD',
+			'S'
+		];
+		var newText = xhttp.responseText.split('\n');
+		var natureMulMap = mapSpace.natureMulMap;
+		for(var i = 0; i < newText.length; i++) {
+			if(newText[i] != undefined) {
+				var line = newText[i].trim();
+				var items = line.split(' ');
+				if(items.length < 3) {
+					break;
+				}
+				var nature = items[0].trim();
+				var incStat = Number(items[1]);
+				var decStat = Number(items[2]);
+				if(!natureMulMap.hasOwnProperty(nature)) {
+					natureMulMap[nature] = {};
+				}
+				natureMulMap[nature][IntToStat[incStat]] = 1.1;
+				natureMulMap[nature][IntToStat[decStat]] = .9;
+				console.log(nature + ' ' + IntToStat[incStat] + ' ' + IntToStat[decStat]);
+			}
+
+		}
+		mapSpace.NatureDataLoaded = true;
+	},
+	
 	LoadMoveIDToEntryIDMap:function() {
 		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
 		var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
@@ -136,9 +169,10 @@ var mapSpace = {
 		xhttp.onreadystatechange = function() {
 			if(this.readyState == 4 && this.status == 200) {
 				doFunc(xhttp);
-				console.log("AFTER LOAD DOC");
+				console.log("AFTER LOAD DOC: " + url);
 				if(mapSpace.AllLoadedQuery()) {
 					mapSpace.LoadRestData();
+					console.log("REST DATA IS LOADED");
 				}
 			} else {
 				console.log(this.status);
@@ -268,7 +302,8 @@ var mapSpace = {
 		&& mapSpace.EntryDataLoaded 
 		&& mapSpace.TypeDataLoaded 
 		&& mapSpace.MoveDataLoaded 
-		&& mapSpace.StatDataLoaded;
+		&& mapSpace.StatDataLoaded
+		&& mapSpace.NatureDataLoaded;
 	} ,
 	LoadAllData:function() {
 		mapSpace.loadDoc("BASE/NAME/Names.txt",mapSpace.LoadNameToDexIDMap);
@@ -276,6 +311,7 @@ var mapSpace = {
 		mapSpace.loadDoc("BASE/TYPE/Types.txt",mapSpace.LoadDexIDToTypeMap);
 		mapSpace.loadDoc("BASE/MOVE/MoveData.txt",mapSpace.LoadMoveIDToMoveNameMap);
 		mapSpace.loadDoc("BASE/STATS/BaseStats.txt",mapSpace.LoadDexIDToBaseStatsMap);
+		mapSpace.loadDoc("BASE/NATURE/NatureData.txt",mapSpace.LoadNatureMulMap);
 	} ,
 	StringListIntersection:function(list1,list2) {
 		var res = [];

@@ -47,17 +47,6 @@
 	padding: 10px;
 }
 
-.screenshot{
-	padding: 50px;
-}
-
-.description {
-	padding: 50px;
-	margin-left:auto;
-	margin-right:0;
-}
-
-
 .col-1 {
 	width: 8.33%;
 }
@@ -120,37 +109,6 @@
 	margin-right:auto;	
 	color:white;
 	background:teal;
-}
-
-.BannerArt {
-	width: 750px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-#entryInputForm,#querySizeForm,#whichEntryForm,#entryOutputForm {
-	margin-left: auto;
-	margin-right: auto;
-	text-align:center;
-
-}
-
-
-.outputDescriptionClass {
-	#padding:200px;
-	margin:20px;
-	#color:yellow;
-	#background:linear-gradient(to bottom,blue,red);
-}
-
-.inputDescriptionClass {
-	#width:200px;
-	#height:200px;
-	#padding-bottom:100px;
-	#margin-bottom:50px;
-	#background:black;
-	#color:white;
-	margin:20px;
 }
 
 #pageBarAbout {
