@@ -376,7 +376,7 @@ var mapSpace = {
 		var StringListIntersection = mapSpace.StringListIntersection;
 		var CalculateSingleMoveQuery = mapSpace.CalculateSingleMoveQuery;
 		
-		for(var i = 0; i < 4; i++) {
+		for(var i = 0; i < moveList.length; i++) {
 			var moveName = moveList[i].trim();
 			if(moveName.length > 0) {
 				resList.push(CalculateSingleMoveQuery(moveName));
