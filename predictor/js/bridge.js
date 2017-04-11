@@ -26,6 +26,10 @@ function RetrieveEntryQueryInput() {
 
 function RetrieveCutOffInput() {
 	var cutOff = parseFloat($('#' + 'cutOffInput').val());
+	console.log(cutOff + ' ' + typeof(cutOff));
+	if(isNaN(cutOff)) {
+		cutOff = 0;
+	}
 	cutOff = Math.max(0,cutOff);
 	return cutOff;
 }
