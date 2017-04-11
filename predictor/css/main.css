@@ -1,0 +1,17 @@
+.inputDescriptionClass {
+	#width:200px;
+	#height:200px;
+	#padding-bottom:100px;
+	#margin-bottom:50px;
+	#background:black;
+	#color:white;
+	margin:20px;
+}
+
+
+#moveNameOutput,#moveProbabilityOutput {
+	#padding:200px;
+	margin:20px;
+	#color:yellow;
+	#background:linear-gradient(to bottom,blue,red);
+}
