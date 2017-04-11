@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="mapper/css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/gridFrame.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src = "mapper/js/loadData.js"></script>
+	<script src = "mapper/js/mapperModule.js"></script>
 </head>
 
 <body>		
@@ -18,7 +18,7 @@
 			<div class = "col-10">
 			
 			<div class = "BannerArt">
-				<img src= "images/CrudeBanner.png" alt="app picture" href = "https://github.com/chulchultrain/FactoryHead"> 
+				<a href = "https://github.com/chulchultrain/FactoryHead"> <img src = "images/CrudeBanner.png" /> </a> <!-- Need fix cuz not a link -->
 			</div>
 			
 			</div>
@@ -30,7 +30,7 @@
 		
 		<div id = "MapDiv" class = "row">
 			<div class = "col-4">
-				<form id = "entryInputForm"  onsubmit = "return CalculateEntryQuery();">
+				<form id = "entryInputForm"  onsubmit = "return EntryFormSubmit();">
 				</form>
 			</div>
 			<div class = "col-4">
@@ -65,6 +65,7 @@
 	
 	
 	<script src = "mapper/js/dynamicBuild.js"></script>
+	<script src = "mapper/js/bridge.js"></script>
 </body>
 
 </html>

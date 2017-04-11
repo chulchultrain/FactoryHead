@@ -18,9 +18,32 @@
 	then I will hardcode the data into a javascript file. It probably won't reduce it by much, but hopefully enough.
 	Only things I can see is from headers from the requests. I seriously doubt I'll go over 100GB a month.
 */
-//TODO: Move all functions inside namespace and change syntax accordingly. Get rid of front-end link and parameterize EntryFilter
-//TODO: Precede mapSpace fields with mapSpace inside function scopes due to
-//it checking global scope instead of enclosing scope.
+//TODO:CHECK LOADNATUREMULMAP for not modular or not well organized code.
+
+/*
+	IMPORTANT PARTS:
+	Given an entryQuery, you can calculate a list of Entries whose data are consistent with the query. These entries shall be represented by their IDs as a return type
+	for that function. mapSpace.CalculateEntryIDList(entryQuery)
+	The attributes that an entryQuery object that will be used for calculation are:
+		name - a string
+		type - a string
+		moveList - a list of up to 4 strings indicating the moves themselves.
+	Return type:
+		a list of strings which are the entryIDs.
+	
+	Given an entryID, you can retrieve the full entry data associated with that ID. mapSpace.CalculateFullEntryData(entryID)
+		entryID - string
+	Return type:
+		an object with the attributes:
+			baseStats - list
+			moves - list
+			EVs - list
+			name - string
+			type  - string
+			item - string
+			nature - string
+			
+*/
 var mapSpace = {
 	
 	mapData:{},
@@ -35,11 +58,13 @@ var mapSpace = {
 		mapSpace.DexIDToEntryIDMap = {};
 		mapSpace.MoveIDToEntryIDMap = {};
 		mapSpace.EntryIDToEntryDataMap = {};
+		mapSpace.natureMulMap = {};
 		mapSpace.NameDataLoaded = false;
 		mapSpace.TypeDataLoaded = false;
 		mapSpace.EntryDataLoaded = false;
 		mapSpace.MoveDataLoaded = false;
-		mapSpace.StatDataLoaded = false;	
+		mapSpace.StatDataLoaded = false;
+		mapSpace.NatureDataLoaded = false;
 		mapSpace.entryDataItems = [];
 	} ,
 	LoadDexIDToBaseStatsMap:function(xhttp) {
@@ -57,6 +82,39 @@ var mapSpace = {
 		}
 		mapSpace.StatDataLoaded = true;
 	} ,
+	LoadNatureMulMap:function(xhttp) {
+		var IntToStat = [
+			'HP',
+			'A',
+			'D',
+			'SA',
+			'SD',
+			'S'
+		];
+		var newText = xhttp.responseText.split('\n');
+		var natureMulMap = mapSpace.natureMulMap;
+		for(var i = 0; i < newText.length; i++) {
+			if(newText[i] != undefined) {
+				var line = newText[i].trim();
+				var items = line.split(' ');
+				if(items.length < 3) {
+					break;
+				}
+				var nature = items[0].trim();
+				var incStat = Number(items[1]);
+				var decStat = Number(items[2]);
+				if(!natureMulMap.hasOwnProperty(nature)) {
+					natureMulMap[nature] = {};
+				}
+				natureMulMap[nature][IntToStat[incStat]] = 1.1;
+				natureMulMap[nature][IntToStat[decStat]] = .9;
+				console.log(nature + ' ' + IntToStat[incStat] + ' ' + IntToStat[decStat]);
+			}
+
+		}
+		mapSpace.NatureDataLoaded = true;
+	},
+	
 	LoadMoveIDToEntryIDMap:function() {
 		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
 		var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
@@ -111,9 +169,10 @@ var mapSpace = {
 		xhttp.onreadystatechange = function() {
 			if(this.readyState == 4 && this.status == 200) {
 				doFunc(xhttp);
-				console.log("AFTER LOAD DOC");
+				console.log("AFTER LOAD DOC: " + url);
 				if(mapSpace.AllLoadedQuery()) {
 					mapSpace.LoadRestData();
+					console.log("REST DATA IS LOADED");
 				}
 			} else {
 				console.log(this.status);
@@ -243,7 +302,8 @@ var mapSpace = {
 		&& mapSpace.EntryDataLoaded 
 		&& mapSpace.TypeDataLoaded 
 		&& mapSpace.MoveDataLoaded 
-		&& mapSpace.StatDataLoaded;
+		&& mapSpace.StatDataLoaded
+		&& mapSpace.NatureDataLoaded;
 	} ,
 	LoadAllData:function() {
 		mapSpace.loadDoc("BASE/NAME/Names.txt",mapSpace.LoadNameToDexIDMap);
@@ -251,7 +311,164 @@ var mapSpace = {
 		mapSpace.loadDoc("BASE/TYPE/Types.txt",mapSpace.LoadDexIDToTypeMap);
 		mapSpace.loadDoc("BASE/MOVE/MoveData.txt",mapSpace.LoadMoveIDToMoveNameMap);
 		mapSpace.loadDoc("BASE/STATS/BaseStats.txt",mapSpace.LoadDexIDToBaseStatsMap);
-	}	
+		mapSpace.loadDoc("BASE/NATURE/NatureData.txt",mapSpace.LoadNatureMulMap);
+	} ,
+	StringListIntersection:function(list1,list2) {
+		var res = [];
+		var seen = {};
+		for(var i = 0; i < list1.length; i++) {
+			seen[list1[i]] = true;
+		}
+		for(var j = 0; j < list2.length; j++) {
+			if(seen.hasOwnProperty(list2[j]) ) {
+				res.push(list2[j]);
+			}
+		}
+		return res;
+	} ,
+
+	CalculateNameQuery:function(name) {
+		var nameVal = name.trim();
+		var NameToDexIDMap = mapSpace.NameToDexIDMap;
+		var DexIDToEntryIDMap = mapSpace.DexIDToEntryIDMap;
+		/*
+
+		console.log(nameVal);
+		console.log("Function Called");
+		*/
+		if(NameToDexIDMap.hasOwnProperty(nameVal)) {
+			var dID = NameToDexIDMap[nameVal];
+			if(DexIDToEntryIDMap.hasOwnProperty(dID)) {
+				return DexIDToEntryIDMap[dID];
+			}
+		}
+		
+		return [];
+	} ,
+
+	CalculateTypeQuery:function(type) {
+		var TypeToEntryIDMap = mapSpace.TypeToEntryIDMap;
+		var typeVal = type.trim();
+		if(TypeToEntryIDMap.hasOwnProperty(typeVal)) {
+			return TypeToEntryIDMap[typeVal];
+		}
+		return [];
+	} ,
+
+	CalculateSingleMoveQuery:function(move) {
+
+		var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
+		var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
+		var moveID = MoveNameToMoveIDMap[move];
+		
+		if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
+			var moveID = MoveNameToMoveIDMap[move];
+			if(MoveIDToEntryIDMap.hasOwnProperty(moveID) ) {
+				return MoveIDToEntryIDMap[moveID];
+			}
+		}
+
+		return [];
+	} ,
+
+	CalculateMovesQuery:function(moveList) {
+		var resList = [];
+		var StringListIntersection = mapSpace.StringListIntersection;
+		var CalculateSingleMoveQuery = mapSpace.CalculateSingleMoveQuery;
+		
+		for(var i = 0; i < moveList.length; i++) {
+			var moveName = moveList[i].trim();
+			if(moveName.length > 0) {
+				resList.push(CalculateSingleMoveQuery(moveName));
+			}
+		}
+		var res = [];
+		if(resList.length >= 2) {
+			res = StringListIntersection(resList[0],resList[1]);
+			for(var i = 2; i < resList.length; i++) {
+				res = StringListIntersection(res,resList[i]);
+			}
+		} else if(resList.length == 1){
+			res = resList[0];
+		} else {
+			res = resList;
+		}
+		return res;
+	} ,
+
+	CalculateEntryIDList:function(entryQuery) {
+		var resList = [];
+		
+		var CalculateNameQuery = mapSpace.CalculateNameQuery;
+		var CalculateTypeQuery = mapSpace.CalculateTypeQuery;
+		var CalculateMovesQuery = mapSpace.CalculateMovesQuery;
+		var StringListIntersection = mapSpace.StringListIntersection;
+
+		var NameQueryResIDs = CalculateNameQuery(entryQuery.name);
+		if(NameQueryResIDs.length > 0) {
+			resList.push(NameQueryResIDs);
+		} else {
+			console.log("GG Failed");
+		}
+		var TypeQueryResIDs = CalculateTypeQuery(entryQuery.type);
+		if(TypeQueryResIDs.length > 0) {
+			resList.push(TypeQueryResIDs);
+		} else {
+			console.log("Type Fail");
+		}
+		var MoveQueryResIDs = CalculateMovesQuery(entryQuery.moveList);
+		if(MoveQueryResIDs.length > 0) {
+			resList.push(MoveQueryResIDs);
+		} else {
+			console.log("Move Fail");
+		}
+		var res = [];
+		if(resList.length >= 2) {
+			res = StringListIntersection(resList[0],resList[1]);
+			for(var i = 2; i < resList.length; i++) {
+				res = StringListIntersection(res,resList[i]);
+			}
+		} else {
+			res = resList[0];
+		}
+		return res;
+	} ,
+
+	CalculateFullEntryData:function(entryID) {
+		var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
+		var DexIDToBaseStatsMap = mapSpace.DexIDToBaseStatsMap;
+		var DexIDToNameMap = mapSpace.DexIDToNameMap;
+		var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
+		var MoveIDToMoveNameMap = mapSpace.MoveIDToMoveNameMap;
+		
+		var entryData = EntryIDToEntryDataMap[entryID];
+		if(entryData == undefined) {
+			console.log("und");
+			return undefined;
+		}
+		var res = {};
+		res.baseStats = [];
+		res.moves = [];
+		res.EVs = [];
+		
+		for(var i = 0;i < 6; i++) {
+			res.baseStats.push(DexIDToBaseStatsMap[entryData.dexID][i]);
+		}
+		res.name = DexIDToNameMap[entryData.dexID];
+		res.type = DexIDToTypeMap[entryData.dexID].join(' ');
+		res.ability = entryData.ability;
+		for(var i = 0; i < 4; i++) {
+			res.moves.push(MoveIDToMoveNameMap[entryData.moves[i]]);
+		}
+		for(var j = 0; j < 6; j++) {
+			res.EVs.push(entryData.EVs[j]);
+		}
+		res.item = entryData.item;
+		res.nature = entryData.nature;
+		return res;
+	}
+
+
 };
 /* PREVIOUS VARS
 var entryDataItems = [
@@ -480,183 +697,8 @@ function LoadDexIDToTypeMap(xhttp) {
 */
 //TODO: Be careful starting here. This is the query portion and we need to decouple front-end back-end here.cccccc
 
-function StringListIntersection(list1,list2) {
-	var res = [];
-	var seen = {};
-	for(var i = 0; i < list1.length; i++) {
-		seen[list1[i]] = true;
-	}
-	for(var j = 0; j < list2.length; j++) {
-		if(seen.hasOwnProperty(list2[j]) ) {
-			res.push(list2[j]);
-		}
-	}
-	return res;
-}
 
-function CalculateNameQuery() {
-	var nameVal = document.getElementById("nameInput").value.trim();
-	var NameToDexIDMap = mapSpace.NameToDexIDMap;
-	var DexIDToEntryIDMap = mapSpace.DexIDToEntryIDMap;
-	/*
 
-	console.log(nameVal);
-	console.log("Function Called");
-	*/
-	if(NameToDexIDMap.hasOwnProperty(nameVal)) {
-		var dID = NameToDexIDMap[nameVal];
-		if(DexIDToEntryIDMap.hasOwnProperty(dID)) {
-			return DexIDToEntryIDMap[dID];
-		}
-	}
-	
-	return [];
-}
-
-function CalculateTypeQuery() {
-	var TypeToEntryIDMap = mapSpace.TypeToEntryIDMap;
-	var typeVal = document.getElementById("typeInput").value.trim();
-	if(TypeToEntryIDMap.hasOwnProperty(typeVal)) {
-		return TypeToEntryIDMap[typeVal];
-	}
-	return [];
-}
-
-function CalculateSingleMoveQuery(move) {
-	var moveID = MoveNameToMoveIDMap[move];
-	var MoveNameToMoveIDMap = mapSpace.MoveNameToMoveIDMap;
-	var MoveIDToEntryIDMap = mapSpace.MoveIDToEntryIDMap;
-	
-	if(MoveNameToMoveIDMap.hasOwnProperty(move)) {
-		var moveID = MoveNameToMoveIDMap[move];
-		if(MoveIDToEntryIDMap.hasOwnProperty(moveID) ) {
-			return MoveIDToEntryIDMap[moveID];
-		}
-	}
-
-	return [];
-}
-
-function CalculateMovesQuery() {
-	var resList = [];
-	for(var i = 0; i < 4; i++) {
-		var moveName = document.getElementById("moveInput" + String(i)).value.trim();
-		if(moveName.length > 0) {
-			resList.push(CalculateSingleMoveQuery(moveName));
-		}
-	}
-	var res = [];
-	if(resList.length >= 2) {
-		res = StringListIntersection(resList[0],resList[1]);
-		for(var i = 2; i < resList.length; i++) {
-			res = StringListIntersection(res,resList[i]);
-		}
-	} else if(resList.length == 1){
-		res = resList[0];
-	} else {
-		res = resList;
-	}
-	return res;
-}
-
-var queryRes = [];
-var selectedEntry = 0;
-
-//NEW TOP LEVEL
-function CalculateEntryQuery(entryQuery) {
-	var resList = [];
-
-	var NameQueryResIDs = CalculateNameQuery();
-	if(NameQueryResIDs.length > 0) {
-		resList.push(NameQueryResIDs);
-	} else {
-		console.log("GG Failed");
-	}
-	var TypeQueryResIDs = CalculateTypeQuery();
-	if(TypeQueryResIDs.length > 0) {
-		resList.push(TypeQueryResIDs);
-	} else {
-		console.log("Type Fail");
-	}
-	var MoveQueryResIDs = CalculateMovesQuery();
-	if(MoveQueryResIDs.length > 0) {
-		resList.push(MoveQueryResIDs);
-	} else {
-		console.log("Move Fail");
-	}
-	var res = [];
-	if(resList.length >= 2) {
-		res = StringListIntersection(resList[0],resList[1]);
-		for(var i = 2; i < resList.length; i++) {
-			res = StringListIntersection(res,resList[i]);
-		}
-	} else {
-		res = resList[0];
-	}	
-	queryRes = res;
-	document.getElementById("querySize").value = res.length;
-	if(res.length > 0) {
-		selectedEntry = 0;
-		OutputEntryData(queryRes[selectedEntry]);
-	}
-	return false;
-}
-
-function GetPrevEntry() {
-	selectedEntry--;
-	if(selectedEntry < 0) {
-		selectedEntry += queryRes.length;
-	}
-	OutputEntryData(queryRes[selectedEntry]);	
-	return false;
-}
-
-function GetNextEntry() {
-	selectedEntry++;
-	selectedEntry %= queryRes.length;
-	OutputEntryData(queryRes[selectedEntry]);
-	return false;
-}
-
-function GetSelectedEntry() {
-	var whichEntry = Number(document.getElementById("whichEntryInput").value);
-	var chosenOne = queryRes[whichEntry % (queryRes.length)];
-	OutputEntryData(chosenOne);
-	return false;
-}
-
-function OutputEntryData(x) {
-	//TODO: Type
-	var EntryIDToEntryDataMap = mapSpace.EntryIDToEntryDataMap;
-	var DexIDToBaseStatsMap = mapSpace.DexIDToBaseStatsMap;
-	var DexIDToNameMap = mapSpace.DexIDToNameMap;
-	var DexIDToTypeMap = mapSpace.DexIDToTypeMap;
-	var MoveIDToMoveNameMap = mapSpace.MoveIDToMoveNameMap;
-	
-	var entryData = EntryIDToEntryDataMap[x];
-	if(entryData == undefined) {
-		console.log("und");
-		return false;
-	}
-	for(var i = 0;i < 6; i++) {
-		document.getElementById('baseStatOutput' + String(i)).value = DexIDToBaseStatsMap[entryData.dexID][i];
-	}
-	document.getElementById("nameOutput").value = DexIDToNameMap[entryData.dexID];
-	document.getElementById("typeOutput").value = DexIDToTypeMap[entryData.dexID].join(' ');
-	document.getElementById("abilityOutput").value = entryData.ability;
-	for(var i = 0; i < 4; i++) {
-		document.getElementById("moveOutput" + String(i)).value = MoveIDToMoveNameMap[entryData.moves[i]];
-	}
-	for(var j = 0; j < 6; j++) {
-		document.getElementById("EVOutput" + String(j)).value = entryData.EVs[j];
-	}
-	document.getElementById("itemOutput").value = entryData.item;
-	document.getElementById("natureOutput").value = entryData.nature;
-	$('#nonono').append("nerpus");
-	$('#outputTag').val(entryData.item);
-	$('#outputP').val(entryData.nature);
-	return false;
-}
 
 
 mapSpace.InitMapNames();

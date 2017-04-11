@@ -14,6 +14,7 @@ var nextEntryFormID = 'nextEntryForm';
 
 var mapperHelpID = 'mapperHelp';
 
+//BUILD LOW-LEVEL ITEMS
 function BuildLink(name,loc) {
 	return linkTemplate.replace('%data%',loc).replace('%text%',name);
 }
@@ -30,9 +31,24 @@ function BuildCustomSubmitButtonString(val) {
 	return customSubmitButton.replace('%text%',val);
 }
 
+
+//HIGH-LEVEL ITEMS
 var mapperHelpItems = [
 	['Instructions','mapper/instructions']
 ];
+
+/*
+	Form items - User Side Items
+	InputForm Items will have IDs that are the first entry in each item of entryInputFormItems
+	For example, if an item in entryInputFormItems is ["foo","bar"], then there will be an input form with the document id of foo.
+	Current Input Form Items - 03/23/17
+	['nameInput','Name Input'],
+	['typeInput','Type Input'],
+	['moveInput0','Move Input 0'],
+	['moveInput1','Move Input 1'],
+	['moveInput2','Move Input 2'],
+	['moveInput3','Move Input 3']	
+*/
 
 var entryInputFormItems = [
 	['nameInput','Name Input'],
@@ -49,23 +65,25 @@ var querySizeFormItems = [
 	['querySize','Query Size']
 ];
 
+
 var whichEntryFormItems = [
 	['whichEntryInput','Which Entry Input']
 ];
 
-var entryOutputFormItems = [
-	
+/*
+	OutputForm Items will have IDs that are the first entry of each subitem in each item of entryOutputFormItems
+	For example, if an item in entryOutputFormItems is ["foo","bar"], then there will be an output text area with the document id of foo.
 	[
-	['nameOutput','Name Output'],
-	['typeOutput','Type Output'],
-	['itemOutput','Item Output'],
-	['natureOutput','Nature Output'],
-	['abilityOutput','Ability Output']
+	['nameOutput','Name'],
+	['typeOutput','Type'],
+	['itemOutput','Item'],
+	['natureOutput','Nature'],
+	['abilityOutput','Ability']
 	],
 	[
-	['moveOutput0','Move Output 0'],
-	['moveOutput1','Move Output 1'],
-	['moveOutput2','Move Output 2'],
+	['moveOutput0','Move 0'],
+	['moveOutput1','Move 1'],
+	['moveOutput2','Move 2'],
 	['moveOutput3','Move Output 3']
 	],
 	[
@@ -77,24 +95,57 @@ var entryOutputFormItems = [
 	['baseStatOutput5','S Base Stat']
 	],
 	[
-	['EVOutput0','HP EV Output'],
-	['EVOutput1','Attack EV Output'],
-	['EVOutput2','Defense EV Output'],
-	['EVOutput3','Special Attack EV Output'],
-	['EVOutput4','Special Defense EV Output'],
-	['EVOutput5','Speed EV Output']
+	['EVOutput0','HP EV'],
+	['EVOutput1','Attack EV'],
+	['EVOutput2','Defense EV'],
+	['EVOutput3','Special Attack EV'],
+	['EVOutput4','Special Defense EV'],
+	['EVOutput5','Speed EV']
+	]
+	*/
+var entryOutputItems = [
+	[
+	['nameOutput','Name'],
+	['typeOutput','Type'],
+	['itemOutput','Item'],
+	['natureOutput','Nature'],
+	['abilityOutput','Ability']
+	],
+	[
+	['moveOutput0','Move 0'],
+	['moveOutput1','Move 1'],
+	['moveOutput2','Move 2'],
+	['moveOutput3','Move Output 3']
+	],
+	[
+	['baseStatOutput0','HP Base Stat'],
+	['baseStatOutput1','A Base Stat'],
+	['baseStatOutput2','D Base Stat'],
+	['baseStatOutput3','SA Base Stat'],
+	['baseStatOutput4','SD Base Stat'],
+	['baseStatOutput5','S Base Stat']
+	],
+	[
+	['EVOutput0','HP EV'],
+	['EVOutput1','Attack EV'],
+	['EVOutput2','Defense EV'],
+	['EVOutput3','Special Attack EV'],
+	['EVOutput4','Special Defense EV'],
+	['EVOutput5','Speed EV']
 	]
 ];
 
+
+//BUILD HIGH-LEVEL ITEMSFUNCTIONS
 function BuildInputItems(formID,formItems) {
 	for(var i = 0; i < formItems.length; i++) {
 		$('#' + formID).append(BuildInputString(formItems[i][0],formItems[i][1]));
 	}	
 }
 
-function BuildOutputItems(formID,formItems) {
-	for(var i = 0; i < formItems.length; i++) {
-		$('#' + formID).append(BuildOutputString(formItems[i][0],formItems[i][1]));
+function BuildOutputItems(elementID,elementItems) {
+	for(var i = 0; i < elementItems.length; i++) {
+		$('#' + elementID).append(BuildOutputString(elementItems[i][0],elementItems[i][1]));
 	}	
 }
 
@@ -104,19 +155,14 @@ function BuildInputForm(formID,formItems) {
 	$('#' + formID).append(inputSubmitButton);
 }
 
-function BuildOutputForm(formID,formItems) {
-	BuildOutputItems(formID,formItems);
-}
-
-
 
 function BuildEntryInputForm() {
 	BuildInputForm(entryInputFormID,entryInputFormItems);
 }
 
 
-function BuildQuerySizeForm() {
-	BuildOutputForm(querySizeFormID,querySizeFormItems);
+function BuildQuerySizeOutput() {
+	BuildOutputItems(querySizeFormID,querySizeFormItems);
 }
 
 function BuildWhichEntryInputForm() {
@@ -124,8 +170,8 @@ function BuildWhichEntryInputForm() {
 }
 
 
-function BuildEntryOutputForm() {
-	BuildOutputForm(entryOutputFormID,entryOutputFormItems);
+function BuildEntryOutput() {
+	BuildOutputItems(entryOutputFormID,entryOutputFormItems);
 }
 
 function BuildPrevForm() {
@@ -143,9 +189,9 @@ function BuildPrevNextForms() {
 	BuildNextForm();
 }
 
-function BuildEntryOutputSpace() {
-	for(var i = 0; i < entryOutputFormItems.length; i++) {
-		BuildOutputItems(entryOutputSpaceID + String(i),entryOutputFormItems[i]);
+function BuildEntryOutput() {
+	for(var i = 0; i < entryOutputItems.length; i++) {
+		BuildOutputItems(entryOutputSpaceID + String(i),entryOutputItems[i]);
 	}
 }
 
@@ -158,10 +204,8 @@ function BuildMapperHelp() {
 
 
 BuildEntryInputForm();
-BuildQuerySizeForm();
+BuildQuerySizeOutput();
 BuildWhichEntryInputForm();
-//BuildEntryOutputForm();
-BuildEntryOutputSpace();
+BuildEntryOutput();
 BuildPrevNextForms();
 BuildMapperHelp();
-//$('#selectForm').val('mercedes');
